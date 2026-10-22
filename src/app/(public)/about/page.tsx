@@ -43,18 +43,24 @@ const TEAM: TeamMember[] = [
   {
     image: teamCyrilAndem,
     imagePosition: "object-[50%_20%]",
+    imageZoom: "scale-[1.55] origin-[50%_24%]",
     name: "Cyril Andem",
     role: "CEO & FOUNDER",
     credentials: null,
-    bio: "Cyril founded CallLawya to make trusted legal help reachable for everyone, wherever they are. As CEO, he leads the company's vision, strategy and partnerships.",
+    bio: `Cyril Andem is an entrepreneur and technology-driven innovator with over five years of experience delivering complex, high-value projects across maritime, engineering, and energy infrastructure. He holds an MSc in Project Management from the University of Salford, UK, and brings a wealth of experience in strategic planning, business development, operations, stakeholder management, and project delivery, including work on multimillion-dollar infrastructure and engineering projects.
+
+As the Founder and CEO of CallLawya, Cyril is driven by a vision to transform how individuals and businesses access legal support in Nigeria. Through CallLawya, he is building a trusted digital platform that connects people with verified Nigerian lawyers, making legal assistance more accessible, convenient, and reliable.
+
+His mission is to leverage technology and innovation to solve real-world challenges, reduce the uncertainty associated with finding trusted legal representation, and help make access to justice simpler for everyone.`,
   },
   {
     image: teamJulietDike,
     imagePosition: "object-[50%_25%]",
+    imageZoom: "scale-[1.65] origin-[51%_31%]",
     name: "Juliet Dike",
     role: "CO-FOUNDER & COO",
     credentials: null,
-    bio: "Juliet is a technology and operations professional with experience in project & product delivery, business operations, and digital innovation. As Co-Founder and COO of CallLawya, she drives operational strategy, platform development, and partnerships, helping make trusted legal services more accessible through technology. She is passionate about building practical, user-focused solutions that bridge the gap between people and legal support.",
+    bio: "Juliet is a PMP-certified technology and operations professional with over seven years of experience in project management, software delivery, and digital innovation. She holds two master’s degrees in Managing Innovation & Information Technology and Project Management, alongside certifications in AgilePM, Scrum, and Google Project Management. As Co-Founder and COO of CallLawya, she leads operational strategy, product development, and partnerships to make trusted legal services more accessible through technology.",
   },
   {
     image: teamIfunanyaDike,

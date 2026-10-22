@@ -303,7 +303,7 @@ export default async function HomePage() {
                   <span className="line-clamp-1 text-xs font-bold uppercase text-brand">
                     {lawyer.expertiseAreas[0] ?? "General practice"}
                   </span>
-                  <h3 className="mt-1 line-clamp-1 font-serif text-2xl font-bold">{lawyer.name}</h3>
+                  <h3 className="mt-1 line-clamp-2 font-serif text-2xl font-bold leading-tight">{lawyer.name}</h3>
                   <p className="text-sm text-slate-500">
                     {lawyer.location}
                     {lawyer.rating !== null && ` · ${lawyer.rating.toFixed(1)} ★`}

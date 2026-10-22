@@ -33,7 +33,7 @@ export default function LawyerAvatar({
           alt={name}
           fill
           sizes={sizes}
-          className="object-cover"
+          className="object-cover object-top"
           preload={preload}
           onError={() => setFailed(true)}
         />
