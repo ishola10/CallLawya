@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { courtCorridor, lawyerWoman1, legalConsultation } from "@/assets/images";
 import { CountUp, Icon, StoreButton } from "@/components/common";
-import { FEATURED_LAWYERS, ROUTES } from "@/constants";
-import { faArrowRight, faBolt, faBriefcase, faBuildingColumns, faChartLine, faEarthAfrica, faGavel, faHandshake, faLandmark, faLock, faMobileScreenButton, faScaleBalanced, faShieldHalved, faUserCheck, faWallet } from "@/assets/icons";
+import { LawyerAvatar } from "@/components/lawyers";
+import { ROUTES } from "@/constants";
+import { getTopLawyers } from "@/services/lawyers";
+import { ArrowRightIcon, BriefcaseIcon, Building2Icon, ChartLineIcon, GavelIcon, GlobeIcon, HandshakeIcon, LandmarkIcon, LockIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserCheckIcon, WalletIcon, ZapIcon } from "@/assets/icons";
 
 const STATS = [
   { value: 10000, label: "Verified Lawyers" },
@@ -12,19 +14,19 @@ const STATS = [
 ];
 
 const PARTNERS = [
-  { icon: faScaleBalanced, name: "LexAfrica" },
-  { icon: faBuildingColumns, name: "PanAfrican Bar Forum" },
-  { icon: faGavel, name: "Justice Hub" },
-  { icon: faEarthAfrica, name: "Ubuntu Rights" },
-  { icon: faHandshake, name: "Legal Aid Alliance" },
-  { icon: faShieldHalved, name: "TrustPay Africa" },
+  { icon: ScaleIcon, name: "LexAfrica" },
+  { icon: Building2Icon, name: "PanAfrican Bar Forum" },
+  { icon: GavelIcon, name: "Justice Hub" },
+  { icon: GlobeIcon, name: "Ubuntu Rights" },
+  { icon: HandshakeIcon, name: "Legal Aid Alliance" },
+  { icon: ShieldCheckIcon, name: "TrustPay Africa" },
 ];
 
 const WHY_ITEMS = [
-  { icon: faUserCheck, title: "Verified Lawyers", text: "Vetted and licensed professionals." },
-  { icon: faMobileScreenButton, title: "Mobile First", text: "Advice wherever life happens." },
-  { icon: faChartLine, title: "Expand Your Income", text: "Serve more clients across borders." },
-  { icon: faBriefcase, title: "Specialized Expertise", text: "Property, family, business, IP and more." },
+  { icon: UserCheckIcon, title: "Verified Lawyers", text: "Vetted and licensed professionals." },
+  { icon: SmartphoneIcon, title: "Mobile First", text: "Advice wherever life happens." },
+  { icon: ChartLineIcon, title: "Expand Your Income", text: "Serve more clients across borders." },
+  { icon: BriefcaseIcon, title: "Specialized Expertise", text: "Property, family, business, IP and more." },
 ];
 
 const STEPS = [
@@ -42,7 +44,11 @@ const STEPS = [
   },
 ];
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const topLawyers = await getTopLawyers(4).catch(() => []);
+
   return (
     <>
       <Link
@@ -51,7 +57,7 @@ export default function HomePage() {
       >
         <span className="shrink-0 bg-white px-2 py-1 text-brand">LEGAL ACCESS</span>
         <span>Now serving clients and lawyers across Africa — call, video or chat in minutes.</span>
-        <Icon icon={faArrowRight} className="ml-auto" />
+        <Icon icon={ArrowRightIcon} className="ml-auto" />
       </Link>
 
       <section className="page-x overflow-hidden bg-black py-10 lg:py-12 text-white lg:min-h-[780px]">
@@ -74,7 +80,7 @@ export default function HomePage() {
                 href={ROUTES.lawyers}
                 className="press rounded-md bg-brand px-8 py-4 text-lg font-bold hover:bg-brand-hover"
               >
-                Find a Lawyer <Icon icon={faArrowRight} className="ml-3" />
+                Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-3" />
               </Link>
               <Link
                 href={ROUTES.forLawyers}
@@ -123,7 +129,7 @@ export default function HomePage() {
             <div className="absolute left-0 top-[110px] w-[210px] rounded-xl sm:w-[245px] border-t-4 border-brand bg-white p-5 text-navy shadow-2xl">
               <div className="flex items-center gap-3">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-mist text-brand">
-                  <Icon icon={faScaleBalanced} />
+                  <Icon icon={ScaleIcon} />
                 </span>
                 <div>
                   <p className="text-xs text-slate-500">MATCH FOUND</p>
@@ -136,7 +142,7 @@ export default function HomePage() {
               <p className="mt-2 text-xs text-slate-500">3 verified lawyers available now</p>
             </div>
             <div className="absolute bottom-8 left-0 rounded-lg bg-gold px-5 py-4 font-bold text-black shadow-xl sm:left-8">
-              <Icon icon={faLock} className="mr-2" /> End-to-end encrypted
+              <Icon icon={LockIcon} className="mr-2" /> End-to-end encrypted
             </div>
           </div>
         </div>
@@ -196,24 +202,24 @@ export default function HomePage() {
         </div>
         <div className="grid gap-6 lg:grid-cols-3">
           <article className="lift min-h-[330px] rounded-xl bg-ink p-8 text-white">
-            <Icon icon={faBolt} className="text-3xl text-gold" />
-            <p className="mt-16 text-xs font-bold tracking-widest text-brand-light">01 / INSTANT</p>
+            <Icon icon={ZapIcon} className="h-12 w-12 rounded-xl bg-white/10 p-2.5 text-gold" />
+            <p className="mt-10 text-xs font-bold tracking-widest text-brand-light">01 / INSTANT</p>
             <h3 className="mt-3 font-serif text-3xl font-bold">Instant Connections</h3>
             <p className="mt-4 leading-7 text-white/65">
               Tell us what happened. We connect you with the right available lawyer in minutes.
             </p>
           </article>
           <article className="lift min-h-[330px] rounded-xl bg-brand-mist p-8">
-            <Icon icon={faWallet} className="text-3xl text-brand" />
-            <p className="mt-16 text-xs font-bold tracking-widest text-brand">02 / FAIR</p>
+            <Icon icon={WalletIcon} className="h-12 w-12 rounded-xl bg-white p-2.5 text-brand shadow-sm" />
+            <p className="mt-10 text-xs font-bold tracking-widest text-brand">02 / FAIR</p>
             <h3 className="mt-3 font-serif text-3xl font-bold">Affordable Pricing</h3>
             <p className="mt-4 leading-7 text-slate-600">
               Compare transparent options before you connect. Quality counsel should be within reach.
             </p>
           </article>
           <article className="lift min-h-[330px] rounded-xl bg-brand p-8 text-white">
-            <Icon icon={faShieldHalved} className="text-3xl text-white" />
-            <p className="mt-16 text-xs font-bold tracking-widest text-white/70">03 / PRIVATE</p>
+            <Icon icon={ShieldCheckIcon} className="h-12 w-12 rounded-xl bg-white/15 p-2.5 text-white" />
+            <p className="mt-10 text-xs font-bold tracking-widest text-white/70">03 / PRIVATE</p>
             <h3 className="mt-3 font-serif text-3xl font-bold">Secure Platform</h3>
             <p className="mt-4 leading-7 text-white/75">
               Encrypted conversations protect the details that matter most — your story, your rights, your privacy.
@@ -236,7 +242,7 @@ export default function HomePage() {
           <div data-reveal="whole" className="grid gap-px border border-slate-200 bg-slate-200 sm:grid-cols-2">
             {WHY_ITEMS.map((item) => (
               <article key={item.title} className="bg-white p-7">
-                <Icon icon={item.icon} className="text-xl text-brand" />
+                <Icon icon={item.icon} className="h-11 w-11 rounded-lg bg-brand-mist p-2 text-brand" />
                 <h3 className="mt-5 text-xl font-bold">{item.title}</h3>
                 <p className="mt-2 text-slate-600">{item.text}</p>
               </article>
@@ -267,37 +273,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="page-x bg-white section-y">
-        <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="eyebrow text-brand">Available now</p>
-            <h2 className="mt-2 font-serif text-4xl font-bold md:text-5xl">Meet verified lawyers.</h2>
-          </div>
-          <Link href={ROUTES.lawyers} className="font-bold hover:text-brand">
-            View directory <Icon icon={faArrowRight} className="ml-2" />
-          </Link>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURED_LAWYERS.map((lawyer) => (
-            <Link key={lawyer.id} href={ROUTES.lawyers} className="lift block overflow-hidden rounded-xl border border-slate-200">
-              <Image
-                src={lawyer.image}
-                alt={lawyer.name}
-                className="h-64 w-full object-cover"
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                placeholder="blur"
-              />
-              <div className="p-5">
-                <span className="text-xs font-bold uppercase text-brand">{lawyer.specialization}</span>
-                <h3 className="mt-1 font-serif text-2xl font-bold">{lawyer.name}</h3>
-                <p className="text-sm text-slate-500">
-                  {lawyer.city}, {lawyer.country === "South Africa" ? "SA" : lawyer.country} · {lawyer.rating.toFixed(1)} ★
-                </p>
-              </div>
+      {topLawyers.length > 0 && (
+        <section className="page-x bg-white section-y">
+          <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="eyebrow text-brand">Available now</p>
+              <h2 className="mt-2 font-serif text-4xl font-bold md:text-5xl">Meet verified lawyers.</h2>
+            </div>
+            <Link href={ROUTES.lawyers} className="font-bold hover:text-brand">
+              View directory <Icon icon={ArrowRightIcon} className="ml-2" />
             </Link>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {topLawyers.map((lawyer) => (
+              <Link
+                key={lawyer.id}
+                href={`${ROUTES.lawyers}/${lawyer.id}`}
+                className="lift block overflow-hidden rounded-xl border border-slate-200"
+              >
+                <LawyerAvatar
+                  src={lawyer.avatar}
+                  name={lawyer.name}
+                  initials={lawyer.initials}
+                  className="h-64 w-full"
+                  initialsClassName="text-6xl"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                />
+                <div className="p-5">
+                  <span className="line-clamp-1 text-xs font-bold uppercase text-brand">
+                    {lawyer.expertiseAreas[0] ?? "General practice"}
+                  </span>
+                  <h3 className="mt-1 line-clamp-1 font-serif text-2xl font-bold">{lawyer.name}</h3>
+                  <p className="text-sm text-slate-500">
+                    {lawyer.location}
+                    {lawyer.rating !== null && ` · ${lawyer.rating.toFixed(1)} ★`}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="page-x bg-paper section-y">
         <div className="mb-8 flex items-end justify-between border-t-4 border-black pt-5">
@@ -335,7 +351,7 @@ export default function HomePage() {
           </Link>
           <Link href={ROUTES.news} className="group border-t border-black pt-4">
             <div className="flex h-44 items-end bg-navy p-6 text-white">
-              <Icon icon={faLandmark} className="text-5xl text-brand-light" />
+              <Icon icon={LandmarkIcon} strokeWidth={1.25} className="text-5xl text-brand-light" />
             </div>
             <p className="mt-4 text-xs font-bold text-brand">LAND & PROPERTY</p>
             <h3 className="mt-2 font-serif text-2xl font-bold group-hover:text-brand">

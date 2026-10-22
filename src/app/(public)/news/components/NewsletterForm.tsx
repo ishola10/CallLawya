@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { newsletterSchema } from "@/lib/validations";
 import type { NewsletterValues } from "@/lib/validations";
 import { Icon } from "@/components/common";
-import { faCircleCheck } from "@/assets/icons";
+import { CircleCheckIcon } from "@/assets/icons";
 
 export default function NewsletterForm() {
   const [subscribedEmail, setSubscribedEmail] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export default function NewsletterForm() {
     return (
       <div className="rounded bg-white p-5 text-navy" role="status">
         <p className="font-bold">
-          <Icon icon={faCircleCheck} className="mr-2 text-brand" />
+          <Icon icon={CircleCheckIcon} className="mr-2 text-brand" />
           You&apos;re subscribed.
         </p>
         <p className="mt-1 text-sm text-slate-500">The next legal briefing will arrive at {subscribedEmail}.</p>

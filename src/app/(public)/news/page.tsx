@@ -11,7 +11,7 @@ import {
 } from "@/assets/images";
 import { NewsletterForm } from "./components";
 import { Icon } from "@/components/common";
-import { faHouse, faLaptopCode } from "@/assets/icons";
+import { HouseIcon, LaptopIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "Legal News",
@@ -153,7 +153,7 @@ export default function NewsPage() {
           </article>
           <article className="group border-t-4 border-black pt-4">
             <div className="flex h-48 items-end bg-navy p-6 text-white">
-              <Icon icon={faHouse} className="text-6xl text-brand-light" />
+              <Icon icon={HouseIcon} strokeWidth={1.25} className="text-6xl text-brand-light" />
             </div>
             <p className="mt-4 text-xs font-bold text-brand">LAND & PROPERTY</p>
             <h3 className="mt-2 font-serif text-2xl font-bold leading-tight group-hover:text-brand">
@@ -163,7 +163,7 @@ export default function NewsPage() {
           </article>
           <article className="group border-t-4 border-black pt-4">
             <div className="flex h-48 items-end bg-brand p-6 text-white">
-              <Icon icon={faLaptopCode} className="text-6xl" />
+              <Icon icon={LaptopIcon} strokeWidth={1.25} className="text-6xl" />
             </div>
             <p className="mt-4 text-xs font-bold text-brand">TECH & IP</p>
             <h3 className="mt-2 font-serif text-2xl font-bold leading-tight group-hover:text-brand">

@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { lawyerMan1, lawyerMan2, lawyerWoman1, lawyerWoman2, officeCity, teamPhoto } from "@/assets/images";
+import {
+  officeCity,
+  teamAlexanderOmini,
+  teamCyrilAndem,
+  teamIfunanyaDike,
+  teamJulietDike,
+  teamPhoto,
+} from "@/assets/images";
 import { CountUp, Icon } from "@/components/common";
+import { TeamMemberCard, type TeamMember } from "./components";
 import { ROUTES } from "@/constants";
-import { faArrowRight, faArrowTrendUp, faHandshakeAngle, faShieldHalved, faUniversalAccess } from "@/assets/icons";
+import { AccessibilityIcon, ArrowRightIcon, HeartHandshakeIcon, ShieldCheckIcon, TrendingUpIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "About",
@@ -20,41 +28,49 @@ const IMPACT = [
 ];
 
 const VALUES = [
-  { icon: faUniversalAccess, title: "Access", text: "Legal support should meet people where they are." },
-  { icon: faShieldHalved, title: "Trust", text: "Verified professionals and protected conversations." },
-  { icon: faHandshakeAngle, title: "Dignity", text: "Every person deserves respect and plain language." },
+  { icon: AccessibilityIcon, title: "Access", text: "Legal support should meet people where they are." },
+  { icon: ShieldCheckIcon, title: "Trust", text: "Verified professionals and protected conversations." },
+  { icon: HeartHandshakeIcon, title: "Dignity", text: "Every person deserves respect and plain language." },
   {
-    icon: faArrowTrendUp,
+    icon: TrendingUpIcon,
     title: "Progress",
     text: "Technology should move justice closer, not complicate it.",
     accent: true,
   },
 ];
 
-const TEAM = [
+const TEAM: TeamMember[] = [
   {
-    image: lawyerWoman1,
-    name: "Ada Nwosu",
-    role: "CO-FOUNDER & CEO",
-    bio: "A former commercial litigator from Lagos, Ada founded CallLawya after years of watching people give up on justice they couldn't reach. She leads the company's vision and partnerships across the continent.",
+    image: teamCyrilAndem,
+    imagePosition: "object-[50%_20%]",
+    name: "Cyril Andem",
+    role: "CEO & FOUNDER",
+    credentials: null,
+    bio: "Cyril founded CallLawya to make trusted legal help reachable for everyone, wherever they are. As CEO, he leads the company's vision, strategy and partnerships.",
   },
   {
-    image: lawyerMan1,
-    name: "Kofi Addo",
-    role: "CHIEF LEGAL OFFICER",
-    bio: "Kofi spent over a decade in corporate and regulatory practice in Accra. He oversees lawyer verification, compliance and the professional standards that keep every consultation trustworthy.",
+    image: teamJulietDike,
+    imagePosition: "object-[50%_25%]",
+    name: "Juliet Dike",
+    role: "CO-FOUNDER & COO",
+    credentials: null,
+    bio: "Juliet is a technology and operations professional with experience in project & product delivery, business operations, and digital innovation. As Co-Founder and COO of CallLawya, she drives operational strategy, platform development, and partnerships, helping make trusted legal services more accessible through technology. She is passionate about building practical, user-focused solutions that bridge the gap between people and legal support.",
   },
   {
-    image: lawyerWoman2,
-    name: "Lerato Dube",
-    role: "VP, OPERATIONS",
-    bio: "Based in Johannesburg, Lerato scaled operations for two pan-African startups before joining CallLawya. She makes sure clients are matched quickly and supported at every step.",
+    image: teamIfunanyaDike,
+    imagePosition: "object-top",
+    name: "Ifunanya Dike, Esq.",
+    role: "BOARD MEMBER",
+    credentials: "LLB",
+    bio: "Ifunanya is a Nigerian-qualified Barrister and Solicitor with a UK Master’s degree in Intellectual Property and Information Technology Law. Her legal expertise encompasses contract drafting and review, legal research and advisory, and corporate and commercial documentation. Combining strong legal analytical skills with an international outlook, she is committed to delivering practical, commercially sound legal solutions that protect clients’ interests and support business growth. Through CallLawya, she aims to contribute to accessible, professional legal services for individuals, businesses, and organisations in Nigeria and internationally, particularly in corporate, commercial, and cross-border legal matters.",
   },
   {
-    image: lawyerMan2,
-    name: "Samuel Kamau",
-    role: "VP, PRODUCT",
-    bio: "Samuel builds the CallLawya app from Nairobi. A mobile-first product leader, he focuses on making legal help simple, secure and usable on any phone, on any network.",
+    image: teamAlexanderOmini,
+    imagePosition: "object-top",
+    name: "Alexander Omini, Esq.",
+    role: "BOARD MEMBER",
+    credentials: "LLB, BL, FSS, USIP",
+    bio: "Alexander supports the board with legal and governance expertise, helping CallLawya grow responsibly and keep trust at the centre of every consultation.",
   },
 ];
 
@@ -177,8 +193,8 @@ export default function AboutPage() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {VALUES.map((value) => (
             <article key={value.title} className="lift rounded-xl border border-white/15 bg-white/5 p-7">
-              <Icon icon={value.icon} className={`text-3xl ${value.accent ? "text-gold" : "text-brand-light"}`} />
-              <h3 className="mt-14 text-xl font-bold">{value.title}</h3>
+              <Icon icon={value.icon} className={`h-12 w-12 rounded-xl bg-white/10 p-2.5 ${value.accent ? "text-gold" : "text-brand-light"}`} />
+              <h3 className="mt-8 text-xl font-bold">{value.title}</h3>
               <p className="mt-3 leading-7 text-white/55">{value.text}</p>
             </article>
           ))}
@@ -197,31 +213,7 @@ export default function AboutPage() {
         </div>
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {TEAM.map((member) => (
-            <article
-              key={member.name}
-              tabIndex={0}
-              className="group h-[400px] rounded-xl outline-none [perspective:1200px] focus-visible:ring-4 focus-visible:ring-brand/30"
-            >
-              <div className="relative h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus:[transform:rotateY(180deg)] motion-reduce:transition-none">
-                <div className="absolute inset-0 [backface-visibility:hidden]">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    className="h-80 w-full rounded-xl object-cover"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    placeholder="blur"
-                  />
-                  <h3 className="mt-4 font-serif text-2xl font-bold">{member.name}</h3>
-                  <p className="text-sm font-bold text-brand">{member.role}</p>
-                </div>
-                <div className="absolute inset-0 flex flex-col rounded-xl border-t-4 border-brand bg-ink p-7 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                  <p className="text-xs font-bold tracking-widest text-brand-light">{member.role}</p>
-                  <p className="mt-2 font-serif text-3xl font-bold">{member.name}</p>
-                  <span className="mt-5 h-[3px] w-10 bg-gold" />
-                  <p className="mt-5 leading-7 text-white/70">{member.bio}</p>
-                </div>
-              </div>
-            </article>
+            <TeamMemberCard key={member.name} member={member} />
           ))}
         </div>
       </section>
@@ -257,7 +249,7 @@ export default function AboutPage() {
           <p className="mt-3 text-white/70">Join as a client, lawyer or partner.</p>
         </div>
         <Link href={ROUTES.lawyers} className="press self-start rounded bg-black px-8 py-4 font-bold lg:self-auto">
-          Get started <Icon icon={faArrowRight} className="ml-2" />
+          Get started <Icon icon={ArrowRightIcon} className="ml-2" />
         </Link>
       </section>
     </div>

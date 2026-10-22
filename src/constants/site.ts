@@ -1,4 +1,4 @@
-import { faFacebook, faInstagram, faLinkedin, faXTwitter } from "@/assets/icons";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, XTwitterIcon } from "@/assets/icons";
 
 export const NAV_LINKS = [
   { label: "Features", href: "/features" },
@@ -28,13 +28,18 @@ export const CONTACT_EMAILS = {
 } as const;
 
 export const STORE_LINKS = {
-  googlePlay: "#",
-  appStore: "#",
+  googlePlay: "https://play.google.com/store/apps/details?id=com.vickzuzo.lawyerapp",
+  appStore: "https://apps.apple.com/gb/app/calllawya/id6757891453",
+} as const;
+
+export const MOBILE_APP = {
+  scheme: "calllawya",
+  androidPackage: "com.vickzuzo.lawyerapp",
 } as const;
 
 export const SOCIAL_LINKS = [
-  { label: "LinkedIn", icon: faLinkedin, href: "#" },
-  { label: "X (Twitter)", icon: faXTwitter, href: "#" },
-  { label: "Instagram", icon: faInstagram, href: "#" },
-  { label: "Facebook", icon: faFacebook, href: "#" },
+  { label: "LinkedIn", icon: LinkedinIcon, href: "#" },
+  { label: "X (Twitter)", icon: XTwitterIcon, href: "#" },
+  { label: "Instagram", icon: InstagramIcon, href: "#" },
+  { label: "Facebook", icon: FacebookIcon, href: "#" },
 ] as const;

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { CONTACT_SUBJECTS, contactFormSchema } from "@/lib/validations";
 import type { ContactFormValues } from "@/lib/validations";
 import { Icon } from "@/components/common";
-import { faArrowRight, faCircleCheck, faEnvelope } from "@/assets/icons";
+import { ArrowRightIcon, CircleCheckIcon, MailIcon } from "@/assets/icons";
 
 const isSubject = (value: unknown): value is ContactFormValues["subject"] =>
   CONTACT_SUBJECTS.includes(value as ContactFormValues["subject"]);
@@ -51,14 +51,14 @@ export default function ContactForm() {
           <h2 className="mt-2 font-serif text-3xl font-bold md:text-4xl">How can we help?</h2>
         </div>
         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-mist text-brand">
-          <Icon icon={faEnvelope} className="text-xl" />
+          <Icon icon={MailIcon} className="text-xl" />
         </span>
       </div>
 
       {sentTo && (
         <div className="mt-7 rounded-md border border-brand/30 bg-brand-mist p-5" role="status">
           <p className="font-bold">
-            <Icon icon={faCircleCheck} className="mr-2 text-brand" />
+            <Icon icon={CircleCheckIcon} className="mr-2 text-brand" />
             Thanks — your message has been sent.
           </p>
           <p className="mt-1 text-sm text-slate-600">We&apos;ll reply to {sentTo} as soon as possible.</p>
@@ -120,7 +120,7 @@ export default function ContactForm() {
         disabled={isSubmitting}
         className="press mt-7 w-full rounded-md bg-brand py-4 text-lg font-bold text-white hover:bg-brand-hover disabled:opacity-60"
       >
-        Send Message <Icon icon={faArrowRight} className="ml-2" />
+        Send Message <Icon icon={ArrowRightIcon} className="ml-2" />
       </button>
     </form>
   );

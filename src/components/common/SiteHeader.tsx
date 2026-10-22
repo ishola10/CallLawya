@@ -8,7 +8,7 @@ import { logo } from "@/assets/images";
 import { NAV_LINKS, ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import Icon from "./Icon";
-import { faBars, faDownload, faXmark } from "@/assets/icons";
+import { DownloadIcon, MenuIcon, XIcon } from "@/assets/icons";
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -58,7 +58,7 @@ export default function SiteHeader() {
               pathname === ROUTES.download && "border-brand text-brand-light",
             )}
           >
-            <Icon icon={faDownload} />
+            <Icon icon={DownloadIcon} />
           </Link>
         </div>
 
@@ -69,7 +69,7 @@ export default function SiteHeader() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
         >
-          <Icon icon={menuOpen ? faXmark : faBars} />
+          <Icon icon={menuOpen ? XIcon : MenuIcon} />
         </button>
       </div>
 

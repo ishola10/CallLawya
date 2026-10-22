@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { appScreen, lawyerMan1, lawyerWoman1, logo } from "@/assets/images";
 import { Icon, StoreButton } from "@/components/common";
-import { faArrowRight, faBell, faBolt, faCircleCheck, faFileShield, faPhone, faShieldHalved, faStar, faVideo, faWallet } from "@/assets/icons";
+import { ArrowRightIcon, BellIcon, CircleCheckIcon, FileLockIcon, PhoneIcon, ShieldCheckIcon, StarIcon, VideoIcon, WalletIcon, ZapIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "Download the App",
@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 };
 
 const BENEFITS = [
-  { icon: faBolt, title: "Instant Matching", text: "See relevant, available lawyers based on your legal issue." },
-  { icon: faVideo, title: "Call, Video or Chat", text: "Choose the secure consultation format that works for you." },
-  { icon: faWallet, title: "Clear Pricing", text: "Understand consultation prices before you connect." },
+  { icon: ZapIcon, title: "Instant Matching", text: "See relevant, available lawyers based on your legal issue." },
+  { icon: VideoIcon, title: "Call, Video or Chat", text: "Choose the secure consultation format that works for you." },
+  { icon: WalletIcon, title: "Clear Pricing", text: "Understand consultation prices before you connect." },
   {
-    icon: faFileShield,
+    icon: FileLockIcon,
     title: "Secure Files",
     text: "Keep documents and next steps together in one protected place.",
     accent: true,
@@ -102,7 +102,7 @@ export default function DownloadPage() {
             <div className="mt-8 flex items-center gap-4">
               <div className="flex gap-1 text-gold">
                 {Array.from({ length: 5 }, (_, index) => (
-                  <Icon key={index} icon={faStar} />
+                  <Icon key={index} icon={StarIcon} className="fill-current" />
                 ))}
               </div>
               <span className="text-sm text-white/55">
@@ -117,7 +117,7 @@ export default function DownloadPage() {
               <div className="h-full bg-paper px-5 pt-5 text-navy">
                 <div className="flex items-center justify-between">
                   <Image src={logo} alt="CallLawya" className="h-auto w-24 rounded bg-black px-2 py-1" />
-                  <Icon icon={faBell} />
+                  <Icon icon={BellIcon} />
                 </div>
                 <p className="mt-6 text-xs text-slate-500">Good morning</p>
                 <h3 className="font-serif text-2xl font-bold">How can we help?</h3>
@@ -125,7 +125,7 @@ export default function DownloadPage() {
                   <p className="text-xs text-white/60">START HERE</p>
                   <strong>Describe your legal issue</strong>
                   <div className="mt-4 flex items-center justify-between rounded bg-white/15 px-3 py-2 text-xs">
-                    Property dispute <Icon icon={faArrowRight} />
+                    Property dispute <Icon icon={ArrowRightIcon} />
                   </div>
                 </div>
                 <p className="mt-6 text-xs font-bold">Available lawyers</p>
@@ -156,17 +156,17 @@ export default function DownloadPage() {
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/75 to-transparent p-5 pb-12">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-green-500">
-                    <Icon icon={faPhone} />
+                    <Icon icon={PhoneIcon} />
                   </span>
                   <span className="ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand">
-                    <Icon icon={faVideo} />
+                    <Icon icon={VideoIcon} />
                   </span>
                   <p className="mt-3 text-xs text-white/70">Secure consultation in progress</p>
                 </div>
               </div>
             </div>
             <div className="absolute bottom-20 left-0 rounded-lg bg-gold px-5 py-4 font-bold text-black shadow-xl">
-              <Icon icon={faShieldHalved} className="mr-2" /> Private & encrypted
+              <Icon icon={ShieldCheckIcon} className="mr-2" /> Private & encrypted
             </div>
           </div>
         </div>
@@ -183,8 +183,8 @@ export default function DownloadPage() {
               key={benefit.title}
               className={`border-t-4 bg-paper p-7 ${benefit.accent ? "border-gold" : "border-brand"}`}
             >
-              <Icon icon={benefit.icon} className="text-2xl text-brand" />
-              <h3 className="mt-10 text-xl font-bold">{benefit.title}</h3>
+              <Icon icon={benefit.icon} className="h-12 w-12 rounded-xl bg-white p-2.5 text-brand shadow-sm" />
+              <h3 className="mt-7 text-xl font-bold">{benefit.title}</h3>
               <p className="mt-3 leading-7 text-slate-600">{benefit.text}</p>
             </article>
           ))}
@@ -223,7 +223,7 @@ export default function DownloadPage() {
             <ul className="mt-7 space-y-4 font-semibold">
               {SHOWCASE_POINTS.map((point) => (
                 <li key={point}>
-                  <Icon icon={faCircleCheck} className="mr-3 text-brand" />
+                  <Icon icon={CircleCheckIcon} className="mr-3 text-brand" />
                   {point}
                 </li>
               ))}

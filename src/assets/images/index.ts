@@ -9,6 +9,10 @@ import lawyerWoman1 from "./lawyer-portrait-woman-1.jpg";
 import lawyerWoman2 from "./lawyer-portrait-woman-2.jpg";
 import legalConsultation from "./legal-consultation.jpg";
 import officeCity from "./office-city.jpg";
+import teamAlexanderOmini from "./team-alexander-omini.jpg";
+import teamCyrilAndem from "./team-cyril-andem.jpg";
+import teamIfunanyaDike from "./team-ifunanya-dike.jpg";
+import teamJulietDike from "./team-juliet-dike.jpg";
 
 export {
   appScreen,
@@ -20,5 +24,9 @@ export {
   legalConsultation,
   logo,
   officeCity,
+  teamAlexanderOmini,
+  teamCyrilAndem,
+  teamIfunanyaDike,
+  teamJulietDike,
   teamPhoto,
 };
