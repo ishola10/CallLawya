@@ -8,6 +8,7 @@ import { Icon } from "@/components/common";
 export type TeamMember = {
   image: StaticImageData;
   imagePosition: string;
+  imageZoom?: string;
   name: string;
   role: string;
   credentials: string | null;
@@ -25,13 +26,15 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
       >
         <div className="relative h-full transition-transform duration-700 [transform-style:preserve-3d] group-focus-within:[transform:rotateY(180deg)] group-hover:[transform:rotateY(180deg)] motion-reduce:transition-none">
           <div className="absolute inset-0 [backface-visibility:hidden]">
-            <Image
-              src={member.image}
-              alt={member.name}
-              className={`h-80 w-full rounded-xl object-cover ${member.imagePosition}`}
-              sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
-              placeholder="blur"
-            />
+            <div className="h-80 overflow-hidden rounded-xl">
+              <Image
+                src={member.image}
+                alt={member.name}
+                className={`h-full w-full object-cover contrast-[1.05] grayscale ${member.imagePosition} ${member.imageZoom ?? ""}`}
+                sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                placeholder="blur"
+              />
+            </div>
             <h3 className="mt-4 font-serif text-2xl font-bold">{member.name}</h3>
             <p className="text-sm font-bold text-brand">{member.role}</p>
           </div>
@@ -40,7 +43,7 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
             <p className="mt-2 font-serif text-2xl font-bold">{member.name}</p>
             {member.credentials && <p className="mt-1 text-sm font-semibold text-white/50">{member.credentials}</p>}
             <span className="mt-4 h-[3px] w-10 shrink-0 bg-gold" />
-            <p className="mt-4 line-clamp-5 leading-7 text-white/70">{member.bio}</p>
+            <p className="mt-4 line-clamp-5 leading-7 text-white/70">{member.bio.replace(/\s*\n\s*/g, " ")}</p>
             <button
               type="button"
               onClick={() => dialogRef.current?.showModal()}
@@ -70,13 +73,15 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
             <Icon icon={XIcon} />
           </button>
           <div className="flex items-center gap-5 pr-10">
-            <Image
-              src={member.image}
-              alt=""
-              className={`h-20 w-20 shrink-0 rounded-xl object-cover ${member.imagePosition}`}
-              sizes="80px"
-              placeholder="blur"
-            />
+            <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+              <Image
+                src={member.image}
+                alt=""
+                className={`h-full w-full object-cover contrast-[1.05] grayscale ${member.imagePosition} ${member.imageZoom ?? ""}`}
+                sizes="80px"
+                placeholder="blur"
+              />
+            </div>
             <div>
               <p className="text-xs font-bold tracking-widest text-brand">{member.role}</p>
               <h3 className="mt-1 font-serif text-2xl font-bold sm:text-3xl">{member.name}</h3>
@@ -84,7 +89,11 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
             </div>
           </div>
           <span className="mt-6 block h-[3px] w-10 bg-gold" />
-          <p className="mt-6 leading-8 text-slate-600">{member.bio}</p>
+          <div className="mt-6 space-y-4 leading-8 text-slate-600">
+            {member.bio.split(/\n\s*\n/).map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph.trim()}</p>
+            ))}
+          </div>
         </div>
       </dialog>
     </>
