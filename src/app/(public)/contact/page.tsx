@@ -5,7 +5,7 @@ import { officeCity } from "@/assets/images";
 import { CONTACT_EMAILS, ROUTES, SOCIAL_LINKS } from "@/constants";
 import { Icon } from "@/components/common";
 import { ContactForm } from "./components";
-import { faArrowRight, faCircle, faCommentDots, faHeadset, faLocationDot, faMobileScreen, faNewspaper, faScaleBalanced, faShieldHalved, faUser } from "@/assets/icons";
+import { ArrowRightIcon, DotIcon, HeadsetIcon, MapPinIcon, MessageCircleMoreIcon, NewspaperIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -13,16 +13,16 @@ export const metadata: Metadata = {
 };
 
 const CHANNELS = [
-  { icon: faHeadset, label: "CLIENT SUPPORT", email: CONTACT_EMAILS.support },
-  { icon: faScaleBalanced, label: "LAWYER PARTNERSHIPS", email: CONTACT_EMAILS.lawyers },
-  { icon: faNewspaper, label: "MEDIA & PRESS", email: CONTACT_EMAILS.press },
+  { icon: HeadsetIcon, label: "CLIENT SUPPORT", email: CONTACT_EMAILS.support },
+  { icon: ScaleIcon, label: "LAWYER PARTNERSHIPS", email: CONTACT_EMAILS.lawyers },
+  { icon: NewspaperIcon, label: "MEDIA & PRESS", email: CONTACT_EMAILS.press },
 ];
 
 const QUICK_HELP = [
-  { icon: faUser, title: "For clients", text: "Matching, consultations and payments.", href: ROUTES.howItWorks },
-  { icon: faScaleBalanced, title: "For lawyers", text: "Verification, clients and earnings.", href: ROUTES.forLawyers },
-  { icon: faShieldHalved, title: "Privacy & security", text: "How your information is protected.", href: `${ROUTES.features}#secure` },
-  { icon: faMobileScreen, title: "Using the app", text: "Downloads, access and troubleshooting.", href: ROUTES.download },
+  { icon: UserIcon, title: "For clients", text: "Matching, consultations and payments.", href: ROUTES.howItWorks },
+  { icon: ScaleIcon, title: "For lawyers", text: "Verification, clients and earnings.", href: ROUTES.forLawyers },
+  { icon: ShieldCheckIcon, title: "Privacy & security", text: "How your information is protected.", href: `${ROUTES.features}#secure` },
+  { icon: SmartphoneIcon, title: "Using the app", text: "Downloads, access and troubleshooting.", href: ROUTES.download },
 ];
 
 export default function ContactPage() {
@@ -80,7 +80,7 @@ export default function ContactPage() {
                   <h3 className="mt-2 text-xl font-bold">We&apos;re online across time zones.</h3>
                 </div>
                 <span className="shrink-0 text-sm font-bold text-green-600">
-                  <Icon icon={faCircle} className="text-[8px]" /> Online
+                  <Icon icon={DotIcon} className="text-[8px]" /> Online
                 </span>
               </div>
               <div className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
@@ -110,7 +110,7 @@ export default function ContactPage() {
             />
             <div className="absolute inset-0 bg-navy/25" />
             <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-8 border-white/40 bg-brand bg-clip-padding text-white">
-              <Icon icon={faLocationDot} className="text-2xl" />
+              <Icon icon={MapPinIcon} className="text-2xl" />
             </div>
           </div>
           <div className="flex flex-col justify-center p-9">
@@ -134,11 +134,11 @@ export default function ContactPage() {
               href={item.href}
               className="group rounded-lg border border-slate-200 p-6 transition hover:border-brand"
             >
-              <Icon icon={item.icon} className="text-brand" />
+              <Icon icon={item.icon} className="h-11 w-11 rounded-lg bg-brand-mist p-2 text-brand" />
               <h3 className="mt-6 text-lg font-bold">{item.title}</h3>
               <p className="mt-2 text-sm text-slate-500">{item.text}</p>
               <span className="mt-4 inline-block text-sm font-bold group-hover:text-brand">
-                Explore <Icon icon={faArrowRight} className="ml-1" />
+                Explore <Icon icon={ArrowRightIcon} className="ml-1" />
               </span>
             </Link>
           ))}
@@ -149,7 +149,7 @@ export default function ContactPage() {
         href={`mailto:${CONTACT_EMAILS.support}`}
         className="fixed bottom-7 right-7 z-40 rounded-full bg-brand px-6 py-4 font-bold text-white shadow-xl hover:bg-brand-hover"
       >
-        <Icon icon={faCommentDots} className="mr-2" /> Chat with support
+        <Icon icon={MessageCircleMoreIcon} className="mr-2" /> Chat with support
       </a>
     </>
   );

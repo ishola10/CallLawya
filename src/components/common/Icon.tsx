@@ -1,22 +1,19 @@
-import type { IconDefinition } from "@/assets/icons";
+import type { IconComponent } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 
 type IconProps = {
-  icon: IconDefinition;
+  icon: IconComponent;
   className?: string;
+  strokeWidth?: number;
 };
 
-export default function Icon({ icon: [width, height, path], className }: IconProps) {
+export default function Icon({ icon: Glyph, className, strokeWidth = 1.75 }: IconProps) {
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
+    <Glyph
       aria-hidden="true"
       focusable="false"
-      fill="currentColor"
-      className={cn("inline-block h-[1em] shrink-0 overflow-visible align-[-0.125em]", className)}
-      style={{ width: `${(width / height).toFixed(4)}em` }}
-    >
-      <path d={path} />
-    </svg>
+      strokeWidth={strokeWidth}
+      className={cn("inline-block h-[1em] w-[1em] shrink-0 align-[-0.125em]", className)}
+    />
   );
 }

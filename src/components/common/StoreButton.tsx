@@ -1,11 +1,11 @@
 import { STORE_LINKS } from "@/constants";
 import { cn } from "@/lib/utils";
-import { faApple, faGooglePlay } from "@/assets/icons";
+import { AppleIcon, GooglePlayIcon } from "@/assets/icons";
 import Icon from "./Icon";
 
 const STORES = {
-  googlePlay: { icon: faGooglePlay, caption: "GET IT ON", name: "Google Play" },
-  appStore: { icon: faApple, caption: "DOWNLOAD ON THE", name: "App Store" },
+  googlePlay: { icon: GooglePlayIcon, caption: "GET IT ON", name: "Google Play" },
+  appStore: { icon: AppleIcon, caption: "DOWNLOAD ON THE", name: "App Store" },
 } as const;
 
 type StoreButtonProps = {
@@ -21,6 +21,8 @@ export default function StoreButton({ store, variant = "dark", compact = false, 
   return (
     <a
       href={STORE_LINKS[store]}
+      target="_blank"
+      rel="noopener noreferrer"
       className={cn(
         "press inline-flex items-center gap-3 rounded-lg px-6 py-4 text-left",
         variant === "dark" ? "bg-black text-white hover:bg-neutral-900" : "bg-white text-black hover:bg-slate-100",

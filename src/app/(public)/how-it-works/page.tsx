@@ -4,7 +4,7 @@ import Link from "next/link";
 import { lawyerMan1, lawyerWoman1 } from "@/assets/images";
 import { ROUTES } from "@/constants";
 import { Icon } from "@/components/common";
-import { faChevronDown, faComment, faPhone, faPlus, faVideo } from "@/assets/icons";
+import { ChevronDownIcon, MessageCircleIcon, PhoneIcon, PlusIcon, VideoIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -105,7 +105,7 @@ export default function HowItWorksPage() {
               <div className="rounded-lg bg-brand-mist p-5 md:col-span-2 xl:col-span-1">
                 <p className="text-xs font-bold">WHAT DO YOU NEED HELP WITH?</p>
                 <div className="mt-4 flex items-center justify-between rounded border border-brand bg-white p-3">
-                  Land & Property <Icon icon={faChevronDown} />
+                  Land & Property <Icon icon={ChevronDownIcon} />
                 </div>
                 <div className="mt-3 h-10 rounded border border-slate-200 bg-white" />
               </div>
@@ -147,9 +147,9 @@ export default function HowItWorksPage() {
               </div>
               <div className="grid grid-cols-3 gap-3 text-center md:col-span-2 xl:col-span-1">
                 {[
-                  { icon: faPhone, label: "Call" },
-                  { icon: faVideo, label: "Video" },
-                  { icon: faComment, label: "Chat" },
+                  { icon: PhoneIcon, label: "Call" },
+                  { icon: VideoIcon, label: "Video" },
+                  { icon: MessageCircleIcon, label: "Chat" },
                 ].map(({ icon, label }) => (
                   <div key={label} className="rounded bg-white/10 py-5">
                     <Icon icon={icon} className="text-brand-light" />
@@ -208,7 +208,7 @@ export default function HowItWorksPage() {
               <details key={faq.question} className="group border-b border-slate-300 py-6" open={index === 0}>
                 <summary className="flex cursor-pointer list-none justify-between gap-6 text-xl font-bold [&::-webkit-details-marker]:hidden">
                   {faq.question}
-                  <Icon icon={faPlus} className="transition group-open:rotate-45" />
+                  <Icon icon={PlusIcon} className="transition group-open:rotate-45" />
                 </summary>
                 <p className="mt-4 leading-7 text-slate-600 md:pr-16">{faq.answer}</p>
               </details>

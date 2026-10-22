@@ -4,7 +4,7 @@ import Link from "next/link";
 import { legalConsultation } from "@/assets/images";
 import { ROUTES } from "@/constants";
 import { Icon } from "@/components/common";
-import { faArrowDown, faArrowRight, faArrowTrendUp, faCheck, faLock, faMobileScreenButton, faScaleBalanced, faUserShield, faWallet, faWandMagicSparkles } from "@/assets/icons";
+import { ArrowDownIcon, ArrowRightIcon, CheckIcon, LockIcon, ScaleIcon, SmartphoneIcon, SparklesIcon, TrendingUpIcon, UserRoundCheckIcon, WalletIcon } from "@/assets/icons";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 const VERIFIED_CHECKS = ["Professional credentials", "Client ratings", "Practice expertise", "Country licensing"];
 
 const FEATURE_CARDS = [
-  { icon: faMobileScreenButton, title: "Mobile-First", text: "Get advice on the go without geographic limitations." },
-  { icon: faScaleBalanced, title: "Specialized Expertise", text: "Property, family, business, maritime, IP and more." },
-  { icon: faWandMagicSparkles, title: "Instant Matching", text: "Relevant available lawyers, surfaced in minutes." },
-  { icon: faArrowTrendUp, title: "Income for Lawyers", text: "Serve clients beyond physical boundaries." },
+  { icon: SmartphoneIcon, title: "Mobile-First", text: "Get advice on the go without geographic limitations." },
+  { icon: ScaleIcon, title: "Specialized Expertise", text: "Property, family, business, maritime, IP and more." },
+  { icon: SparklesIcon, title: "Instant Matching", text: "Relevant available lawyers, surfaced in minutes." },
+  { icon: TrendingUpIcon, title: "Income for Lawyers", text: "Serve clients beyond physical boundaries." },
 ];
 
 const COMPARISON = [
@@ -46,7 +46,7 @@ export default function FeaturesPage() {
               href="#tools"
               className="press mt-9 inline-block rounded-md bg-brand px-8 py-4 text-lg font-bold hover:bg-brand-hover"
             >
-              Explore the platform <Icon icon={faArrowDown} className="ml-2" />
+              Explore the platform <Icon icon={ArrowDownIcon} className="ml-2" />
             </a>
           </div>
           <div className="relative mb-7 h-[320px] md:h-[430px] lg:mb-0">
@@ -76,7 +76,7 @@ export default function FeaturesPage() {
         <div className="border-y border-slate-200">
           <article className="grid items-center gap-10 border-b border-slate-200 py-10 lg:py-12 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
             <div className="relative flex h-[280px] items-center justify-center rounded-xl bg-brand-mist md:h-[320px]">
-              <Icon icon={faUserShield} className="text-[90px] text-brand md:text-[110px]" />
+              <Icon icon={UserRoundCheckIcon} strokeWidth={1.1} className="text-[90px] text-brand md:text-[110px]" />
               <span className="absolute left-5 top-5 bg-white px-3 py-2 text-xs font-bold">
                 IDENTITY + LICENSE CHECKED
               </span>
@@ -91,7 +91,7 @@ export default function FeaturesPage() {
               <div className="mt-7 grid gap-4 text-sm font-semibold sm:grid-cols-2">
                 {VERIFIED_CHECKS.map((check) => (
                   <p key={check}>
-                    <Icon icon={faCheck} className="mr-2 text-brand" />
+                    <Icon icon={CheckIcon} className="mr-2 text-brand" />
                     {check}
                   </p>
                 ))}
@@ -119,7 +119,7 @@ export default function FeaturesPage() {
               </div>
             </div>
             <div className="order-1 flex h-[280px] flex-col justify-between rounded-xl bg-ink p-8 text-white md:h-[320px] lg:order-2">
-              <Icon icon={faWallet} className="text-4xl text-gold" />
+              <Icon icon={WalletIcon} className="h-14 w-14 rounded-xl bg-white/10 p-3 text-gold" />
               <div>
                 <p className="text-xs text-white/50">PRICE VISIBILITY</p>
                 <p className="mt-2 font-serif text-4xl font-bold">Know before you connect.</p>
@@ -133,7 +133,7 @@ export default function FeaturesPage() {
           >
             <div className="flex h-[280px] flex-col justify-between rounded-xl bg-brand p-8 text-white md:h-[320px]">
               <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40">
-                <Icon icon={faLock} className="text-2xl" />
+                <Icon icon={LockIcon} className="text-2xl" />
               </div>
               <div>
                 <p className="text-sm text-white/60">SECURE SESSION</p>
@@ -159,7 +159,7 @@ export default function FeaturesPage() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURE_CARDS.map((card) => (
             <article key={card.title} className="lift rounded-xl bg-white p-7">
-              <Icon icon={card.icon} className="text-3xl text-brand" />
+              <Icon icon={card.icon} className="h-12 w-12 rounded-xl bg-brand-mist p-2.5 text-brand" />
               <h3 className="mt-8 text-xl font-bold">{card.title}</h3>
               <p className="mt-3 leading-7 text-slate-600">{card.text}</p>
             </article>
@@ -216,7 +216,7 @@ export default function FeaturesPage() {
             <p className="mt-2 text-white/70">Find the right lawyer for your situation today.</p>
           </div>
           <Link href={ROUTES.lawyers} className="press self-start rounded-md bg-black px-8 py-4 font-bold md:self-auto">
-            Find a Lawyer <Icon icon={faArrowRight} className="ml-2" />
+            Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-2" />
           </Link>
         </div>
       </section>
