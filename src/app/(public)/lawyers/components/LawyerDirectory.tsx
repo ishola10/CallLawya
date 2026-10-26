@@ -67,8 +67,12 @@ export default function LawyerDirectory({ initialPage, featured, expertise }: La
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const fromUrl = { expertise: params.get("expertise") ?? "", location: params.get("location") ?? "" };
-    if (fromUrl.expertise || fromUrl.location) setFilters({ ...DEFAULT_FILTERS, ...fromUrl });
+    const fromUrl = {
+      name: params.get("name") ?? "",
+      expertise: params.get("expertise") ?? "",
+      location: params.get("location") ?? "",
+    };
+    if (fromUrl.name || fromUrl.expertise || fromUrl.location) setFilters({ ...DEFAULT_FILTERS, ...fromUrl });
   }, []);
 
   useEffect(() => {

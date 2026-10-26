@@ -1,13 +1,29 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { appScreen, lawyerMan1, lawyerWoman1, logo } from "@/assets/images";
-import { Icon, StoreButton } from "@/components/common";
+import { Icon, JsonLd, StoreButton } from "@/components/common";
 import { ArrowRightIcon, BellIcon, CircleCheckIcon, FileLockIcon, PhoneIcon, ShieldCheckIcon, StarIcon, VideoIcon, WalletIcon, ZapIcon } from "@/assets/icons";
+import { ROUTES, STORE_LINKS } from "@/constants";
+import { SITE_NAME, SITE_URL, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Download the App",
+export const metadata: Metadata = pageMetadata({
+  title: "Download the CallLawya App",
   description:
-    "Find verified lawyers, compare transparent pricing and connect securely by call, video or chat with the CallLawya app.",
+    "Download CallLawya for Android and iOS. Find verified Nigerian lawyers, compare consultation fees and connect by call, video or chat.",
+  path: ROUTES.download,
+});
+
+const APP_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  name: SITE_NAME,
+  operatingSystem: "ANDROID, IOS",
+  applicationCategory: "BusinessApplication",
+  description: "Find verified lawyers, book consultations and connect by call, video or chat.",
+  url: `${SITE_URL}${ROUTES.download}`,
+  downloadUrl: [STORE_LINKS.googlePlay, STORE_LINKS.appStore],
+  offers: { "@type": "Offer", price: "0", priceCurrency: "NGN" },
+  publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
 const BENEFITS = [
@@ -83,6 +99,7 @@ function Notch() {
 export default function DownloadPage() {
   return (
     <div className="bg-black text-white">
+      <JsonLd data={APP_STRUCTURED_DATA} />
       <section className="page-x relative overflow-hidden bg-[#050A12] lg:min-h-[814px]">
         <div className="absolute inset-y-0 right-0 hidden w-[47%] bg-brand lg:block" />
         <div className="relative grid items-center gap-10 lg:min-h-[814px] lg:grid-cols-[.9fr_1.1fr]">

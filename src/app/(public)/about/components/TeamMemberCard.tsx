@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import { useRef } from "react";
 import { ArrowRightIcon, XIcon } from "@/assets/icons";
 import { Icon } from "@/components/common";
+import { cn } from "@/lib/utils";
 
 export type TeamMember = {
   image: StaticImageData;
@@ -17,7 +18,6 @@ export type TeamMember = {
 
 export default function TeamMemberCard({ member }: { member: TeamMember }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-
   return (
     <>
       <article
@@ -30,7 +30,7 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
               <Image
                 src={member.image}
                 alt={member.name}
-                className={`h-full w-full object-cover contrast-[1.05] grayscale ${member.imagePosition} ${member.imageZoom ?? ""}`}
+                className={cn("h-full w-full object-cover", member.imagePosition, member.imageZoom)}
                 sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
                 placeholder="blur"
               />
@@ -77,7 +77,7 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
               <Image
                 src={member.image}
                 alt=""
-                className={`h-full w-full object-cover contrast-[1.05] grayscale ${member.imagePosition} ${member.imageZoom ?? ""}`}
+                className={cn("h-full w-full object-cover", member.imagePosition, member.imageZoom)}
                 sizes="80px"
                 placeholder="blur"
               />

@@ -1,3 +1,12 @@
+import { notFound } from "next/navigation";
+
+// The News page is hidden for now and returns "page not found".
+// To restore it, delete NewsPage below and uncomment the original page underneath.
+export default function NewsPage() {
+  notFound();
+}
+
+/*
 import type { Metadata } from "next";
 import Image from "next/image";
 import {
@@ -12,11 +21,15 @@ import {
 import { NewsletterForm } from "./components";
 import { Icon } from "@/components/common";
 import { HouseIcon, LaptopIcon } from "@/assets/icons";
+import { ROUTES } from "@/constants";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Legal News",
-  description: "Reporting on law, rights and access across Africa from the CallLawya Newsroom.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Legal News & Guides",
+  description:
+    "Practical legal guides and news on property, family, business, employment and your rights from the CallLawya Newsroom.",
+  path: ROUTES.news,
+});
 
 const CATEGORIES = ["All", "Land & Property", "Family Law", "Criminal", "Business", "Human Rights", "Tech & IP"];
 
@@ -262,3 +275,4 @@ export default function NewsPage() {
     </div>
   );
 }
+*/

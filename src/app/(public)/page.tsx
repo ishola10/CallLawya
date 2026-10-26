@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { courtCorridor, lawyerWoman1, legalConsultation } from "@/assets/images";
+import { lawyerWoman1 } from "@/assets/images";
+// Used by the hidden news section: import { courtCorridor, legalConsultation } from "@/assets/images";
+// Used by the hidden news section: import { LandmarkIcon } from "@/assets/icons";
 import { CountUp, Icon, StoreButton } from "@/components/common";
 import { LawyerAvatar } from "@/components/lawyers";
 import { ROUTES } from "@/constants";
 import { getTopLawyers } from "@/services/lawyers";
-import { ArrowRightIcon, BriefcaseIcon, Building2Icon, ChartLineIcon, GavelIcon, GlobeIcon, HandshakeIcon, LandmarkIcon, LockIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserCheckIcon, WalletIcon, ZapIcon } from "@/assets/icons";
+import { ArrowRightIcon, BriefcaseIcon, Building2Icon, ChartLineIcon, GavelIcon, GlobeIcon, HandshakeIcon, LockIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserCheckIcon, WalletIcon, ZapIcon } from "@/assets/icons";
 
 const STATS = [
   { value: 10000, label: "Verified Lawyers" },
@@ -23,10 +25,20 @@ const PARTNERS = [
 ];
 
 const WHY_ITEMS = [
-  { icon: UserCheckIcon, title: "Verified Lawyers", text: "Vetted and licensed professionals." },
-  { icon: SmartphoneIcon, title: "Mobile First", text: "Advice wherever life happens." },
-  { icon: ChartLineIcon, title: "Expand Your Income", text: "Serve more clients across borders." },
-  { icon: BriefcaseIcon, title: "Specialized Expertise", text: "Property, family, business, IP and more." },
+  {
+    icon: UserCheckIcon,
+    title: "Verified Lawyers",
+    text: "Vetted and licensed professionals.",
+    href: `${ROUTES.features}#verified-lawyers`,
+  },
+  { icon: SmartphoneIcon, title: "Mobile First", text: "Advice wherever life happens.", href: ROUTES.download },
+  { icon: ChartLineIcon, title: "Expand Your Income", text: "Serve more clients across borders.", href: ROUTES.forLawyers },
+  {
+    icon: BriefcaseIcon,
+    title: "Specialized Expertise",
+    text: "Property, family, business, IP and more.",
+    href: ROUTES.lawyers,
+  },
 ];
 
 const STEPS = [
@@ -241,11 +253,26 @@ export default async function HomePage() {
           </div>
           <div data-reveal="whole" className="grid gap-px border border-slate-200 bg-slate-200 sm:grid-cols-2">
             {WHY_ITEMS.map((item) => (
-              <article key={item.title} className="bg-white p-7">
-                <Icon icon={item.icon} className="h-11 w-11 rounded-lg bg-brand-mist p-2 text-brand" />
-                <h3 className="mt-5 text-xl font-bold">{item.title}</h3>
-                <p className="mt-2 text-slate-600">{item.text}</p>
-              </article>
+              <Link
+                key={item.title}
+                href={item.href}
+                className="group relative block bg-white p-7 outline-none transition-colors duration-300 hover:bg-brand focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand"
+              >
+                <Icon
+                  icon={item.icon}
+                  className="h-11 w-11 rounded-lg bg-brand-mist p-2 text-brand transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white"
+                />
+                <Icon
+                  icon={ArrowRightIcon}
+                  className="absolute right-7 top-7 -translate-x-2 text-xl text-white opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                />
+                <h3 className="mt-5 text-xl font-bold transition-colors duration-300 group-hover:text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-slate-600 transition-colors duration-300 group-hover:text-white/80">
+                  {item.text}
+                </p>
+              </Link>
             ))}
           </div>
         </div>
@@ -315,6 +342,7 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* News section hidden for now. Uncomment to restore it.
       <section className="page-x bg-paper section-y">
         <div className="mb-8 flex items-end justify-between border-t-4 border-black pt-5">
           <h2 className="font-serif text-4xl font-bold md:text-5xl">Latest Legal News</h2>
@@ -360,6 +388,7 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+      */}
 
       <section className="page-x section-y">
         <div className="grid items-center gap-8 rounded-[20px] bg-brand p-8 text-white md:p-14 lg:grid-cols-[1.3fr_.7fr]">

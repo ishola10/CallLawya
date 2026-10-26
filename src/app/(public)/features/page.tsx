@@ -1,32 +1,208 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import type { IconComponent } from "@/assets/icons";
+import {
+  ArrowDownIcon,
+  ArrowRightIcon,
+  BadgeCheckIcon,
+  CalendarCheckIcon,
+  CheckIcon,
+  FileSearchIcon,
+  FolderKanbanIcon,
+  InfoIcon,
+  MessagesSquareIcon,
+  ReceiptTextIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+} from "@/assets/icons";
 import { legalConsultation } from "@/assets/images";
-import { ROUTES } from "@/constants";
 import { Icon } from "@/components/common";
-import { ArrowDownIcon, ArrowRightIcon, CheckIcon, LockIcon, ScaleIcon, SmartphoneIcon, SparklesIcon, TrendingUpIcon, UserRoundCheckIcon, WalletIcon } from "@/assets/icons";
+import { ROUTES } from "@/constants";
+import { pageMetadata } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Features",
   description:
-    "Verified lawyers, transparent pricing and secure, encrypted consultations — everything you need for legal access across Africa.",
+    "Verified lawyers, consultation booking, Lex AI, document review, digital consultations and case management — practical legal support tools in one place.",
+  path: ROUTES.features,
+});
+
+type Tone = "mist" | "ink" | "brand";
+
+type Feature = {
+  id: string;
+  name: string;
+  title: string;
+  icon: IconComponent;
+  paragraphs: string[];
+  listIntro?: string;
+  list?: string[];
+  note?: string;
+  tone: Tone;
+  panelLabel: string;
+  panelTitle: string;
 };
 
-const VERIFIED_CHECKS = ["Professional credentials", "Client ratings", "Practice expertise", "Country licensing"];
-
-const FEATURE_CARDS = [
-  { icon: SmartphoneIcon, title: "Mobile-First", text: "Get advice on the go without geographic limitations." },
-  { icon: ScaleIcon, title: "Specialized Expertise", text: "Property, family, business, maritime, IP and more." },
-  { icon: SparklesIcon, title: "Instant Matching", text: "Relevant available lawyers, surfaced in minutes." },
-  { icon: TrendingUpIcon, title: "Income for Lawyers", text: "Serve clients beyond physical boundaries." },
+const FEATURES: Feature[] = [
+  {
+    id: "verified-lawyers",
+    name: "Verified Legal Professionals",
+    title: "Know Who You Are Connecting With.",
+    icon: BadgeCheckIcon,
+    paragraphs: [
+      "Choosing a lawyer requires confidence in their qualifications and professional background.",
+      "CallLawya's lawyer verification process is designed to check relevant professional identity and licensing information before eligible profiles are activated.",
+      "Explore lawyer profiles to learn about their experience, areas of practice and professional background before deciding whom to contact.",
+    ],
+    tone: "mist",
+    panelLabel: "PROFILE CHECKS",
+    panelTitle: "Identity and licensing reviewed before activation.",
+  },
+  {
+    id: "consultation-booking",
+    name: "Consultation Booking",
+    title: "Book a Legal Consultation Without the Unnecessary Back-and-Forth.",
+    icon: CalendarCheckIcon,
+    paragraphs: [
+      "Finding a suitable time to speak with a lawyer should be straightforward.",
+      "Browse available appointment slots, choose your preferred time and complete the booking process through the platform.",
+      "Whether you need an initial discussion or want to arrange a follow-up, the aim is to make accessing legal professionals more convenient.",
+    ],
+    tone: "ink",
+    panelLabel: "SCHEDULING",
+    panelTitle: "Pick a slot. Confirm. Talk.",
+  },
+  {
+    id: "lex-ai",
+    name: "Lex AI",
+    title: "Meet Lex AI: A Smarter Starting Point for Legal Questions.",
+    icon: SparklesIcon,
+    paragraphs: [
+      "Legal language can be difficult to understand, particularly when you are already dealing with a stressful situation.",
+      "Lex AI is designed to help users explore legal information, organise their thoughts and better understand the questions they may need to ask.",
+    ],
+    listIntro: "Use Lex AI to:",
+    list: [
+      "Explore general legal information.",
+      "Summarise or clarify unfamiliar legal terminology.",
+      "Organise the facts of a situation.",
+      "Prepare questions for a consultation.",
+      "Identify issues that may require professional legal attention.",
+    ],
+    note: "Lex AI is intended to support access to legal information, not replace a qualified lawyer. Its responses may require verification, particularly where the law depends on your location or the specific facts of your case.",
+    tone: "brand",
+    panelLabel: "LEX AI",
+    panelTitle: "A starting point for your legal questions.",
+  },
+  {
+    id: "document-review",
+    name: "Legal Document Review",
+    title: "Understand the Document Before You Sign.",
+    icon: FileSearchIcon,
+    paragraphs: [
+      "Contracts and other legal documents can contain obligations, conditions and risks that are easy to overlook.",
+      "CallLawya's document-review tools are intended to help users examine documents, understand important clauses and identify questions that may need further attention.",
+    ],
+    listIntro: "Potential uses include:",
+    list: [
+      "Reviewing rental and tenancy agreements.",
+      "Understanding employment contracts.",
+      "Examining business agreements.",
+      "Identifying important dates, obligations and termination provisions.",
+      "Preparing questions for a lawyer.",
+    ],
+    note: "AI-assisted document review is preliminary assistance. It is not a substitute for a lawyer's review, particularly for high-value transactions, litigation or legally binding decisions.",
+    tone: "mist",
+    panelLabel: "DOCUMENT REVIEW",
+    panelTitle: "Clauses, dates and obligations, highlighted.",
+  },
+  {
+    id: "digital-consultations",
+    name: "Digital Consultations",
+    title: "Speak to a Lawyer in a Way That Works for You.",
+    icon: MessagesSquareIcon,
+    paragraphs: [
+      "Connect with legal professionals through the consultation formats supported by CallLawya.",
+      "Depending on the service available, users can choose voice calls, video consultations or chat to discuss their concerns.",
+      "Digital consultations can make it easier to seek guidance without always needing to arrange an in-person meeting.",
+    ],
+    tone: "ink",
+    panelLabel: "CALL · VIDEO · CHAT",
+    panelTitle: "Legal guidance without the commute.",
+  },
+  {
+    id: "case-management",
+    name: "Case Management",
+    title: "Keep Your Legal Matters Organised.",
+    icon: FolderKanbanIcon,
+    paragraphs: [
+      "When dealing with a legal issue, it can be difficult to keep track of conversations, documents, appointments and next steps.",
+      "CallLawya's case-management experience is designed to help users organise their legal matters in one place.",
+    ],
+    listIntro: "Depending on the functionality enabled, this may include:",
+    list: [
+      "Viewing active and completed matters.",
+      "Tracking case progress and status updates.",
+      "Keeping relevant documents organised.",
+      "Reviewing upcoming consultations.",
+      "Following up on agreed next steps.",
+    ],
+    note: "Case-management tools help organise information but do not guarantee the outcome or resolution time of a legal matter.",
+    tone: "brand",
+    panelLabel: "CASE MANAGEMENT",
+    panelTitle: "Every matter and next step in one place.",
+  },
+  {
+    id: "transparent-pricing",
+    name: "Transparent Consultation Options",
+    title: "Understand the Cost Before You Commit.",
+    icon: ReceiptTextIcon,
+    paragraphs: [
+      "Legal costs are an important consideration when choosing professional support.",
+      "CallLawya aims to make consultation information clearer by presenting relevant fees and service details before users commit to a booking.",
+      "Review the consultation price, format and scope of service so you can make a more informed decision.",
+    ],
+    tone: "mist",
+    panelLabel: "BEFORE YOU BOOK",
+    panelTitle: "Price, format and scope, upfront.",
+  },
+  {
+    id: "secure-communication",
+    name: "Secure Communication",
+    title: "Your Legal Conversations Deserve Care.",
+    icon: ShieldCheckIcon,
+    paragraphs: [
+      "Legal matters can involve personal, financial or commercially sensitive information.",
+      "Our commitment is to make privacy and security an essential part of the user experience.",
+    ],
+    tone: "ink",
+    panelLabel: "PRIVACY",
+    panelTitle: "Care for every conversation.",
+  },
 ];
 
-const COMPARISON = [
-  { label: "Time to connect", us: "Minutes", them: "Days or weeks" },
-  { label: "Pricing visibility", us: "Upfront", them: "Often unclear" },
-  { label: "Access format", us: "Call, video & chat", them: "Mostly in-person" },
-  { label: "Geographic reach", us: "Africa-wide", them: "Office location" },
-];
+const PANEL_TONES: Record<Tone, { panel: string; tile: string; label: string; title: string }> = {
+  mist: { panel: "bg-brand-mist", tile: "bg-white text-brand shadow-sm", label: "text-brand", title: "text-navy" },
+  ink: { panel: "bg-ink", tile: "bg-white/10 text-gold", label: "text-white/50", title: "text-white" },
+  brand: { panel: "bg-brand", tile: "bg-white/15 text-white", label: "text-white/70", title: "text-white" },
+};
+
+function FeaturePanel({ feature }: { feature: Feature }) {
+  const tone = PANEL_TONES[feature.tone];
+  return (
+    <div className={cn("flex min-h-[260px] flex-col justify-between rounded-xl p-8 md:min-h-[320px]", tone.panel)}>
+      <Icon icon={feature.icon} className={cn("h-16 w-16 rounded-2xl p-3.5", tone.tile)} />
+      <div>
+        <p className={cn("text-xs font-bold tracking-widest", tone.label)}>{feature.panelLabel}</p>
+        <p className={cn("mt-2 font-serif text-3xl font-bold leading-tight md:text-4xl", tone.title)}>
+          {feature.panelTitle}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function FeaturesPage() {
   return (
@@ -34,190 +210,123 @@ export default function FeaturesPage() {
       <section className="page-x bg-ink section-y text-white lg:min-h-[610px]">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
           <div>
-            <p className="eyebrow text-brand-light">One platform. Every legal need.</p>
-            <h1 className="mt-5 font-serif text-[40px] sm:text-5xl font-bold leading-none md:text-6xl xl:text-[70px]">
-              Everything You Need for Legal Access
+            <p className="eyebrow text-brand-light">One platform. Every legal step.</p>
+            <h1 className="mt-5 font-serif text-[40px] font-bold leading-none sm:text-5xl md:text-6xl xl:text-[66px]">
+              Everything You Need to Take the Next Legal Step.
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-8 text-white/65 md:text-xl">
-              From first question to final resolution, CallLawya puts verified expertise, transparent pricing and
-              secure communication in your hands.
+              From finding a lawyer to understanding documents and managing consultations, CallLawya brings practical
+              legal support tools together in one place.
             </p>
             <a
               href="#tools"
               className="press mt-9 inline-block rounded-md bg-brand px-8 py-4 text-lg font-bold hover:bg-brand-hover"
             >
-              Explore the platform <Icon icon={ArrowDownIcon} className="ml-2" />
+              Explore the features <Icon icon={ArrowDownIcon} className="ml-2" />
             </a>
           </div>
           <div className="relative mb-7 h-[320px] md:h-[430px] lg:mb-0">
             <Image
               src={legalConsultation}
-              alt="African legal team"
+              alt="Legal professionals in a consultation"
               className="h-full w-full rounded-xl object-cover"
               sizes="(min-width: 1024px) 50vw, 100vw"
               placeholder="blur"
               preload
             />
             <div className="absolute -bottom-7 left-4 w-64 border-t-4 border-gold bg-white p-6 text-navy shadow-xl lg:-left-7">
-              <p className="font-serif text-3xl font-bold">8 core tools</p>
-              <p className="mt-1 text-sm text-slate-500">One seamless legal journey</p>
+              <p className="font-serif text-3xl font-bold">{FEATURES.length} core tools</p>
+              <p className="mt-1 text-sm text-slate-500">One connected legal journey</p>
             </div>
           </div>
         </div>
       </section>
 
       <section id="tools" className="page-x section-y">
-        <div className="mb-12 flex flex-col gap-4 border-t-4 border-black pt-5 md:flex-row md:justify-between">
-          <h2 className="font-serif text-4xl font-bold md:text-5xl">Built around trust.</h2>
+        <div className="flex flex-col gap-4 border-t-4 border-black pt-5 md:flex-row md:items-end md:justify-between">
+          <h2 className="font-serif text-4xl font-bold md:text-5xl">Practical tools for every step.</h2>
           <p className="max-w-md text-slate-600">
-            Every feature reduces friction between a legal problem and the right professional.
+            Find the right professional, prepare with confidence and keep your legal matters on track.
           </p>
         </div>
-        <div className="border-y border-slate-200">
-          <article className="grid items-center gap-10 border-b border-slate-200 py-10 lg:py-12 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
-            <div className="relative flex h-[280px] items-center justify-center rounded-xl bg-brand-mist md:h-[320px]">
-              <Icon icon={UserRoundCheckIcon} strokeWidth={1.1} className="text-[90px] text-brand md:text-[110px]" />
-              <span className="absolute left-5 top-5 bg-white px-3 py-2 text-xs font-bold">
-                IDENTITY + LICENSE CHECKED
-              </span>
-            </div>
-            <div>
-              <span className="text-xs font-bold tracking-widest text-brand">01 / CONFIDENCE</span>
-              <h3 className="mt-3 font-serif text-4xl font-bold">Verified Lawyers</h3>
-              <p className="mt-4 text-lg leading-8 text-slate-600">
-                Access thoroughly vetted and licensed lawyers across Africa. Profiles show experience, areas of
-                practice, location and verified client feedback before you connect.
-              </p>
-              <div className="mt-7 grid gap-4 text-sm font-semibold sm:grid-cols-2">
-                {VERIFIED_CHECKS.map((check) => (
-                  <p key={check}>
-                    <Icon icon={CheckIcon} className="mr-2 text-brand" />
-                    {check}
+        <nav aria-label="Features on this page" className="mt-8 flex flex-wrap gap-2">
+          {FEATURES.map((feature) => (
+            <a
+              key={feature.id}
+              href={`#${feature.id}`}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
+            >
+              <Icon icon={feature.icon} className="text-brand" />
+              {feature.name}
+            </a>
+          ))}
+        </nav>
+
+        <div className="mt-10 border-y border-slate-200">
+          {FEATURES.map((feature, index) => (
+            <article
+              key={feature.id}
+              id={feature.id}
+              className={cn(
+                "grid items-center gap-10 border-b border-slate-200 py-10 last:border-b-0 lg:gap-16 lg:py-12",
+                index % 2 === 0 ? "lg:grid-cols-[.8fr_1.2fr]" : "lg:grid-cols-[1.2fr_.8fr]",
+              )}
+            >
+              <div className={cn(index % 2 === 1 && "lg:order-2")}>
+                <FeaturePanel feature={feature} />
+              </div>
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest text-brand">
+                  {String(index + 1).padStart(2, "0")} / {feature.name}
+                </span>
+                <h3 className="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">{feature.title}</h3>
+                <div className="mt-4 space-y-4 text-lg leading-8 text-slate-600">
+                  {feature.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                {feature.list && (
+                  <>
+                    <p className="mt-6 font-bold">{feature.listIntro}</p>
+                    <ul className="mt-3 grid gap-3 text-slate-700 sm:grid-cols-2">
+                      {feature.list.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <Icon icon={CheckIcon} className="mt-1 text-brand" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {feature.note && (
+                  <p className="mt-6 flex gap-3 rounded-lg border border-slate-200 bg-paper p-4 text-sm leading-6 text-slate-600">
+                    <Icon icon={InfoIcon} className="mt-0.5 text-base text-brand" />
+                    <span>{feature.note}</span>
                   </p>
-                ))}
+                )}
               </div>
-            </div>
-          </article>
-
-          <article className="grid items-center gap-10 border-b border-slate-200 py-10 lg:py-12 lg:grid-cols-[1.25fr_.75fr] lg:gap-16">
-            <div className="order-2 lg:order-1">
-              <span className="text-xs font-bold tracking-widest text-brand">02 / ACCESS</span>
-              <h3 className="mt-3 font-serif text-4xl font-bold">Affordable, transparent pricing</h3>
-              <p className="mt-4 text-lg leading-8 text-slate-600">
-                Compare options before committing. Choose the consultation format and lawyer that fit your need and
-                budget — with no hidden surprises.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <div className="rounded-lg border border-slate-200 p-5">
-                  <p className="text-xs text-slate-500">CHAT CONSULTATION</p>
-                  <strong className="text-2xl">From $12</strong>
-                </div>
-                <div className="rounded-lg border border-slate-200 p-5">
-                  <p className="text-xs text-slate-500">VIDEO CONSULTATION</p>
-                  <strong className="text-2xl">From $25</strong>
-                </div>
-              </div>
-            </div>
-            <div className="order-1 flex h-[280px] flex-col justify-between rounded-xl bg-ink p-8 text-white md:h-[320px] lg:order-2">
-              <Icon icon={WalletIcon} className="h-14 w-14 rounded-xl bg-white/10 p-3 text-gold" />
-              <div>
-                <p className="text-xs text-white/50">PRICE VISIBILITY</p>
-                <p className="mt-2 font-serif text-4xl font-bold">Know before you connect.</p>
-              </div>
-            </div>
-          </article>
-
-          <article
-            id="secure"
-            className="grid items-center gap-10 border-b border-slate-200 py-10 lg:py-12 lg:grid-cols-[.75fr_1.25fr] lg:gap-16"
-          >
-            <div className="flex h-[280px] flex-col justify-between rounded-xl bg-brand p-8 text-white md:h-[320px]">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40">
-                <Icon icon={LockIcon} className="text-2xl" />
-              </div>
-              <div>
-                <p className="text-sm text-white/60">SECURE SESSION</p>
-                <div className="mt-3 h-2 rounded-full bg-white/20">
-                  <div className="h-full w-4/5 rounded-full bg-white" />
-                </div>
-                <p className="mt-3 text-xs text-white/60">End-to-end encrypted</p>
-              </div>
-            </div>
-            <div>
-              <span className="text-xs font-bold tracking-widest text-brand">03 / PRIVACY</span>
-              <h3 className="mt-3 font-serif text-4xl font-bold">Secure & encrypted</h3>
-              <p className="mt-4 text-lg leading-8 text-slate-600">
-                Your legal conversations deserve the highest level of privacy. Calls, video sessions and messages are
-                protected so you can speak openly with confidence.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="page-x bg-paper section-y">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURE_CARDS.map((card) => (
-            <article key={card.title} className="lift rounded-xl bg-white p-7">
-              <Icon icon={card.icon} className="h-12 w-12 rounded-xl bg-brand-mist p-2.5 text-brand" />
-              <h3 className="mt-8 text-xl font-bold">{card.title}</h3>
-              <p className="mt-3 leading-7 text-slate-600">{card.text}</p>
             </article>
           ))}
-        </div>
-        <article className="mt-5 grid items-center gap-6 rounded-xl bg-navy p-9 text-white lg:grid-cols-[1fr_auto]">
-          <div>
-            <p className="text-xs font-bold tracking-widest text-brand-light">AFRICA-WIDE COVERAGE</p>
-            <h3 className="mt-2 font-serif text-3xl font-bold md:text-4xl">Local legal context. Continental reach.</h3>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            {["NG", "GH", "KE", "ZA"].map((code) => (
-              <span
-                key={code}
-                className="flex h-14 w-14 items-center justify-center rounded-full border border-white/25 font-bold"
-              >
-                {code}
-              </span>
-            ))}
-            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand font-bold">50+</span>
-          </div>
-        </article>
-      </section>
-
-      <section className="page-x bg-white section-y">
-        <h2 className="font-serif text-4xl font-bold md:text-5xl">A clearer way forward.</h2>
-        <div className="mt-9 overflow-x-auto rounded-xl border border-slate-200">
-          <div className="min-w-[560px]">
-            <div className="grid grid-cols-[1.4fr_1fr_1fr] bg-ink font-bold text-white">
-              <div className="p-5">Experience</div>
-              <div className="bg-brand p-5">CallLawya</div>
-              <div className="p-5">Traditional Law Firms</div>
-            </div>
-            {COMPARISON.map((row, index) => (
-              <div
-                key={row.label}
-                className={`grid grid-cols-[1.4fr_1fr_1fr] ${index % 2 === 1 ? "bg-slate-50" : ""} ${
-                  index < COMPARISON.length - 1 ? "border-b border-slate-200" : ""
-                }`}
-              >
-                <div className="p-5 font-semibold">{row.label}</div>
-                <div className="p-5 font-bold text-brand">{row.us}</div>
-                <div className="p-5 text-slate-500">{row.them}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
       <section className="page-x pb-12 lg:pb-14">
-        <div className="flex flex-col gap-6 rounded-xl bg-brand p-8 text-white md:flex-row md:items-center md:justify-between md:p-12">
-          <div>
-            <h2 className="font-serif text-4xl font-bold">Legal access starts here.</h2>
-            <p className="mt-2 text-white/70">Find the right lawyer for your situation today.</p>
+        <div className="flex flex-col gap-8 rounded-xl bg-brand p-8 text-white md:p-12 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <h2 className="font-serif text-4xl font-bold md:text-5xl">Legal Assistance. Anywhere. Anytime.</h2>
+            <p className="mt-4 text-lg leading-8 text-white/75">
+              Explore CallLawya and discover a more convenient way to find legal professionals, prepare for
+              consultations and organise your legal journey.
+            </p>
           </div>
-          <Link href={ROUTES.lawyers} className="press self-start rounded-md bg-black px-8 py-4 font-bold md:self-auto">
-            Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-2" />
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link href={ROUTES.lawyers} className="press rounded-md bg-black px-8 py-4 font-bold">
+              Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-2" />
+            </Link>
+            <Link href={ROUTES.download} className="press rounded-md border border-white px-8 py-4 font-bold">
+              Get the app
+            </Link>
+          </div>
         </div>
       </section>
     </div>

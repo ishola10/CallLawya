@@ -13,9 +13,10 @@ import {
   StarIcon,
   VideoIcon,
 } from "@/assets/icons";
-import { Icon, StoreButton } from "@/components/common";
+import { Icon, JsonLd, StoreButton } from "@/components/common";
 import { BookButton, LawyerAvatar, LawyerFee, LawyerRating } from "@/components/lawyers";
 import { ROUTES } from "@/constants";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 import { getLawyer } from "@/services/lawyers";
 
 export const revalidate = 300;
@@ -31,16 +32,57 @@ const loadLawyer = cache(async (id: string) => (UUID_PATTERN.test(id) ? getLawye
 type PageProps = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const lawyer = await loadLawyer((await params).id);
-  if (!lawyer) return { title: "Lawyer not found" };
-  const practice = lawyer.expertiseAreas.slice(0, 2).join(" & ") || "Legal services";
-  return {
-    title: `${lawyer.name} — ${practice}`,
-    description:
-      lawyer.bio?.slice(0, 155) ??
-      `Book a consultation with ${lawyer.name}${lawyer.location ? ` in ${lawyer.location}` : ""} on CallLawya.`,
-    openGraph: lawyer.avatar ? { images: [lawyer.avatar] } : undefined,
-  };
+  const { id } = await params;
+  const lawyer = await loadLawyer(id);
+  if (!lawyer) return { title: "Lawyer not found", robots: { index: false, follow: true } };
+  const practice = lawyer.expertiseAreas.slice(0, 2).join(" & ") || "Lawyer";
+  const place = lawyer.location ? ` in ${lawyer.location}` : "";
+  return pageMetadata({
+    title: `${lawyer.name} — ${practice}${place}`,
+    description: truncate(
+      lawyer.bio
+        ? `${lawyer.bio} Book a consultation with ${lawyer.name} on CallLawya.`
+        : `Book a consultation with ${lawyer.name}, a verified lawyer${place}, on CallLawya.`,
+      158,
+    ),
+    path: `${ROUTES.lawyers}/${id}`,
+  });
+}
+
+function truncate(text: string, max: number) {
+  return text.length <= max ? text : `${text.slice(0, max - 1).trimEnd()}…`;
+}
+
+function lawyerStructuredData(lawyer: NonNullable<Awaited<ReturnType<typeof loadLawyer>>>) {
+  const url = absoluteUrl(`${ROUTES.lawyers}/${lawyer.id}`);
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      url,
+      mainEntity: {
+        "@type": "Person",
+        name: lawyer.name,
+        jobTitle: "Lawyer",
+        url,
+        ...(lawyer.avatar ? { image: lawyer.avatar } : {}),
+        ...(lawyer.bio ? { description: lawyer.bio } : {}),
+        ...(lawyer.expertiseAreas.length ? { knowsAbout: lawyer.expertiseAreas } : {}),
+        ...(lawyer.location
+          ? { address: { "@type": "PostalAddress", addressLocality: lawyer.location, addressCountry: "NG" } }
+          : {}),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+        { "@type": "ListItem", position: 2, name: "Lawyers", item: absoluteUrl(ROUTES.lawyers) },
+        { "@type": "ListItem", position: 3, name: lawyer.name, item: url },
+      ],
+    },
+  ];
 }
 
 const reviewDate = new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" });
@@ -53,6 +95,7 @@ export default async function LawyerProfilePage({ params }: PageProps) {
 
   return (
     <div className="bg-paper">
+      <JsonLd data={lawyerStructuredData(lawyer)} />
       <section className="page-x bg-ink pb-12 pt-8 text-white lg:pb-14">
         <Link href={ROUTES.lawyers} className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white">
           <Icon icon={ArrowLeftIcon} /> All lawyers
