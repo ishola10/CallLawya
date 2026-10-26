@@ -25,7 +25,7 @@ His mission is to leverage technology and innovation to solve real-world challen
   {
     image: teamIfunanyaDike,
     imagePosition: "object-top",
-    name: "Ifunanya Dike, Esq.",
+    name: "Ifunanya Dike Esq.",
     role: "BOARD MEMBER / DIRECTOR",
     credentials: "LLB",
     bio: "Ifunanya is a Nigerian-qualified Barrister and Solicitor with a UK Master’s degree in Intellectual Property and Information Technology Law. Her legal expertise encompasses contract drafting and review, legal research and advisory, and corporate and commercial documentation. Combining strong legal analytical skills with an international outlook, she is committed to delivering practical, commercially sound legal solutions that protect clients’ interests and support business growth. Through CallLawya, she aims to contribute to accessible, professional legal services for individuals, businesses, and organisations in Nigeria and internationally, particularly in corporate, commercial, and cross-border legal matters.",
@@ -33,7 +33,7 @@ His mission is to leverage technology and innovation to solve real-world challen
   {
     image: teamAlexanderOmini,
     imagePosition: "object-top",
-    name: "Alexander Omini, Esq.",
+    name: "Alexander Omini Esq.",
     role: "BOARD MEMBER / DIRECTOR",
     credentials: "LLB, BL, FSS, USIP",
     bio: "Alexander supports the board with legal and governance expertise, helping CallLawya grow responsibly and keep trust at the centre of every consultation.",

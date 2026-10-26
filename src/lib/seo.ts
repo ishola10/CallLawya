@@ -4,7 +4,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://calllawya.
 export const SITE_NAME = "CallLawya";
 export const DEFAULT_TITLE = "CallLawya | Find Verified Lawyers & Book Legal Consultations in Nigeria";
 export const DEFAULT_DESCRIPTION =
-  "Find verified Nigerian lawyers, compare consultation fees and book call, video or chat consultations on CallLawya. Prepare with Lex AI and keep your legal matters organised.";
+  "Find verified Nigerian lawyers, compare consultation fees and book call or chat consultations on CallLawya. Prepare with Lex AI and keep your legal matters organised.";
 
 export const SEO_KEYWORDS = [
   "CallLawya",

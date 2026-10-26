@@ -60,7 +60,7 @@ const SECTIONS: LegalSection[] = [
           </li>
           <li>
             <strong>Consultations and communications:</strong> bookings, messages, files and documents you share,
-            records of calls and video sessions (such as time and duration), reviews and ratings, and messages you
+            records of calls (such as time and duration), reviews and ratings, and messages you
             send to our support team.
           </li>
           <li>
@@ -101,7 +101,7 @@ const SECTIONS: LegalSection[] = [
       <ul>
         <li>To create and manage your account and keep it secure.</li>
         <li>To verify lawyers before their profiles are activated, and to keep the directory accurate.</li>
-        <li>To help you find lawyers, book consultations and communicate by call, video or chat.</li>
+        <li>To help you find lawyers, book consultations and communicate by call or chat.</li>
         <li>To process payments, invoices, refunds and lawyer payouts.</li>
         <li>To provide Lex AI and document-review features.</li>
         <li>To send service messages, booking updates and notifications.</li>

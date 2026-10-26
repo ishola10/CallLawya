@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { appScreen, lawyerMan1, lawyerWoman1, logo } from "@/assets/images";
 import { Icon, JsonLd, StoreButton } from "@/components/common";
-import { ArrowRightIcon, BellIcon, CircleCheckIcon, FileLockIcon, PhoneIcon, ShieldCheckIcon, StarIcon, VideoIcon, WalletIcon, ZapIcon } from "@/assets/icons";
+import { ArrowRightIcon, BellIcon, CircleCheckIcon, FileLockIcon, PhoneIcon, MessageCircleIcon, ShieldCheckIcon, StarIcon, WalletIcon, ZapIcon } from "@/assets/icons";
 import { ROUTES, STORE_LINKS } from "@/constants";
 import { SITE_NAME, SITE_URL, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Download the CallLawya App",
   description:
-    "Download CallLawya for Android and iOS. Find verified Nigerian lawyers, compare consultation fees and connect by call, video or chat.",
+    "Download CallLawya for Android and iOS. Find verified Nigerian lawyers, compare consultation fees and connect by call or chat.",
   path: ROUTES.download,
 });
 
@@ -19,7 +19,7 @@ const APP_STRUCTURED_DATA = {
   name: SITE_NAME,
   operatingSystem: "ANDROID, IOS",
   applicationCategory: "BusinessApplication",
-  description: "Find verified lawyers, book consultations and connect by call, video or chat.",
+  description: "Find verified lawyers, book consultations and connect by call or chat.",
   url: `${SITE_URL}${ROUTES.download}`,
   downloadUrl: [STORE_LINKS.googlePlay, STORE_LINKS.appStore],
   offers: { "@type": "Offer", price: "0", priceCurrency: "NGN" },
@@ -28,7 +28,7 @@ const APP_STRUCTURED_DATA = {
 
 const BENEFITS = [
   { icon: ZapIcon, title: "Instant Matching", text: "See relevant, available lawyers based on your legal issue." },
-  { icon: VideoIcon, title: "Call, Video or Chat", text: "Choose the secure consultation format that works for you." },
+  { icon: MessageCircleIcon, title: "Call or Chat", text: "Choose the consultation format that works for you." },
   { icon: WalletIcon, title: "Clear Pricing", text: "Understand consultation prices before you connect." },
   {
     icon: FileLockIcon,
@@ -109,7 +109,7 @@ export default function DownloadPage() {
               Your lawyer is closer than you think.
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-8 text-white/65 md:text-xl">
-              Find verified lawyers, compare transparent pricing and connect securely by call, video or chat — wherever
+              Find verified lawyers, compare transparent pricing and connect securely by call or chat — wherever
               life happens.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
@@ -174,9 +174,6 @@ export default function DownloadPage() {
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/75 to-transparent p-5 pb-12">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-green-500">
                     <Icon icon={PhoneIcon} />
-                  </span>
-                  <span className="ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand">
-                    <Icon icon={VideoIcon} />
                   </span>
                   <p className="mt-3 text-xs text-white/70">Secure consultation in progress</p>
                 </div>

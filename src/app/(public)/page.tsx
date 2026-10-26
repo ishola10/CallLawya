@@ -52,7 +52,7 @@ const STEPS = [
   },
   {
     title: "Connect & Resolve",
-    text: "Connect securely by call, video or chat and move forward with confidence.",
+    text: "Connect securely by call or chat and move forward with confidence.",
   },
 ];
 
@@ -68,7 +68,7 @@ export default async function HomePage() {
         className="page-x flex min-h-[34px] items-center gap-4 bg-brand py-2 text-xs font-bold tracking-wide text-white"
       >
         <span className="shrink-0 bg-white px-2 py-1 text-brand">LEGAL ACCESS</span>
-        <span>Now serving clients and lawyers across Africa — call, video or chat in minutes.</span>
+        <span>Now serving clients and lawyers across Africa — call or chat in minutes.</span>
         <Icon icon={ArrowRightIcon} className="ml-auto" />
       </Link>
 
@@ -135,7 +135,7 @@ export default async function HomePage() {
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-7">
                 <span className="bg-brand px-2 py-1 text-xs font-bold">VERIFIED LAWYER</span>
                 <h3 className="mt-3 font-serif text-3xl">Counsel in your corner.</h3>
-                <p className="mt-2 text-white/70">Speak privately by voice, video or chat.</p>
+                <p className="mt-2 text-white/70">Speak privately by call or chat.</p>
               </div>
             </div>
             <div className="absolute left-0 top-[110px] w-[210px] rounded-xl sm:w-[245px] border-t-4 border-brand bg-white p-5 text-navy shadow-2xl">

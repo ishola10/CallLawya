@@ -125,11 +125,11 @@ const FEATURES: Feature[] = [
     icon: MessagesSquareIcon,
     paragraphs: [
       "Connect with legal professionals through the consultation formats supported by CallLawya.",
-      "Depending on the service available, users can choose voice calls, video consultations or chat to discuss their concerns.",
+      "Depending on the service available, users can choose voice calls or chat to discuss their concerns.",
       "Digital consultations can make it easier to seek guidance without always needing to arrange an in-person meeting.",
     ],
     tone: "ink",
-    panelLabel: "CALL · VIDEO · CHAT",
+    panelLabel: "CALL · CHAT",
     panelTitle: "Legal guidance without the commute.",
   },
   {

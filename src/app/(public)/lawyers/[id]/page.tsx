@@ -11,7 +11,6 @@ import {
   PhoneIcon,
   ShieldCheckIcon,
   StarIcon,
-  VideoIcon,
 } from "@/assets/icons";
 import { Icon, JsonLd, StoreButton } from "@/components/common";
 import { BookButton, LawyerAvatar, LawyerFee, LawyerRating } from "@/components/lawyers";
@@ -220,10 +219,9 @@ export default async function LawyerProfilePage({ params }: PageProps) {
               <div className="mt-2 text-2xl">
                 <LawyerFee fee={lawyer.fee} />
               </div>
-              <div className="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold">
+              <div className="mt-6 grid grid-cols-2 gap-2 text-center text-xs font-semibold">
                 {[
                   { icon: PhoneIcon, label: "Call" },
-                  { icon: VideoIcon, label: "Video" },
                   { icon: MessageCircleIcon, label: "Chat" },
                 ].map((mode) => (
                   <div key={mode.label} className="rounded bg-paper py-4">
