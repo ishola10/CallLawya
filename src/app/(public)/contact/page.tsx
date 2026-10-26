@@ -3,14 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { officeCity } from "@/assets/images";
 import { CONTACT_EMAILS, ROUTES, SOCIAL_LINKS } from "@/constants";
+import { pageMetadata } from "@/lib/seo";
 import { Icon } from "@/components/common";
 import { ContactForm } from "./components";
 import { ArrowRightIcon, DotIcon, HeadsetIcon, MapPinIcon, MessageCircleMoreIcon, NewspaperIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserIcon } from "@/assets/icons";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Questions about the platform, partnerships or support? Get in touch with the CallLawya team.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Contact Us",
+  description:
+    "Questions about CallLawya, lawyer onboarding, partnerships or support? Contact the CallLawya team and we will direct your message to the right person.",
+  path: ROUTES.contact,
+});
 
 const CHANNELS = [
   { icon: HeadsetIcon, label: "CLIENT SUPPORT", email: CONTACT_EMAILS.support },
@@ -21,7 +24,7 @@ const CHANNELS = [
 const QUICK_HELP = [
   { icon: UserIcon, title: "For clients", text: "Matching, consultations and payments.", href: ROUTES.howItWorks },
   { icon: ScaleIcon, title: "For lawyers", text: "Verification, clients and earnings.", href: ROUTES.forLawyers },
-  { icon: ShieldCheckIcon, title: "Privacy & security", text: "How your information is protected.", href: `${ROUTES.features}#secure` },
+  { icon: ShieldCheckIcon, title: "Privacy & security", text: "How your information is protected.", href: `${ROUTES.features}#secure-communication` },
   { icon: SmartphoneIcon, title: "Using the app", text: "Downloads, access and troubleshooting.", href: ROUTES.download },
 ];
 
@@ -67,7 +70,14 @@ export default function ContactPage() {
               </div>
               <div className="mt-8 flex gap-5 border-t border-white/25 pt-6 text-xl">
                 {SOCIAL_LINKS.map((social) => (
-                  <a key={social.label} href={social.href} aria-label={social.label} className="hover:text-white/70">
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`CallLawya on ${social.label}`}
+                    className="hover:text-white/70"
+                  >
                     <Icon icon={social.icon} />
                   </a>
                 ))}

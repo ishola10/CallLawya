@@ -18,16 +18,16 @@ const FOOTER_COLUMNS = [
     title: "Company",
     links: [
       { label: "About", href: ROUTES.about },
-      { label: "News", href: ROUTES.news },
+      // { label: "News", href: ROUTES.news },
       { label: "Contact", href: ROUTES.contact },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-      { label: "Security", href: `${ROUTES.features}#secure` },
+      { label: "Privacy", href: ROUTES.privacy },
+      { label: "Terms", href: ROUTES.terms },
+      { label: "Security", href: ROUTES.security },
     ],
   },
   {
@@ -48,9 +48,17 @@ export default function SiteFooter() {
           <p className="mt-5 max-w-xs text-white/50">
             Democratising Africa&apos;s legal system. Justice should not be a privilege.
           </p>
-          <div className="mt-6 flex gap-4 text-xl">
+          <p className="mt-6 text-xs font-bold uppercase tracking-widest text-white/40">Follow our social media pages</p>
+          <div className="mt-3 flex gap-4 text-xl">
             {SOCIAL_LINKS.map((social) => (
-              <a key={social.label} href={social.href} aria-label={social.label} className="hover:text-brand-light">
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`CallLawya on ${social.label}`}
+                className="hover:text-brand-light"
+              >
                 <Icon icon={social.icon} />
               </a>
             ))}

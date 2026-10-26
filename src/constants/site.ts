@@ -4,7 +4,7 @@ export const NAV_LINKS = [
   { label: "Features", href: "/features" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Lawyers Directory", href: "/lawyers" },
-  { label: "News", href: "/news" },
+  // { label: "News", href: "/news" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -19,6 +19,9 @@ export const ROUTES = {
   about: "/about",
   contact: "/contact",
   download: "/download",
+  privacy: "/privacy",
+  terms: "/terms",
+  security: "/security",
 } as const;
 
 export const CONTACT_EMAILS = {
@@ -38,8 +41,12 @@ export const MOBILE_APP = {
 } as const;
 
 export const SOCIAL_LINKS = [
-  { label: "LinkedIn", icon: LinkedinIcon, href: "#" },
-  { label: "X (Twitter)", icon: XTwitterIcon, href: "#" },
-  { label: "Instagram", icon: InstagramIcon, href: "#" },
-  { label: "Facebook", icon: FacebookIcon, href: "#" },
+  {
+    label: "LinkedIn",
+    icon: LinkedinIcon,
+    href: "https://www.linkedin.com/posts/calllawya_calllawya-accesstolegalservices-lawyersinnigeria-activity-7434582787774382080-Nfao",
+  },
+  { label: "X (Twitter)", icon: XTwitterIcon, href: "https://x.com/i/status/2030304431779021035" },
+  { label: "Instagram", icon: InstagramIcon, href: "https://www.instagram.com/p/DVbES6pDIOJ/?igsh=MXNrZ2Fhdnc0dnBobw==" },
+  { label: "Facebook", icon: FacebookIcon, href: "https://www.facebook.com/share/p/1bdmDsv3Lv/" },
 ] as const;

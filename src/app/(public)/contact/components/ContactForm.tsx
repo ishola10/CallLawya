@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { ROUTES } from "@/constants";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CONTACT_SUBJECTS, contactFormSchema } from "@/lib/validations";
@@ -112,7 +114,13 @@ export default function ContactForm() {
       </label>
       <label className="mt-5 flex items-start gap-3 text-sm text-slate-500">
         <input type="checkbox" className="mt-1 accent-brand" {...register("consent")} />
-        I agree that CallLawya may use this information to respond to my enquiry.
+        <span>
+          I agree that CallLawya may use this information to respond to my enquiry, as described in our{" "}
+          <Link href={ROUTES.privacy} className="font-semibold text-brand underline underline-offset-2">
+            Privacy Policy
+          </Link>
+          .
+        </span>
       </label>
       <FieldError message={errors.consent?.message} />
       <button

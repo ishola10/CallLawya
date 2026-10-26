@@ -89,6 +89,27 @@
   .section-y {
     @apply py-12 lg:py-14;
   }
+  .legal-prose p {
+    @apply mt-4 leading-8 text-slate-600;
+  }
+  .legal-prose ul {
+    @apply mt-4 list-disc space-y-2 pl-6 text-slate-600;
+  }
+  .legal-prose li {
+    @apply pl-1 leading-7;
+  }
+  .legal-prose li::marker {
+    @apply text-brand;
+  }
+  .legal-prose h3 {
+    @apply mt-7 text-lg font-bold text-navy;
+  }
+  .legal-prose strong {
+    @apply font-semibold text-navy;
+  }
+  .legal-prose a {
+    @apply font-semibold text-brand underline underline-offset-2 hover:text-brand-hover;
+  }
   .reveal {
     opacity: 0;
     translate: 0 28px;
