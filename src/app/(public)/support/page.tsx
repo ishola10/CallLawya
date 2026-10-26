@@ -59,7 +59,7 @@ const FAQS = [
   {
     question: "How do I connect with a lawyer?",
     answer:
-      "Describe your legal issue in the app and browse qualified, verified lawyers who practise in that area. You can then book a consultation and connect by call, video or chat.",
+      "Describe your legal issue in the app and browse qualified, verified lawyers who practise in that area. You can then book a consultation and connect by call or chat.",
   },
   {
     question: "How much does a consultation cost?",

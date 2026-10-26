@@ -43,7 +43,7 @@ export default function OpenGraphImage() {
             Find verified lawyers. Book a consultation.
           </div>
           <div style={{ display: "flex", marginTop: 24, fontSize: 30, color: "rgba(255,255,255,0.7)", maxWidth: 900 }}>
-            Legal support by call, video or chat — with Lex AI to help you prepare.
+            Legal support by call or chat — with Lex AI to help you prepare.
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 26 }}>

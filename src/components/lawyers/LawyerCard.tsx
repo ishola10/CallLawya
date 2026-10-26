@@ -7,9 +7,7 @@ import BookButton from "./BookButton";
 import LawyerAvatar from "./LawyerAvatar";
 
 export function LawyerRating({ lawyer, className }: { lawyer: LawyerSummary; className?: string }) {
-  if (lawyer.rating === null) {
-    return <span className={className}>New on CallLawya</span>;
-  }
+  if (lawyer.rating === null) return null;
   return (
     <span className={className}>
       <strong>{lawyer.rating.toFixed(1)}</strong> <Icon icon={StarIcon} className="fill-current text-gold" />{" "}
@@ -65,7 +63,9 @@ export default function LawyerCard({ lawyer }: { lawyer: LawyerSummary }) {
         )}
         <div className="mt-auto flex items-center justify-between gap-3 pt-4 text-sm">
           <LawyerRating lawyer={lawyer} />
-          <LawyerFee fee={lawyer.fee} />
+          <span className="ml-auto">
+            <LawyerFee fee={lawyer.fee} />
+          </span>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-2">
           <BookButton className="press rounded-md bg-brand py-3 text-center font-bold text-white hover:bg-brand-hover">

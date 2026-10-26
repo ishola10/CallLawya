@@ -22,7 +22,7 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
     <>
       <article
         tabIndex={0}
-        className="group h-[400px] rounded-xl outline-none [perspective:1200px] focus-visible:ring-4 focus-visible:ring-brand/30"
+        className="group h-[430px] rounded-xl outline-none [perspective:1200px] focus-visible:ring-4 focus-visible:ring-brand/30"
       >
         <div className="relative h-full transition-transform duration-700 [transform-style:preserve-3d] group-focus-within:[transform:rotateY(180deg)] group-hover:[transform:rotateY(180deg)] motion-reduce:transition-none">
           <div className="absolute inset-0 [backface-visibility:hidden]">
@@ -35,13 +35,22 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
                 placeholder="blur"
               />
             </div>
-            <h3 className="mt-4 font-serif text-2xl font-bold">{member.name}</h3>
-            <p className="text-sm font-bold text-brand">{member.role}</p>
+            <h3 className="mt-4 font-serif text-2xl font-bold leading-tight">
+              {member.name}
+              {member.credentials && (
+                <span className="ml-1.5 font-sans text-base font-semibold text-slate-500">{member.credentials}</span>
+              )}
+            </h3>
+            <p className="mt-1 text-sm font-bold text-brand">{member.role}</p>
           </div>
           <div className="absolute inset-0 flex flex-col rounded-xl border-t-4 border-brand bg-ink p-7 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
             <p className="text-xs font-bold tracking-widest text-brand-light">{member.role}</p>
-            <p className="mt-2 font-serif text-2xl font-bold">{member.name}</p>
-            {member.credentials && <p className="mt-1 text-sm font-semibold text-white/50">{member.credentials}</p>}
+            <p className="mt-2 font-serif text-2xl font-bold leading-tight">
+              {member.name}
+              {member.credentials && (
+                <span className="ml-1.5 font-sans text-base font-semibold text-white/60">{member.credentials}</span>
+              )}
+            </p>
             <span className="mt-4 h-[3px] w-10 shrink-0 bg-gold" />
             <p className="mt-4 line-clamp-5 leading-7 text-white/70">{member.bio.replace(/\s*\n\s*/g, " ")}</p>
             <button
@@ -84,8 +93,12 @@ export default function TeamMemberCard({ member }: { member: TeamMember }) {
             </div>
             <div>
               <p className="text-xs font-bold tracking-widest text-brand">{member.role}</p>
-              <h3 className="mt-1 font-serif text-2xl font-bold sm:text-3xl">{member.name}</h3>
-              {member.credentials && <p className="mt-1 text-sm font-semibold text-slate-500">{member.credentials}</p>}
+              <h3 className="mt-1 font-serif text-2xl font-bold leading-tight sm:text-3xl">
+                {member.name}
+                {member.credentials && (
+                  <span className="ml-1.5 font-sans text-base font-semibold text-slate-500">{member.credentials}</span>
+                )}
+              </h3>
             </div>
           </div>
           <span className="mt-6 block h-[3px] w-10 bg-gold" />

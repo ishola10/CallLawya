@@ -243,7 +243,7 @@ export default function HowItWorksPage() {
                   ))}
                 </div>
                 <div className="mt-3 flex items-center gap-2 rounded bg-white/10 p-3 text-xs font-semibold text-white/80">
-                  <Icon icon={CalendarCheckIcon} className="text-base text-gold" /> Booked: Tuesday, 14:30 · Video call
+                  <Icon icon={CalendarCheckIcon} className="text-base text-gold" /> Booked: Tuesday, 14:30 · Voice call
                 </div>
               </div>
             </article>
