@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { label: "How It Works", href: "/how-it-works" },
   { label: "Lawyers Directory", href: "/lawyers" },
   // { label: "News", href: "/news" },
+  // { label: "Articles", href: "/articles/new" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -22,6 +23,14 @@ export const ROUTES = {
   privacy: "/privacy",
   terms: "/terms",
   security: "/security",
+  support: "/support",
+  writeArticle: "/articles/new",
+} as const;
+
+export const SUPPORT_PHONE = {
+  display: "+234 (0) 706 801 8386",
+  href: "tel:+2347068018386",
+  hours: "Mon–Fri, 9am–5pm WAT",
 } as const;
 
 export const CONTACT_EMAILS = {

@@ -20,6 +20,7 @@ const FOOTER_COLUMNS = [
       { label: "About", href: ROUTES.about },
       // { label: "News", href: ROUTES.news },
       { label: "Contact", href: ROUTES.contact },
+      { label: "Support", href: ROUTES.support },
     ],
   },
   {
