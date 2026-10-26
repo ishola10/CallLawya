@@ -12,16 +12,23 @@ function isLayoutContainer(element: Element) {
   return (display === "grid" || display === "flex") && element.children.length > 1;
 }
 
-const expand = (element: Element) => (isLayoutContainer(element) ? [...element.children] : [element]);
+const isTallerThanScreen = (element: Element) => element.getBoundingClientRect().height > window.innerHeight;
+
+function expand(element: Element): Element[] {
+  if (isLayoutContainer(element)) return [...element.children];
+  if (isTallerThanScreen(element) && element.children.length > 1) return [...element.children].flatMap(expand);
+  return [element];
+}
 
 function collectTargets(main: HTMLElement) {
   const targets: { element: HTMLElement; order: number }[] = [];
   main.querySelectorAll<HTMLElement>(":scope > section, :scope > div > section").forEach((section) => {
     const blocks = isLayoutContainer(section) ? [section] : [...section.children];
     blocks.forEach((block) => {
+      const staggered = isLayoutContainer(block);
       expand(block).forEach((item, index) => {
         if (item instanceof HTMLElement) {
-          targets.push({ element: item, order: Math.min(index, MAX_STAGGER_STEPS) });
+          targets.push({ element: item, order: staggered ? Math.min(index, MAX_STAGGER_STEPS) : 0 });
         }
       });
     });
@@ -51,7 +58,7 @@ export default function ScrollReveal() {
           element.addEventListener("transitionend", () => cleanup(element), { once: true });
         });
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
 
     const frame = requestAnimationFrame(() => {
