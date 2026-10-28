@@ -142,7 +142,7 @@ export default function LawyerDirectory({ initialPage, featured, expertise }: La
                 value={filters.name}
                 onChange={(event) => update({ name: event.target.value })}
                 className="w-full min-w-0 outline-none"
-                placeholder="Lawyer's name"
+                placeholder="Area of expertise"
               />
             </div>
           </label>

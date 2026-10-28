@@ -17,12 +17,12 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-black text-white">
-      <div className="page-x flex h-[72px] items-center gap-8 lg:h-[86px]">
+      <div className="page-x flex h-[72px] items-center gap-4 xl:gap-8 lg:h-[86px]">
         <Link href={ROUTES.home} className="shrink-0" onClick={closeMenu}>
           <Image src={logo} alt="CallLawya" className="h-auto w-[104px] lg:w-[118px]" preload />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-6 text-sm font-semibold lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-4 xl:gap-6 text-sm font-semibold lg:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
