@@ -11,6 +11,7 @@ import {
   SmartphoneIcon,
 } from "@/assets/icons";
 import { Icon, JsonLd } from "@/components/common";
+import { SupportChat } from "@/components/support";
 import { CONTACT_EMAILS, ROUTES, SUPPORT_PHONE } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 import { SupportForm } from "./components";
@@ -242,6 +243,8 @@ export default function SupportPage() {
           </Link>
         </div>
       </section>
+
+      <SupportChat />
     </>
   );
 }

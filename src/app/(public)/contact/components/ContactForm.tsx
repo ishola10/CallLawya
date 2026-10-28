@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { ROUTES } from "@/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CONTACT_SUBJECTS, contactFormSchema } from "@/lib/validations";
 import type { ContactFormValues } from "@/lib/validations";
@@ -20,6 +20,8 @@ function FieldError({ message }: { message?: string }) {
 
 export default function ContactForm() {
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const trapRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -37,8 +39,24 @@ export default function ContactForm() {
   }, [setValue]);
 
   const onSubmit = async (values: ContactFormValues) => {
-    setSentTo(values.email);
-    reset();
+    setSendError(null);
+    setSentTo(null);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, company: trapRef.current?.value ?? "" }),
+      });
+      const result = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        setSendError(result?.error ?? "We couldn't send your message. Please try again.");
+        return;
+      }
+      setSentTo(values.email);
+      reset();
+    } catch {
+      setSendError("We couldn't reach CallLawya. Check your connection and try again.");
+    }
   };
 
   return (
@@ -66,6 +84,20 @@ export default function ContactForm() {
           <p className="mt-1 text-sm text-slate-600">We&apos;ll reply to {sentTo} as soon as possible.</p>
         </div>
       )}
+      {sendError && (
+        <p className="mt-7 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-semibold text-[#D92D20]" role="alert">
+          {sendError}
+        </p>
+      )}
+      <input
+        ref={trapRef}
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
 
       <div className="mt-7 grid gap-5 md:grid-cols-2">
         <label>
@@ -128,7 +160,7 @@ export default function ContactForm() {
         disabled={isSubmitting}
         className="press mt-7 w-full rounded-md bg-brand py-4 text-lg font-bold text-white hover:bg-brand-hover disabled:opacity-60"
       >
-        Send Message <Icon icon={ArrowRightIcon} className="ml-2" />
+        {isSubmitting ? "Sending…" : "Send Message"} <Icon icon={ArrowRightIcon} className="ml-2" />
       </button>
     </form>
   );

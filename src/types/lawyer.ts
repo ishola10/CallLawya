@@ -45,6 +45,12 @@ export type LawyerPage = {
   totalPages: number;
 };
 
+export type LawyerStats = {
+  verifiedLawyers: number;
+  averageRating: number | null;
+  ratingsCount: number;
+};
+
 export type ExpertiseStat = {
   expertise: string;
   count: number;

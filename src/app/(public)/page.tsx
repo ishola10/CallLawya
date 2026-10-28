@@ -6,15 +6,11 @@ import { lawyerWoman1 } from "@/assets/images";
 import { CountUp, Icon, StoreButton } from "@/components/common";
 import { LawyerAvatar } from "@/components/lawyers";
 import { ROUTES } from "@/constants";
-import { getTopLawyers } from "@/services/lawyers";
-import { ArrowRightIcon, BriefcaseIcon, Building2Icon, ChartLineIcon, GavelIcon, GlobeIcon, HandshakeIcon, LockIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserCheckIcon, WalletIcon, ZapIcon } from "@/assets/icons";
+import { getLawyerStats, getTopLawyers } from "@/services/lawyers";
+import { ArrowRightIcon, BriefcaseIcon, CalendarCheckIcon, ChartLineIcon, FileSearchIcon, LockIcon, ScaleIcon, SearchIcon, SmartphoneIcon, SparklesIcon, UserCheckIcon } from "@/assets/icons";
+// Used by the hidden partners section: import { Building2Icon, GavelIcon, GlobeIcon, HandshakeIcon, ShieldCheckIcon } from "@/assets/icons";
 
-const STATS = [
-  { value: 10000, label: "Verified Lawyers" },
-  { value: 50, label: "Countries" },
-  { value: 500000, label: "Cases Resolved" },
-];
-
+/* Partners section hidden until real partners are confirmed. Uncomment (with its section below) to restore it.
 const PARTNERS = [
   { icon: ScaleIcon, name: "LexAfrica" },
   { icon: Building2Icon, name: "PanAfrican Bar Forum" },
@@ -22,6 +18,54 @@ const PARTNERS = [
   { icon: GlobeIcon, name: "Ubuntu Rights" },
   { icon: HandshakeIcon, name: "Legal Aid Alliance" },
   { icon: ShieldCheckIcon, name: "TrustPay Africa" },
+];
+*/
+
+const FEATURES = [
+  {
+    icon: SearchIcon,
+    label: "FIND",
+    title: "Find a Lawyer",
+    text: "Discover lawyers by area of expertise, location, and other relevant criteria. Review available profiles and choose a professional suited to your legal needs.",
+    href: ROUTES.lawyers,
+    card: "bg-ink text-white",
+    iconClass: "bg-white/10 text-gold",
+    labelClass: "text-brand-light",
+    textClass: "text-white/65",
+  },
+  {
+    icon: CalendarCheckIcon,
+    label: "BOOK",
+    title: "Book a Consultation",
+    text: "Arrange a consultation with a lawyer at a suitable time. Get the opportunity to explain your situation, ask questions, and understand your next steps.",
+    href: `${ROUTES.features}#consultation-booking`,
+    card: "bg-brand-mist",
+    iconClass: "bg-white text-brand shadow-sm",
+    labelClass: "text-brand",
+    textClass: "text-slate-600",
+  },
+  {
+    icon: SparklesIcon,
+    label: "LEX AI",
+    title: "Get Legal Guidance with Lex AI",
+    text: "Use AI-assisted legal tools to help you understand legal information, organise your questions, and identify issues you may need to discuss with a lawyer.",
+    href: `${ROUTES.features}#lex-ai`,
+    card: "bg-brand text-white",
+    iconClass: "bg-white/15 text-white",
+    labelClass: "text-white/70",
+    textClass: "text-white/75",
+  },
+  {
+    icon: FileSearchIcon,
+    label: "REVIEW",
+    title: "Review Legal Documents",
+    text: "Get assistance reviewing documents, identifying important clauses, and preparing questions for a qualified legal professional.",
+    href: `${ROUTES.features}#document-review`,
+    card: "border border-slate-200 bg-paper",
+    iconClass: "bg-white text-brand shadow-sm",
+    labelClass: "text-brand",
+    textClass: "text-slate-600",
+  },
 ];
 
 const WHY_ITEMS = [
@@ -59,7 +103,10 @@ const STEPS = [
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const topLawyers = await getTopLawyers(4).catch(() => []);
+  const [topLawyers, stats] = await Promise.all([
+    getTopLawyers(4).catch(() => []),
+    getLawyerStats().catch(() => null),
+  ]);
 
   return (
     <>
@@ -80,12 +127,17 @@ export default async function HomePage() {
               <span className="eyebrow text-brand-pale">Africa&apos;s legal access network</span>
             </div>
             <h1 className="mb-7 font-serif text-[40px] sm:text-5xl font-bold leading-[.98] tracking-[-.04em] md:text-6xl xl:text-[72px]">
-              Get Legal Help
+              Legal Assistance.
               <br />
-              <span className="text-[#2F7FFF]">Anywhere in Africa</span> — Instantly
+              <span className="text-[#2F7FFF]">Anywhere. Anytime.</span>
             </h1>
-            <p className="max-w-[650px] border-l-2 border-gold pl-5 text-lg leading-8 text-white/70 md:text-xl">
-              Connecting you with verified, affordable lawyers across Africa. Justice should not be a privilege.
+            <p className="max-w-[650px] border-l-2 border-gold pl-5 text-lg leading-8 text-white/75 md:text-xl">
+              Finding the right lawyer should not be complicated. CallLawya helps you connect with legal professionals,
+              book consultations and get support for the issues that matter to you.
+            </p>
+            <p className="mt-5 max-w-[650px] leading-7 text-white/55 md:text-lg">
+              Whether you are dealing with a property dispute, starting a business, reviewing a contract or trying to
+              understand your rights, CallLawya helps you take the next step with greater confidence.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
@@ -95,31 +147,16 @@ export default async function HomePage() {
                 Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-3" />
               </Link>
               <Link
-                href={ROUTES.forLawyers}
+                href={ROUTES.features}
                 className="press rounded-md border border-white/60 px-8 py-4 text-lg font-bold hover:bg-white hover:text-black"
               >
-                Connect as Lawyer
+                Explore CallLawya
               </Link>
             </div>
-            <div className="mt-10 flex items-center gap-5 text-sm text-white/60">
-              <div className="flex -space-x-2">
-                {[
-                  ["AO", "bg-[#164C9C]"],
-                  ["KM", "bg-[#856315]"],
-                  ["EN", "bg-[#2A6559]"],
-                ].map(([initials, bg]) => (
-                  <span
-                    key={initials}
-                    className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-black text-white ${bg}`}
-                  >
-                    {initials}
-                  </span>
-                ))}
-              </div>
-              <span>
-                <strong className="text-white">4.9/5</strong> from thousands of consultations
-              </span>
-            </div>
+            <p className="mt-10 flex items-center gap-3 text-sm text-white/60">
+              <span className="h-px w-8 shrink-0 bg-gold" />
+              Your legal questions deserve clear answers and professional guidance.
+            </p>
           </div>
 
           <div className="relative h-[520px] sm:h-[600px]">
@@ -160,26 +197,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="page-x border-b border-slate-200 bg-white">
-        <div className="grid grid-cols-2 gap-y-6 py-7 lg:grid-cols-4 lg:divide-x lg:divide-slate-200">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="px-4 lg:px-7">
+      {stats && stats.verifiedLawyers > 0 && (
+        <section className="page-x border-b border-slate-200 bg-white">
+          <div className="grid grid-cols-2 divide-x divide-slate-200 py-7">
+            <div className="pr-4 lg:px-7">
               <strong className="font-serif text-3xl md:text-4xl">
-                <CountUp value={stat.value} suffix="+" />
+                <CountUp value={stats.verifiedLawyers} />
               </strong>
-              <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">{stat.label}</p>
+              <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">Verified Lawyers</p>
             </div>
-          ))}
-          <div className="px-4 lg:px-7">
-            <strong className="font-serif text-3xl md:text-4xl">
-              <CountUp value={4.9} decimals={1} />
-              <span className="text-gold">★</span>
-            </strong>
-            <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">Client Rating</p>
+            {stats.averageRating !== null && (
+              <div className="pl-6 lg:px-7">
+                <strong className="font-serif text-3xl md:text-4xl">
+                  <CountUp value={stats.averageRating} decimals={1} />
+                  <span className="text-gold">★</span>
+                </strong>
+                <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">
+                  Client Rating · {stats.ratingsCount.toLocaleString("en-US")} rating
+                  {stats.ratingsCount === 1 ? "" : "s"}
+                </p>
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
+      {/* Partners section hidden until real partners are confirmed. Uncomment (with PARTNERS above) to restore it.
       <section className="page-x border-b border-slate-200 bg-paper py-10">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
           <div className="shrink-0 lg:w-[240px]">
@@ -201,42 +244,43 @@ export default async function HomePage() {
           </ul>
         </div>
       </section>
+      */}
 
       <section className="page-x bg-white section-y">
-        <div className="mb-9 flex flex-col gap-4 border-t-4 border-black pt-5 md:flex-row md:items-end md:justify-between">
+        <div className="mb-10 grid gap-6 border-t-4 border-black pt-5 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
           <div>
             <p className="eyebrow text-brand">Built for real life</p>
-            <h2 className="mt-2 font-serif text-4xl font-bold md:text-5xl">Legal help, without the barriers.</h2>
+            <h2 className="mt-2 font-serif text-4xl font-bold md:text-5xl">Legal Support for Real-Life Situations</h2>
           </div>
-          <Link href={ROUTES.features} className="self-start border-b-2 border-brand pb-1 font-bold md:self-auto">
-            Explore all features
-          </Link>
+          <div className="space-y-4 leading-7 text-slate-600">
+            <p>
+              Life can present legal challenges when you least expect them. You might need help recovering a debt,
+              understanding an employment agreement, protecting your business, or resolving a family matter.
+            </p>
+            <p>
+              CallLawya makes it easier to find legal professionals who understand your needs and can help you explore
+              your options.
+            </p>
+          </div>
         </div>
-        <div className="grid gap-6 lg:grid-cols-3">
-          <article className="lift min-h-[330px] rounded-xl bg-ink p-8 text-white">
-            <Icon icon={ZapIcon} className="h-12 w-12 rounded-xl bg-white/10 p-2.5 text-gold" />
-            <p className="mt-10 text-xs font-bold tracking-widest text-brand-light">01 / INSTANT</p>
-            <h3 className="mt-3 font-serif text-3xl font-bold">Instant Connections</h3>
-            <p className="mt-4 leading-7 text-white/65">
-              Tell us what happened. We connect you with the right available lawyer in minutes.
-            </p>
-          </article>
-          <article className="lift min-h-[330px] rounded-xl bg-brand-mist p-8">
-            <Icon icon={WalletIcon} className="h-12 w-12 rounded-xl bg-white p-2.5 text-brand shadow-sm" />
-            <p className="mt-10 text-xs font-bold tracking-widest text-brand">02 / FAIR</p>
-            <h3 className="mt-3 font-serif text-3xl font-bold">Affordable Pricing</h3>
-            <p className="mt-4 leading-7 text-slate-600">
-              Compare transparent options before you connect. Quality counsel should be within reach.
-            </p>
-          </article>
-          <article className="lift min-h-[330px] rounded-xl bg-brand p-8 text-white">
-            <Icon icon={ShieldCheckIcon} className="h-12 w-12 rounded-xl bg-white/15 p-2.5 text-white" />
-            <p className="mt-10 text-xs font-bold tracking-widest text-white/70">03 / PRIVATE</p>
-            <h3 className="mt-3 font-serif text-3xl font-bold">Secure Platform</h3>
-            <p className="mt-4 leading-7 text-white/75">
-              Encrypted conversations protect the details that matter most — your story, your rights, your privacy.
-            </p>
-          </article>
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {FEATURES.map((feature, index) => (
+            <Link
+              key={feature.title}
+              href={feature.href}
+              className={`lift group flex min-h-[340px] flex-col rounded-xl p-8 ${feature.card}`}
+            >
+              <Icon icon={feature.icon} className={`h-12 w-12 rounded-xl p-2.5 ${feature.iconClass}`} />
+              <p className={`mt-10 text-xs font-bold tracking-widest ${feature.labelClass}`}>
+                0{index + 1} / {feature.label}
+              </p>
+              <h3 className="mt-3 font-serif text-2xl font-bold">{feature.title}</h3>
+              <p className={`mt-4 leading-7 ${feature.textClass}`}>{feature.text}</p>
+              <span className="mt-auto pt-6 text-sm font-bold">
+                Learn more <Icon icon={ArrowRightIcon} className="ml-1 transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 

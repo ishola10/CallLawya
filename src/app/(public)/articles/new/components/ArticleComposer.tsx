@@ -16,16 +16,16 @@ import {
   TrashIcon,
   XIcon,
 } from "@/assets/icons";
+import { ArticleBody } from "@/components/articles";
 import { Icon } from "@/components/common";
 import { ROUTES } from "@/constants";
+import { compressImage } from "@/lib/articles/image";
 import { cn } from "@/lib/utils";
-import { ARTICLE_CATEGORIES, articleSchema } from "@/lib/validations";
+import { ARTICLE_CATEGORIES, COVER_TYPES, MAX_COVER_BYTES, articleSchema, parseTags } from "@/lib/validations";
 import type { ArticleValues } from "@/lib/validations";
-import ArticleBody from "./ArticleBody";
+import type { Article } from "@/types/article";
 
 const DRAFT_KEY = "calllawya:article-draft";
-const MAX_COVER_BYTES = 5 * 1024 * 1024;
-const COVER_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const EMPTY_ARTICLE = {
   title: "",
@@ -40,7 +40,7 @@ const EMPTY_ARTICLE = {
 const STEPS = [
   { id: "write", label: "Write" },
   { id: "preview", label: "Preview" },
-  { id: "published", label: "Publish" },
+  { id: "published", label: "Post" },
 ] as const;
 
 type Step = (typeof STEPS)[number]["id"];
@@ -63,16 +63,15 @@ function countWords(text: string) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
-function parseTags(tags?: string) {
-  return [...new Set((tags ?? "").split(",").map((tag) => tag.trim()).filter(Boolean))].slice(0, 6);
-}
-
 export default function ArticleComposer() {
   const [step, setStep] = useState<Step>("write");
-  const [cover, setCover] = useState<{ url: string; name: string } | null>(null);
+  const [cover, setCover] = useState<{ url: string; blob: Blob; name: string } | null>(null);
   const [coverError, setCoverError] = useState<string | null>(null);
   const [draftSaved, setDraftSaved] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [publishError, setPublishError] = useState<string | null>(null);
+  const [published, setPublished] = useState<Article | null>(null);
+  const [processingCover, setProcessingCover] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<ArticleValues>({
@@ -103,8 +102,9 @@ export default function ArticleComposer() {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  useEffect(() => () => {
-    if (cover) URL.revokeObjectURL(cover.url);
+  useEffect(() => {
+    if (!cover) return;
+    return () => URL.revokeObjectURL(cover.url);
   }, [cover]);
 
   const words = countWords(values.body ?? "");
@@ -125,11 +125,15 @@ export default function ArticleComposer() {
       return;
     }
     if (file.size > MAX_COVER_BYTES) {
-      setCoverError("The image must be 5 MB or smaller.");
+      setCoverError("The image must be 2 MB or smaller.");
       return;
     }
     setCoverError(null);
-    setCover({ url: URL.createObjectURL(file), name: file.name });
+    setProcessingCover(true);
+    compressImage(file)
+      .then((blob) => setCover({ url: URL.createObjectURL(blob), blob, name: file.name }))
+      .catch(() => setCoverError("We couldn't read that image. Try a different file."))
+      .finally(() => setProcessingCover(false));
   };
 
   const clearDraft = () => {
@@ -139,17 +143,40 @@ export default function ArticleComposer() {
     setDraftSaved(false);
   };
 
-  const publish = () => {
+  const publish = async () => {
     setPublishing(true);
-    window.setTimeout(() => {
-      setPublishing(false);
+    setPublishError(null);
+    const data = new FormData();
+    data.set("title", values.title.trim());
+    data.set("category", values.category);
+    data.set("authorName", values.authorName.trim());
+    if (values.authorRole?.trim()) data.set("authorRole", values.authorRole.trim());
+    data.set("excerpt", values.excerpt.trim());
+    data.set("body", values.body.trim());
+    if (tags.length) data.set("tags", tags.join(","));
+    data.set("confirmed", String(values.confirmed));
+    if (cover) data.set("cover", cover.blob, "cover.jpg");
+
+    try {
+      const response = await fetch("/api/articles", { method: "POST", body: data });
+      const result = (await response.json().catch(() => null)) as (Article & { error?: string }) | null;
+      if (!response.ok || !result?.slug) {
+        setPublishError(result?.error ?? "We couldn't post your article. Please try again.");
+        return;
+      }
       window.localStorage.removeItem(DRAFT_KEY);
+      setPublished(result);
       goTo("published");
-    }, 900);
+    } catch {
+      setPublishError("We couldn't reach CallLawya. Check your connection and try again.");
+    } finally {
+      setPublishing(false);
+    }
   };
 
   const startNew = () => {
     clearDraft();
+    setPublished(null);
     goTo("write");
   };
 
@@ -158,8 +185,14 @@ export default function ArticleComposer() {
   return (
     <div ref={topRef} className="scroll-mt-24 bg-paper">
       <section className="page-x bg-ink pb-10 pt-12 text-white">
-        <p className="eyebrow text-brand-light">CallLawya Newsroom</p>
-        <h1 className="mt-3 font-serif text-[40px] font-bold leading-none sm:text-5xl md:text-6xl">Write an article</h1>
+        <Link
+          href={ROUTES.articles}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white"
+        >
+          <Icon icon={ArrowLeftIcon} /> All articles
+        </Link>
+        <p className="eyebrow mt-6 text-brand-light">CallLawya Newsroom</p>
+        <h1 className="mt-3 font-serif text-[40px] font-bold leading-none sm:text-5xl md:text-6xl">Post an article</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-white/65">
           Share practical legal guidance that helps people understand their rights and take the next step.
         </p>
@@ -284,8 +317,8 @@ export default function ArticleComposer() {
                 ) : (
                   <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-paper px-6 py-10 text-center transition hover:border-brand">
                     <Icon icon={ImagePlusIcon} className="h-12 w-12 rounded-xl bg-white p-2.5 text-brand shadow-sm" />
-                    <span className="mt-4 font-bold">Upload a cover image</span>
-                    <span className="mt-1 text-sm text-slate-500">JPG, PNG or WebP, up to 5 MB</span>
+                    <span className="mt-4 font-bold">{processingCover ? "Processing image…" : "Upload a cover image"}</span>
+                    <span className="mt-1 text-sm text-slate-500">JPG, PNG or WebP, up to 2 MB</span>
                     <input type="file" accept={COVER_TYPES.join(",")} className="sr-only" onChange={handleCover} />
                   </label>
                 )}
@@ -401,10 +434,15 @@ export default function ArticleComposer() {
                 disabled={publishing}
                 className="press inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3 font-bold text-white hover:bg-brand-hover disabled:opacity-60"
               >
-                <Icon icon={SendIcon} /> {publishing ? "Publishing…" : "Publish article"}
+                <Icon icon={SendIcon} /> {publishing ? "Posting…" : "Post article"}
               </button>
             </div>
           </div>
+          {publishError && (
+            <p className="mx-auto mb-6 max-w-3xl rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-semibold text-[#D92D20]" role="alert">
+              {publishError}
+            </p>
+          )}
 
           <article className="mx-auto max-w-3xl rounded-xl bg-white p-6 shadow-sm md:p-12">
             <p className="text-xs font-bold tracking-widest text-brand">{values.category?.toUpperCase()}</p>
@@ -445,29 +483,32 @@ export default function ArticleComposer() {
         <section className="page-x section-y">
           <div className="mx-auto max-w-2xl rounded-xl bg-white p-8 text-center shadow-sm md:p-12">
             <Icon icon={CircleCheckIcon} className="mx-auto h-16 w-16 rounded-full bg-green-50 p-3.5 text-green-600" />
-            <h2 className="mt-6 font-serif text-4xl font-bold">Article submitted</h2>
+            <h2 className="mt-6 font-serif text-4xl font-bold">Article posted</h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              Thank you for contributing to the CallLawya Newsroom.
-            </p>
-            <p className="mx-auto mt-6 flex max-w-xl gap-3 rounded-lg border border-gold/50 bg-gold/10 p-4 text-left text-sm leading-6 text-slate-700">
-              <Icon icon={InfoIcon} className="mt-0.5 text-base text-gold" />
-              Publishing isn&apos;t connected to a server yet, so this article hasn&apos;t been saved or published.
-              Once the articles service is set up, submitted articles will be saved and appear on the site.
+              Thank you for contributing to the CallLawya Newsroom. Your article is now live on the articles page.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
+              {published && (
+                <Link
+                  href={`${ROUTES.articles}/${published.slug}`}
+                  className="press inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3 font-bold text-white hover:bg-brand-hover"
+                >
+                  View article <Icon icon={ArrowRightIcon} />
+                </Link>
+              )}
+              <Link
+                href={ROUTES.articles}
+                className="press rounded-md border border-slate-300 px-6 py-3 font-bold hover:border-brand hover:text-brand"
+              >
+                All articles
+              </Link>
               <button
                 type="button"
                 onClick={startNew}
-                className="press inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3 font-bold text-white hover:bg-brand-hover"
+                className="press inline-flex items-center gap-2 rounded-md border border-slate-300 px-6 py-3 font-bold hover:border-brand hover:text-brand"
               >
-                <Icon icon={PenLineIcon} /> Write another article
+                <Icon icon={PenLineIcon} /> Write another
               </button>
-              <Link
-                href={ROUTES.home}
-                className="press rounded-md border border-slate-300 px-6 py-3 font-bold hover:border-brand hover:text-brand"
-              >
-                Back to home
-              </Link>
             </div>
           </div>
         </section>

@@ -5,10 +5,10 @@ import type {
   LawyerProfile,
   LawyerReview,
   LawyerSearchParams,
+  LawyerStats,
   LawyerSummary,
 } from "@/types/lawyer";
-
-const REVALIDATE_SECONDS = 300;
+import { ApiError, apiGet } from "./api";
 
 type ApiLawyer = {
   id: string;
@@ -45,34 +45,6 @@ type ApiLawyerPage = {
   page: number;
   totalPages: number;
 };
-
-export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
-    super(message);
-  }
-}
-
-function apiUrl(path: string, params?: Record<string, string | number | boolean | undefined>) {
-  const base = process.env.API_BASE_URL;
-  if (!base) throw new Error("API_BASE_URL is not set. Add it to .env.local (see .env.example).");
-  const url = new URL(path, base);
-  Object.entries(params ?? {}).forEach(([key, value]) => {
-    if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
-  });
-  return url;
-}
-
-async function apiGet<T>(path: string, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
-  const response = await fetch(apiUrl(path, params), {
-    headers: { Accept: "application/json" },
-    next: { revalidate: REVALIDATE_SECONDS },
-  });
-  if (!response.ok) throw new ApiError(response.status, `CallLawya API ${path} responded ${response.status}`);
-  return response.json() as Promise<T>;
-}
 
 const titleCaseShouting = (name: string) =>
   name
@@ -152,6 +124,29 @@ export async function getLawyer(id: string): Promise<LawyerProfile | null> {
 
 export async function getExpertiseStats(): Promise<ExpertiseStat[]> {
   return apiGet<ExpertiseStat[]>("/lawyers/expertise-stats");
+}
+
+const STATS_PAGE_SIZE = 50;
+const STATS_MAX_PAGES = 20;
+
+export async function getLawyerStats(): Promise<LawyerStats> {
+  const first = await searchLawyers({ limit: STATS_PAGE_SIZE });
+  const pageCount = Math.min(first.totalPages, STATS_MAX_PAGES);
+  const rest = await Promise.all(
+    Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) =>
+      searchLawyers({ limit: STATS_PAGE_SIZE, page: index + 2 }),
+    ),
+  );
+  const lawyers = [first, ...rest].flatMap((page) => page.items);
+  const rated = lawyers.filter((lawyer) => lawyer.rating !== null && lawyer.reviewCount > 0);
+  const ratingsCount = rated.reduce((sum, lawyer) => sum + lawyer.reviewCount, 0);
+  const weightedTotal = rated.reduce((sum, lawyer) => sum + (lawyer.rating ?? 0) * lawyer.reviewCount, 0);
+
+  return {
+    verifiedLawyers: first.totalPages > STATS_MAX_PAGES ? first.total : lawyers.length,
+    averageRating: ratingsCount > 0 ? Math.round((weightedTotal / ratingsCount) * 10) / 10 : null,
+    ratingsCount,
+  };
 }
 
 export async function getTopLawyers(count: number): Promise<LawyerSummary[]> {

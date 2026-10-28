@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LEGAL_LAST_UPDATED, LegalDocument, type LegalSection } from "@/components/legal";
+import { LegalDocument, type LegalSection } from "@/components/legal";
 import { CONTACT_EMAILS, ROUTES } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
-    "How CallLawya collects, uses, shares and protects personal data, and the rights you have under the Nigeria Data Protection Act 2023.",
+    "How CallLawya Limited collects, uses, shares and protects personal information, and the privacy rights and choices available to you.",
   path: ROUTES.privacy,
 });
 
@@ -15,282 +15,284 @@ const Email = () => <a href={`mailto:${CONTACT_EMAILS.support}`}>{CONTACT_EMAILS
 
 const SECTIONS: LegalSection[] = [
   {
-    id: "who-we-are",
-    title: "Who we are",
+    id: "introduction",
+    title: "Introduction",
     body: (
       <>
         <p>
-          CallLawya (&quot;CallLawya&quot;, &quot;we&quot;, &quot;us&quot; or &quot;our&quot;) operates a digital
-          platform, available through this website and our mobile apps, that helps individuals and businesses
-          discover legal professionals, book consultations and access legal-information tools such as Lex AI.
+          This Privacy Policy explains how and why CallLawya collects, uses, and shares personal information when you
+          interact with or use our Site or Service. It also includes any information CallLawya collects offline in
+          connection with the Service, which we may combine with information from the Site and Service. By reading this
+          Privacy Policy, you will understand your privacy rights and choices.
         </p>
         <p>
-          This Privacy Policy explains how we handle personal data when you visit our website, use our apps or
-          otherwise interact with us. We are the data controller for the personal data described in this policy and
-          we process it in line with the Nigeria Data Protection Act 2023 (&quot;NDPA&quot;) and other applicable
-          laws.
+          When we say &quot;CallLawya&quot;, we mean CallLawya Limited and any of its affiliates. When we say
+          &quot;Site&quot;, we mean <Link href={ROUTES.home}>www.calllawya.com</Link>, and when we say &quot;Service&quot;,
+          we mean the Site plus any websites, features, applications, widgets, or online services owned or controlled by
+          CallLawya and that post a link to this Privacy Policy.
+        </p>
+        <p>
+          As part of the Service, CallLawya provides a marketplace which results in platform information pertaining to
+          different parties to an interaction. Users of the Service may be Clients, Freelancers, Law firms, or Sites. This
+          Privacy Policy applies to CallLawya&apos;s processing of personal information of Users where CallLawya
+          determines the purposes and means of processing. It does not apply to processing of information by Users
+          themselves, who may be controllers of the personal information they access through the Service. For
+          information about how Users process your personal information, please contact them directly.
+        </p>
+        <p>
+          By the use and entry into this site and submitting or requesting information, you are deemed to have
+          understood and agreed to the terms of this policy, and you will be treated as having given your consent for
+          information processing as provided in this policy.
+        </p>
+        <p>
+          Please note that &quot;we&quot;, &quot;us&quot;, &quot;our&quot; and &quot;the Company&quot; refer to
+          CALLLAWYA LIMITED, and &quot;your&quot; and &quot;you&quot; refer to the User.
+        </p>
+        <p>
+          We encourage users of this site to comply with all regulatory and/or contractual obligations in respect of
+          data privacy.
+        </p>
+        <p>
+          Please be informed that this policy is subject to change, as determined by prevailing laws and other
+          contingency factors. We therefore advise you to read the updated versions thoroughly and in their entirety
+          before submitting any information.
         </p>
       </>
     ),
   },
   {
-    id: "information-we-collect",
-    title: "Information we collect",
+    id: "how-we-generate-data",
+    title: "How we generate data",
     body: (
       <>
-        <h3>Information you give us</h3>
+        <p>We generate data through the following means:</p>
+        <ol>
+          <li>
+            <strong>Account creation and user profile:</strong> data that our users furnish us with during account
+            creation. Some of the data collected includes names or initials, age, gender, weight, height, email and
+            residential address, date of birth, mobile number, professional or employment-related information (e.g.
+            professional title and credentials), username and password, financial information such as bank account,
+            credit card or other payment instrument details, physical, physiological and mental health condition,
+            medical records and history, and other health information that you provide during account registration or
+            otherwise.
+          </li>
+          <li>
+            <strong>User-generated content:</strong> we collect the information users provide or generate when they use
+            our services or interact with our customer support. We also collect information through ratings, research,
+            and survey responses. Please note that all survey responses are voluntary, and the information collected
+            will be used for research and reporting purposes to help us better serve users. We achieve this by learning
+            more about users&apos; needs and the quality of our services. We may share anonymous user data for research
+            and analysis purposes. We also maintain records of our communications and meetings with you.
+          </li>
+          <li>
+            <strong>Demographic data:</strong> we collect demographic data about users such as age, gender, employment
+            status, and income through user surveys. This helps us determine whether our services are well received,
+            the areas with larger subscription, and how we can improve our services.
+          </li>
+          <li>
+            <strong>Location data:</strong> access to your location, only if you grant us access, which helps us attend
+            to your legal cases.
+          </li>
+          <li>
+            <strong>User patterns and preferences.</strong>
+          </li>
+        </ol>
+        <p>We also collect additional information through:</p>
         <ul>
+          <li>User assessments, such as ratings, complaints, or compliments.</li>
+          <li>Data provided by users in connection with any legal rights, claim, proceedings, or dispute.</li>
+          <li>Data available to the public.</li>
           <li>
-            <strong>Account details:</strong> your name, email address, phone number, password and account type
-            (client or lawyer).
-          </li>
-          <li>
-            <strong>Profile information:</strong> for clients, details you choose to add to your profile; for lawyers,
-            professional details such as your Supreme Court Number (SCN), licensing information, year and state of
-            call, qualifications, areas of practice, location, consultation fees, availability and profile photo.
-          </li>
-          <li>
-            <strong>Verification information (lawyers):</strong> information needed to confirm your identity and
-            professional standing, which may include your National Identification Number (NIN) and a verification
-            selfie.
-          </li>
-          <li>
-            <strong>Payout details (lawyers):</strong> your bank name, account number and account name so we can pay
-            you for completed work.
-          </li>
-          <li>
-            <strong>Consultations and communications:</strong> bookings, messages, files and documents you share,
-            records of calls (such as time and duration), reviews and ratings, and messages you
-            send to our support team.
-          </li>
-          <li>
-            <strong>Lex AI and document tools:</strong> the questions, descriptions and documents you submit, and the
-            responses generated.
-          </li>
-          <li>
-            <strong>Referrals:</strong> referral codes you use or share and related reward information.
+            User data received from our business partners and affiliates through which users access our services.
+            Examples include payment providers, other apps, and websites that use our APIs or whose APIs we use.
           </li>
         </ul>
-        <h3>Information collected automatically</h3>
+        <p>We may merge the data collected from other sources with the data in our possession.</p>
+      </>
+    ),
+  },
+  {
+    id: "how-we-use-personal-data",
+    title: "How we use personal data",
+    body: (
+      <>
+        <p>We use personal data:</p>
         <ul>
+          <li>To provide information on services for your benefit;</li>
+          <li>To manage your legal service requests;</li>
+          <li>To arrange how you meet legal practitioners on our App while providing for your legal needs;</li>
+          <li>To personalise your experiences with us;</li>
+          <li>To improve our services;</li>
+          <li>To comply with legal obligations; and</li>
           <li>
-            Device and usage information such as device type, operating system, app version, IP address, push
-            notification tokens and log data about how you use our services.
+            To perform internal quality control, verify identity, send communications regarding service provision or
+            any changes to the policy, prevent potentially prohibited or illegal activities, and enforce our{" "}
+            <Link href={ROUTES.terms}>Terms and Conditions</Link>.
           </li>
         </ul>
-        <h3>Information from third parties</h3>
+        <p>Other uses may include:</p>
         <ul>
-          <li>
-            If you sign in with Google or Apple, we receive basic account information such as your name and email
-            address.
-          </li>
-          <li>Payment confirmations and transaction references from our payment provider.</li>
-          <li>Results of professional verification checks, for example confirmation of a lawyer&apos;s SCN.</li>
+          <li>Generally managing your information;</li>
+          <li>Responding to questions, comments and requests; and</li>
+          <li>Providing access to certain areas and features of the Sites.</li>
         </ul>
         <p>
-          Please only share information about other people, or sensitive details about your legal matter, where it is
-          necessary for the help you are seeking.
+          Please note that in protecting the data of users, we do not exchange users&apos; personal data with third
+          parties except where the prior consent of our users has been obtained.
         </p>
       </>
     ),
   },
   {
-    id: "how-we-use-information",
-    title: "How we use your information",
+    id: "data-sharing",
+    title: "Data sharing",
+    body: (
+      <>
+        <p>We may share your information with:</p>
+        <ul>
+          <li>Service providers, such as legal practitioners and partners who assist us in providing the services.</li>
+          <li>
+            Third parties for public health, research, analytics and any other legally permissible purposes, limited to
+            impersonal (non-identifying) information within what was provided.
+          </li>
+          <li>
+            Legal authorities, when required by law, for the purpose of responding to court orders and legal
+            investigations, or in the legitimate interest of the Company to comply with regulatory laws.
+          </li>
+        </ul>
+        <h3>Your choices and rights</h3>
+        <ul>
+          <li>
+            We will share your personal information with third parties only in ways that are described in this Privacy
+            Policy. We do not sell your personal information to third parties.
+          </li>
+          <li>
+            We may collect information from other sources and combine it with information we collect about you under
+            this Privacy Policy.
+          </li>
+          <li>
+            We may also share data for marketing and communication purposes, provided that the prior consent of users
+            has been obtained.
+          </li>
+          <li>
+            Personal data may be viewed by the general public when users interact with us by posting reviews,
+            information or complaints on our websites or social media handles.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "data-security",
+    title: "Data security",
+    body: (
+      <p>
+        We take data security seriously and employ industry-standard measures to protect your information from
+        unauthorised access, disclosure, alteration, or destruction. Read more on our{" "}
+        <Link href={ROUTES.security}>Security page</Link>.
+      </p>
+    ),
+  },
+  {
+    id: "decision-making",
+    title: "Decision making",
+    body: (
+      <p>
+        We reserve the right to deactivate users who have been observed and identified as engaging in fraudulent or
+        other activities that are likely to negatively affect our brand name.
+      </p>
+    ),
+  },
+  {
+    id: "cookies-and-tracking",
+    title: "Cookies and tracking",
+    body: (
+      <p>
+        We may use cookies, web beacons, pixels and other identity technologies, which you accept while using our App,
+        and similar tracking technologies to enhance your experience on our App platform. You can manage your cookie
+        preferences through your browser settings.
+      </p>
+    ),
+  },
+  {
+    id: "other-cookies-and-tracking",
+    title: "Other cookies and tracking",
     body: (
       <ul>
-        <li>To create and manage your account and keep it secure.</li>
-        <li>To verify lawyers before their profiles are activated, and to keep the directory accurate.</li>
-        <li>To help you find lawyers, book consultations and communicate by call or chat.</li>
-        <li>To process payments, invoices, refunds and lawyer payouts.</li>
-        <li>To provide Lex AI and document-review features.</li>
-        <li>To send service messages, booking updates and notifications.</li>
-        <li>To provide customer support and respond to your enquiries.</li>
-        <li>To prevent fraud and misuse, enforce our Terms and meet our legal obligations.</li>
-        <li>To understand how our services are used and to improve them.</li>
+        <li>
+          We may include third-party links which are outside our control. You are strongly advised to review the privacy
+          policies of the third-party sites and Apps that you are directed to before continuing to use their services.
+          Users hereby agree to exonerate us from any liability arising out of the use and practices of these third-party
+          sites.
+        </li>
+        <li>
+          We may also engage the services of other sites to advertise our services across the internet. These sites may
+          use cookies, pixels, web beacons or any other technology to track and identify visitors to our websites and
+          services.
+        </li>
+        <li>
+          Note that they may use your personal information for other purposes disclosed to you at the time you provide
+          personal information, or with your consent.
+        </li>
       </ul>
     ),
   },
   {
-    id: "lawful-bases",
-    title: "Our lawful bases",
+    id: "updates",
+    title: "Updates, alterations and modifications to this policy",
     body: (
-      <>
-        <p>Under the NDPA we rely on one or more of the following lawful bases to process personal data:</p>
-        <ul>
-          <li>
-            <strong>Contract:</strong> where processing is needed to provide the services you request, such as
-            bookings and payments.
-          </li>
-          <li>
-            <strong>Consent:</strong> for example, where you choose to share optional information or enable
-            notifications. You can withdraw consent at any time.
-          </li>
-          <li>
-            <strong>Legal obligation:</strong> where we must keep or disclose information to comply with the law.
-          </li>
-          <li>
-            <strong>Legitimate interests:</strong> such as keeping our platform secure and improving our services, where
-            those interests are not overridden by your rights.
-          </li>
-        </ul>
-      </>
-    ),
-  },
-  {
-    id: "sharing",
-    title: "How we share information",
-    body: (
-      <>
-        <p>We do not sell your personal data. We share it only where needed, including with:</p>
-        <ul>
-          <li>
-            <strong>Clients and lawyers:</strong> the information needed for a consultation, such as booking details
-            and the information you choose to share with the professional you book.
-          </li>
-          <li>
-            <strong>Service providers:</strong> companies that help us operate the platform, such as cloud hosting,
-            payment processing (Paystack), communications, push notifications and AI technology providers. They may
-            only use your data to provide services to us.
-          </li>
-          <li>
-            <strong>Verification sources:</strong> where needed to confirm a lawyer&apos;s identity or professional
-            standing.
-          </li>
-          <li>
-            <strong>Authorities and advisers:</strong> where required by law, court order or regulation, or to protect
-            the rights, safety and property of our users, the public or CallLawya.
-          </li>
-          <li>
-            <strong>Business transfers:</strong> if CallLawya is involved in a merger, acquisition or sale of assets,
-            subject to appropriate safeguards.
-          </li>
-        </ul>
-      </>
-    ),
-  },
-  {
-    id: "lex-ai",
-    title: "Lex AI and automated tools",
-    body: (
-      <>
-        <p>
-          Lex AI and our document-review tools use artificial intelligence to generate general legal information. We
-          process what you submit to produce responses, and we may use technology providers to do so.
-        </p>
-        <p>
-          These tools do not make decisions that produce legal or similarly significant effects about you. Their
-          responses may be incomplete or inaccurate and are not a substitute for advice from a qualified lawyer.
-          Avoid submitting information that is not needed for your question.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: "international-transfers",
-    title: "International transfers",
-    body: (
-      <p>
-        Some of our service providers may store or process data outside Nigeria. Where personal data is transferred
-        outside Nigeria, we take steps to ensure it receives an adequate level of protection as required by the NDPA,
-        for example through contractual safeguards.
-      </p>
-    ),
-  },
-  {
-    id: "retention",
-    title: "How long we keep information",
-    body: (
-      <p>
-        We keep personal data only for as long as needed for the purposes described in this policy, including to
-        provide our services, resolve disputes, keep accurate financial records and meet legal, regulatory and tax
-        obligations. When information is no longer needed, we delete or anonymise it.
-      </p>
-    ),
-  },
-  {
-    id: "security",
-    title: "Security",
-    body: (
-      <p>
-        We use technical and organisational measures designed to protect personal data against unauthorised access,
-        loss or misuse. No method of transmission or storage is completely secure, so we cannot guarantee absolute
-        security. Read more on our <Link href={ROUTES.security}>Security page</Link>.
-      </p>
+      <ul>
+        <li>
+          We may update this Privacy Policy to reflect changes in our practices. We will notify you of any significant
+          changes via email or our platform/App.
+        </li>
+        <li>
+          Users will be given enough time to read through the changed policy and contact us with any questions or
+          queries regarding the new Privacy Policy.
+        </li>
+        <li>By continuing to use the site and mobile application, you agree to be bound by the terms of the new policy.</li>
+      </ul>
     ),
   },
   {
     id: "your-rights",
-    title: "Your rights",
+    title: "Data protection rights of users",
     body: (
       <>
-        <p>Subject to the NDPA, you have the right to:</p>
-        <ul>
-          <li>Be informed about how your personal data is used.</li>
-          <li>Access the personal data we hold about you.</li>
-          <li>Ask us to correct inaccurate or incomplete data.</li>
-          <li>Ask us to delete your data, where applicable.</li>
-          <li>Restrict or object to certain processing.</li>
-          <li>Receive your data in a portable format, where applicable.</li>
-          <li>Withdraw consent where we rely on it.</li>
-        </ul>
         <p>
-          To exercise your rights, email <Email />. We may need to verify your identity first. You also have the right
-          to lodge a complaint with the Nigeria Data Protection Commission (NDPC).
+          Just as we understand that privacy is important in this digital world, we also acknowledge the rights of our
+          users regarding their data. To this end, users have the right to:
         </p>
+        <ul>
+          <li>Withdraw consent for their data to be processed;</li>
+          <li>Erase and delete their data;</li>
+          <li>Have their data transferred at their request; and</li>
+          <li>Object to their data being processed.</li>
+        </ul>
       </>
     ),
   },
   {
-    id: "deleting-your-account",
-    title: "Deleting your account",
-    body: (
-      <p>
-        You can permanently delete your account from within the CallLawya app or by contacting us at <Email />. When
-        you delete your account we remove or anonymise your personal data, except information we must keep for legal,
-        regulatory, accounting or dispute-resolution purposes.
-      </p>
-    ),
-  },
-  {
-    id: "children",
-    title: "Children",
-    body: (
-      <p>
-        CallLawya is intended for people aged 18 and over. We do not knowingly collect personal data from children. If
-        you believe a child has provided us with personal data, please contact us so we can remove it.
-      </p>
-    ),
-  },
-  {
-    id: "cookies",
-    title: "Cookies and similar technologies",
-    body: (
-      <p>
-        Our website uses only the technologies needed for it to work, such as delivering pages securely and
-        remembering basic preferences. We do not use advertising cookies. If we introduce analytics or other
-        optional technologies, we will update this policy and, where required, ask for your consent.
-      </p>
-    ),
-  },
-  {
-    id: "changes",
-    title: "Changes to this policy",
-    body: (
-      <p>
-        We may update this Privacy Policy from time to time. We will post the updated version on this page with a new
-        &quot;Last updated&quot; date and, where changes are significant, let you know through the app or by email.
-      </p>
-    ),
-  },
-  {
     id: "contact",
-    title: "Contact us",
+    title: "Questions on our Privacy Policy / Contact us",
     body: (
       <p>
-        If you have questions about this policy or how we handle your personal data, contact us at <Email /> or
-        through our <Link href={ROUTES.contact}>contact page</Link>.
+        All questions, concerns, and complaints arising from this Privacy Policy should be sent to our email address at{" "}
+        <Email />, or through our <Link href={ROUTES.contact}>contact page</Link>.
       </p>
+    ),
+  },
+  {
+    id: "consent",
+    title: "Consent",
+    body: (
+      <>
+        <p>By using our services, you consent to the terms of this Privacy Policy.</p>
+        <p>
+          Thank you for trusting CALLLAWYA LIMITED to provide for your legal needs. We are committed to safeguarding your
+          privacy and providing you with the best possible experience.
+        </p>
+      </>
     ),
   },
 ];
@@ -300,12 +302,12 @@ export default function PrivacyPage() {
     <LegalDocument
       current="privacy"
       eyebrow="Legal"
-      title="Privacy Policy"
-      updated={LEGAL_LAST_UPDATED}
+      title="Privacy Policy for CallLawya Limited"
+      updated="28 October 2026"
       intro={
         <p>
-          Your legal matters can involve sensitive information. This policy explains what we collect, why we collect
-          it and the choices you have.
+          How and why CallLawya collects, uses and shares personal information, and the privacy rights and choices
+          available to you.
         </p>
       }
       sections={SECTIONS}
