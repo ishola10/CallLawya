@@ -1,6 +1,7 @@
 import { FacebookIcon, InstagramIcon, LinkedinIcon, XTwitterIcon } from "@/assets/icons";
 
 export const NAV_LINKS = [
+  { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Lawyers Directory", href: "/lawyers" },
