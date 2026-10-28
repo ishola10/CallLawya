@@ -125,9 +125,9 @@ export default function ContactPage() {
           </div>
           <div className="flex flex-col justify-center p-9">
             <p className="text-xs font-bold tracking-widest text-brand">OUR HUB</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold">Working across Africa, connected everywhere.</h2>
+            <h2 className="mt-3 font-serif text-3xl font-bold">Working across Nigeria, connected everywhere.</h2>
             <p className="mt-4 leading-7 text-slate-600">
-              Our distributed team collaborates across key African markets, supported by a central operations hub.
+              Our distributed team collaborates across key Nigerian markets, supported by a central operations hub.
             </p>
           </div>
         </div>
