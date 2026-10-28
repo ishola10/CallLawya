@@ -17,7 +17,7 @@ export function LawyerRating({ lawyer, className }: { lawyer: LawyerSummary; cla
 }
 
 export function LawyerFee({ fee }: { fee: number | null }) {
-  if (fee === null) return <span className="text-sm text-slate-500">Fee on request</span>;
+  if (fee === null || fee === 0) return <strong>Free</strong>;
   return (
     <strong>
       {formatNaira(fee)} <span className="text-xs font-normal text-slate-400">/ session</span>

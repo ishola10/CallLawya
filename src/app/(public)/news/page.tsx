@@ -57,13 +57,13 @@ const ANALYSIS = [
     image: teamPhoto,
     alt: "Legal technology team",
     category: "SPECIAL REPORT",
-    title: "Inside the teams building Africa's next legal infrastructure",
+    title: "Inside the teams building Nigeria's next legal infrastructure",
   },
   {
     image: officeCity,
-    alt: "African business district",
+    alt: "Nigerian business district",
     category: "BUSINESS",
-    title: "Why legal certainty is a growth strategy for African cities",
+    title: "Why legal certainty is a growth strategy for Nigerian cities",
   },
 ];
 
@@ -80,14 +80,14 @@ export default function NewsPage() {
     <div className="bg-white">
       <div className="page-x flex min-h-[38px] items-center gap-5 bg-brand py-2 text-sm text-white">
         <span className="shrink-0 bg-white px-2 py-1 text-[10px] font-bold text-brand">BREAKING</span>
-        <strong>Africa&apos;s digital legal services enter a new era of cross-border access</strong>
+        <strong>Nigeria&apos;s digital legal services enter a new era of access</strong>
         <span className="hidden text-white/70 md:inline">Updated 12 minutes ago</span>
       </div>
 
       <section className="page-x pb-5 pt-10">
         <div className="flex flex-col gap-3 border-b-4 border-black pb-5 md:flex-row md:items-end md:justify-between">
           <h1 className="font-serif text-[40px] sm:text-5xl font-bold md:text-6xl">CallLawya Newsroom</h1>
-          <p className="text-sm text-slate-500">Reporting on law, rights and access across Africa</p>
+          <p className="text-sm text-slate-500">Reporting on law, rights and access across Nigeria</p>
         </div>
         <nav className="flex overflow-x-auto border-b border-slate-300 [scrollbar-width:none]" aria-label="News categories">
           {CATEGORIES.map((category, index) => (
@@ -107,7 +107,7 @@ export default function NewsPage() {
             <div className="overflow-hidden">
               <Image
                 src={legalConsultation}
-                alt="African lawyers consulting"
+                alt="Nigerian lawyers consulting"
                 className={`h-[300px] w-full object-cover md:h-[470px] ${zoomOnHover}`}
                 sizes="(min-width: 1024px) 40vw, (min-width: 768px) 60vw, 100vw"
                 placeholder="blur"
@@ -118,7 +118,7 @@ export default function NewsPage() {
               <div>
                 <p className="text-xs font-bold tracking-widest text-brand">LEGAL ACCESS</p>
                 <h2 className="mt-3 font-serif text-4xl font-bold leading-[1.05] group-hover:text-brand lg:text-[44px]">
-                  The new digital front door to justice across Africa
+                  The new digital front door to justice across Nigeria
                 </h2>
                 <p className="mt-5 text-lg leading-7 text-slate-600">
                   A growing network of verified professionals is changing where — and how quickly — people find legal

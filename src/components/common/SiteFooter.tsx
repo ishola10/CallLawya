@@ -48,7 +48,7 @@ export default function SiteFooter() {
         <div className="sm:col-span-2 lg:col-span-1">
           <Image src={logo} alt="CallLawya" className="h-auto w-[145px]" />
           <p className="mt-5 max-w-xs text-white/50">
-            Democratising Africa&apos;s legal system. Justice should not be a privilege.
+            Democratising Nigeria&apos;s legal system. Justice should not be a privilege.
           </p>
           <p className="mt-6 text-xs font-bold uppercase tracking-widest text-white/40">Follow our social media pages</p>
           <div className="mt-3 flex gap-4 text-xl">
@@ -78,8 +78,8 @@ export default function SiteFooter() {
         ))}
       </div>
       <div className="flex flex-col gap-2 pt-7 text-sm text-white/45 md:flex-row md:justify-between">
-        <span>© {new Date().getFullYear()} CallLawya. Democratizing Legal Access in Africa.</span>
-        <span>Built for Africa. Available anywhere.</span>
+        <span>© {new Date().getFullYear()} CallLawya. Democratizing Legal Access in Nigeria.</span>
+        <span>Built for Nigeria. Available anywhere.</span>
       </div>
     </footer>
   );

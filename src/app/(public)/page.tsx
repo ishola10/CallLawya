@@ -12,12 +12,12 @@ import { ArrowRightIcon, BriefcaseIcon, CalendarCheckIcon, ChartLineIcon, FileSe
 
 /* Partners section hidden until real partners are confirmed. Uncomment (with its section below) to restore it.
 const PARTNERS = [
-  { icon: ScaleIcon, name: "LexAfrica" },
-  { icon: Building2Icon, name: "PanAfrican Bar Forum" },
+  { icon: ScaleIcon, name: "LexNigeria" },
+  { icon: Building2Icon, name: "Nigerian Bar Forum" },
   { icon: GavelIcon, name: "Justice Hub" },
   { icon: GlobeIcon, name: "Ubuntu Rights" },
   { icon: HandshakeIcon, name: "Legal Aid Alliance" },
-  { icon: ShieldCheckIcon, name: "TrustPay Africa" },
+  { icon: ShieldCheckIcon, name: "TrustPay Nigeria" },
 ];
 */
 
@@ -115,7 +115,7 @@ export default async function HomePage() {
         className="page-x flex min-h-[34px] items-center gap-4 bg-brand py-2 text-xs font-bold tracking-wide text-white"
       >
         <span className="shrink-0 bg-white px-2 py-1 text-brand">LEGAL ACCESS</span>
-        <span>Now serving clients and lawyers across Africa — call or chat in minutes.</span>
+        <span>Now serving clients and lawyers across Nigeria — call or chat in minutes.</span>
         <Icon icon={ArrowRightIcon} className="ml-auto" />
       </Link>
 
@@ -124,7 +124,7 @@ export default async function HomePage() {
           <div>
             <div className="mb-7 flex items-center gap-3">
               <span className="h-[3px] w-10 bg-brand" />
-              <span className="eyebrow text-brand-pale">Africa&apos;s legal access network</span>
+              <span className="eyebrow text-brand-pale">Nigeria&apos;s legal access network</span>
             </div>
             <h1 className="mb-7 font-serif text-[40px] sm:text-5xl font-bold leading-[.98] tracking-[-.04em] md:text-6xl xl:text-[72px]">
               Legal Assistance.
@@ -163,7 +163,7 @@ export default async function HomePage() {
             <div className="absolute right-0 top-2 h-[92%] w-[80%] max-w-[395px] overflow-hidden rounded-[26px] border border-white/15">
               <Image
                 src={lawyerWoman1}
-                alt="Verified African lawyer"
+                alt="Verified Nigerian lawyer"
                 className="h-full w-full object-cover"
                 sizes="(min-width: 1024px) 395px, 80vw"
                 placeholder="blur"
@@ -228,7 +228,7 @@ export default async function HomePage() {
           <div className="shrink-0 lg:w-[240px]">
             <p className="eyebrow text-brand">Our partners</p>
             <p className="mt-2 font-serif text-xl font-bold leading-snug">
-              Working with Africa&apos;s legal community.
+              Working with Nigeria&apos;s legal community.
             </p>
           </div>
           <ul data-reveal="whole" className="grid flex-1 grid-cols-2 gap-px border border-slate-200 bg-slate-200 sm:grid-cols-3 xl:grid-cols-6">
@@ -292,7 +292,7 @@ export default async function HomePage() {
               One trusted network. Every kind of legal need.
             </h2>
             <p className="mt-5 leading-7 text-slate-600">
-              We are breaking down barriers to make legal representation accessible to everyone across Africa.
+              We are breaking down barriers to make legal representation accessible to everyone across Nigeria.
             </p>
           </div>
           <div data-reveal="whole" className="grid gap-px border border-slate-200 bg-slate-200 sm:grid-cols-2">
@@ -405,7 +405,7 @@ export default async function HomePage() {
             />
             <p className="mt-4 text-xs font-bold text-brand">LEGAL ACCESS</p>
             <h3 className="mt-2 font-serif text-3xl font-bold leading-tight group-hover:text-brand">
-              The digital shift reshaping how Africans find legal representation
+              The digital shift reshaping how Nigerians find legal representation
             </h3>
           </Link>
           <Link href={ROUTES.news} className="group border-t border-black pt-4">
