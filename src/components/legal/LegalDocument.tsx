@@ -21,7 +21,7 @@ type LegalDocumentProps = {
 
 const LEGAL_LINKS = [
   { key: "privacy", label: "Privacy Policy", href: ROUTES.privacy },
-  { key: "terms", label: "Terms of Use", href: ROUTES.terms },
+  { key: "terms", label: "Terms and Conditions", href: ROUTES.terms },
   { key: "security", label: "Security", href: ROUTES.security },
 ] as const;
 

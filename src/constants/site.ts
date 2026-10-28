@@ -5,7 +5,7 @@ export const NAV_LINKS = [
   { label: "How It Works", href: "/how-it-works" },
   { label: "Lawyers Directory", href: "/lawyers" },
   // { label: "News", href: "/news" },
-  // { label: "Articles", href: "/articles/new" },
+  // { label: "Articles", href: "/articles" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -24,6 +24,7 @@ export const ROUTES = {
   terms: "/terms",
   security: "/security",
   support: "/support",
+  articles: "/articles",
   writeArticle: "/articles/new",
 } as const;
 
@@ -35,8 +36,7 @@ export const SUPPORT_PHONE = {
 
 export const CONTACT_EMAILS = {
   support: "support@calllawya.com",
-  lawyers: "lawyers@calllawya.com",
-  press: "press@calllawya.com",
+  lawyers: "legal@calllawya.com",
 } as const;
 
 export const STORE_LINKS = {

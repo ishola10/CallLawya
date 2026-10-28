@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CircleCheckIcon, SendIcon } from "@/assets/icons";
 import { Icon } from "@/components/common";
@@ -15,6 +15,8 @@ function FieldError({ message }: { message?: string }) {
 
 export default function SupportForm() {
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const trapRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -23,8 +25,24 @@ export default function SupportForm() {
   } = useForm<SupportRequestValues>({ resolver: zodResolver(supportRequestSchema) });
 
   const onSubmit = async (values: SupportRequestValues) => {
-    setSentTo(values.email);
-    reset();
+    setSendError(null);
+    setSentTo(null);
+    try {
+      const response = await fetch("/api/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, company: trapRef.current?.value ?? "" }),
+      });
+      const result = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        setSendError(result?.error ?? "We couldn't send your request. Please try again.");
+        return;
+      }
+      setSentTo(values.email);
+      reset();
+    } catch {
+      setSendError("We couldn't reach CallLawya. Check your connection and try again.");
+    }
   };
 
   return (
@@ -38,6 +56,20 @@ export default function SupportForm() {
           <p className="mt-1 text-sm text-green-800/80">We&apos;ll get back to you at {sentTo} within 24 hours.</p>
         </div>
       )}
+      {sendError && (
+        <p className="rounded-md border border-red-200 bg-red-50 p-4 text-sm font-semibold text-[#D92D20]" role="alert">
+          {sendError}
+        </p>
+      )}
+      <input
+        ref={trapRef}
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block">
           <span className="mb-2 block text-sm font-bold">Full name</span>
@@ -88,7 +120,7 @@ export default function SupportForm() {
         disabled={isSubmitting}
         className="press inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand py-4 text-lg font-bold text-white hover:bg-brand-hover disabled:opacity-60"
       >
-        <Icon icon={SendIcon} /> Send Request
+        <Icon icon={SendIcon} /> {isSubmitting ? "Sending…" : "Send Request"}
       </button>
     </form>
   );

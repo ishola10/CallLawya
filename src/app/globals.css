@@ -95,6 +95,9 @@
   .legal-prose ul {
     @apply mt-4 list-disc space-y-2 pl-6 text-slate-600;
   }
+  .legal-prose ol {
+    @apply mt-4 list-decimal space-y-3 pl-6 text-slate-600;
+  }
   .legal-prose li {
     @apply pl-1 leading-7;
   }

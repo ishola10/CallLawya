@@ -3,6 +3,7 @@ import Image from "next/image";
 import { appScreen, lawyerMan1, lawyerWoman1, logo } from "@/assets/images";
 import { Icon, JsonLd, StoreButton } from "@/components/common";
 import { ArrowRightIcon, BellIcon, CircleCheckIcon, FileLockIcon, PhoneIcon, MessageCircleIcon, ShieldCheckIcon, StarIcon, WalletIcon, ZapIcon } from "@/assets/icons";
+import { QR_APP_STORE, QR_GOOGLE_PLAY, type QrCode } from "@/assets/qr-codes";
 import { ROUTES, STORE_LINKS } from "@/constants";
 import { SITE_NAME, SITE_URL, pageMetadata } from "@/lib/seo";
 
@@ -59,31 +60,24 @@ const SHOWCASE_POINTS = [
   "Real-time availability indicators",
 ];
 
-const QR_SIZE = 21;
+const QR_CODES = [
+  { label: "Android", store: "Google Play", href: STORE_LINKS.googlePlay, code: QR_GOOGLE_PLAY },
+  { label: "iPhone", store: "the App Store", href: STORE_LINKS.appStore, code: QR_APP_STORE },
+];
 
-function qrPlaceholderModules() {
-  const isFinder = (row: number, col: number) =>
-    [
-      [0, 0],
-      [0, QR_SIZE - 7],
-      [QR_SIZE - 7, 0],
-    ].some(([top, left]) => row >= top && row < top + 7 && col >= left && col < left + 7);
-
-  const finderFill = (row: number, col: number) => {
-    const r = row % (QR_SIZE - 7) === row ? row : row - (QR_SIZE - 7);
-    const c = col % (QR_SIZE - 7) === col ? col : col - (QR_SIZE - 7);
-    const ring = Math.max(Math.abs(r - 3), Math.abs(c - 3));
-    return ring !== 2;
-  };
-
-  const modules: [number, number][] = [];
-  for (let row = 0; row < QR_SIZE; row++) {
-    for (let col = 0; col < QR_SIZE; col++) {
-      const filled = isFinder(row, col) ? finderFill(row, col) : (row * 7 + col * 13 + row * col) % 3 === 0;
-      if (filled) modules.push([row, col]);
-    }
-  }
-  return modules;
+function QrCodeImage({ code, label }: { code: QrCode; label: string }) {
+  return (
+    <svg
+      viewBox={`-2 -2 ${code.size + 4} ${code.size + 4}`}
+      className="h-36 w-36 sm:h-40 sm:w-40"
+      role="img"
+      aria-label={label}
+      shapeRendering="crispEdges"
+    >
+      <rect x={-2} y={-2} width={code.size + 4} height={code.size + 4} fill="#fff" />
+      <path d={code.path} stroke="#000" />
+    </svg>
+  );
 }
 
 const PHONE = "absolute overflow-hidden border-[#20242B] bg-black shadow-[0_35px_70px_rgba(0,0,0,.45)]";
@@ -274,26 +268,26 @@ export default function DownloadPage() {
             <p className="eyebrow text-brand">Download CallLawya</p>
             <h2 className="mt-3 font-serif text-4xl font-bold md:text-5xl">Scan. Install. Get legal help.</h2>
             <p className="mt-4 text-lg text-slate-600">
-              Point your phone camera at the code or choose your app store.
+              Point your phone camera at the code for your phone, or choose your app store.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <StoreButton store="googlePlay" compact />
               <StoreButton store="appStore" compact />
             </div>
           </div>
-          <div className="justify-self-start bg-white p-5 shadow-lg lg:justify-self-auto">
-            <svg
-              viewBox={`0 0 ${QR_SIZE} ${QR_SIZE}`}
-              className="h-48 w-48"
-              role="img"
-              aria-label="QR code placeholder"
-              shapeRendering="crispEdges"
-            >
-              {qrPlaceholderModules().map(([row, col]) => (
-                <rect key={`${row}-${col}`} x={col} y={row} width={1} height={1} fill="#000" />
-              ))}
-            </svg>
-            <p className="mt-2 text-center text-xs font-bold">SCAN TO DOWNLOAD</p>
+          <div className="flex flex-wrap gap-4 justify-self-start lg:justify-self-auto">
+            {QR_CODES.map((qr) => (
+              <a
+                key={qr.label}
+                href={qr.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-white p-4 shadow-lg transition hover:shadow-xl"
+              >
+                <QrCodeImage code={qr.code} label={`QR code to download CallLawya on ${qr.store}`} />
+                <p className="mt-2 text-center text-xs font-bold tracking-wide">SCAN FOR {qr.label.toUpperCase()}</p>
+              </a>
+            ))}
           </div>
         </div>
       </section>

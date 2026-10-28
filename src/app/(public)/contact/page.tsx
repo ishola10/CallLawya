@@ -5,8 +5,9 @@ import { officeCity } from "@/assets/images";
 import { CONTACT_EMAILS, ROUTES, SOCIAL_LINKS } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 import { Icon } from "@/components/common";
+import { SupportChat } from "@/components/support";
 import { ContactForm } from "./components";
-import { ArrowRightIcon, DotIcon, HeadsetIcon, MapPinIcon, MessageCircleMoreIcon, NewspaperIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserIcon } from "@/assets/icons";
+import { ArrowRightIcon, DotIcon, HeadsetIcon, MapPinIcon, ScaleIcon, ShieldCheckIcon, SmartphoneIcon, UserIcon } from "@/assets/icons";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
@@ -18,7 +19,6 @@ export const metadata: Metadata = pageMetadata({
 const CHANNELS = [
   { icon: HeadsetIcon, label: "CLIENT SUPPORT", email: CONTACT_EMAILS.support },
   { icon: ScaleIcon, label: "LAWYER PARTNERSHIPS", email: CONTACT_EMAILS.lawyers },
-  { icon: NewspaperIcon, label: "MEDIA & PRESS", email: CONTACT_EMAILS.press },
 ];
 
 const QUICK_HELP = [
@@ -155,12 +155,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <a
-        href={`mailto:${CONTACT_EMAILS.support}`}
-        className="fixed bottom-7 right-7 z-40 rounded-full bg-brand px-6 py-4 font-bold text-white shadow-xl hover:bg-brand-hover"
-      >
-        <Icon icon={MessageCircleMoreIcon} className="mr-2" /> Chat with support
-      </a>
+      <SupportChat />
     </>
   );
 }
