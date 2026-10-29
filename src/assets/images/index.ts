@@ -1,4 +1,7 @@
 //export all images from this file
+import appConsultationFee from "./app-screens/app-consultation-fee.webp";
+import appProfileSettings from "./app-screens/app-profile-settings.webp";
+import appVerifyLicence from "./app-screens/app-verify-licence.webp";
 import appScreen from "./calllawya-app.jpg";
 import logo from "./calllawya-logo.svg";
 import teamPhoto from "./calllawya-team.jpg";
@@ -15,7 +18,10 @@ import teamIfunanyaDike from "./team-ifunanya-dike.jpg";
 import teamJulietDike from "./team-juliet-dike.jpg";
 
 export {
+  appConsultationFee,
+  appProfileSettings,
   appScreen,
+  appVerifyLicence,
   courtCorridor,
   lawyerMan1,
   lawyerMan2,

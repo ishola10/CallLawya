@@ -1,13 +1,20 @@
-import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { LocalArticleView } from "../components";
 
-// Article pages are hidden for now and return "page not found".
-// To restore them, delete ArticlePage below and uncomment the original page underneath.
-export default function ArticlePage() {
-  notFound();
+export const metadata: Metadata = {
+  title: "Article",
+  robots: { index: false, follow: true },
+};
+
+// Articles are read from browser storage while the backend integration is switched off.
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <LocalArticleView slug={slug} />;
 }
 
-/*
-import type { Metadata } from "next";
+/* Backend version (switched off). To restore: replace ArticlePage above with this and uncomment
+   src/services/articles.ts and src/app/api/articles.
+
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { ROUTES } from "@/constants";

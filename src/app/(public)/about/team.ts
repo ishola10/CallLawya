@@ -36,6 +36,14 @@ His mission is to leverage technology and innovation to solve real-world challen
     name: "Alexander Omini Esq.",
     role: "BOARD MEMBER / DIRECTOR",
     credentials: "LLB, BL, FSS, USIP",
-    bio: "Alexander supports the board with legal and governance expertise, helping CallLawya grow responsibly and keep trust at the centre of every consultation.",
+    bio: `Alexander Omini is a Barrister and Solicitor of the Supreme Court of Nigeria, with over two decades of full-time practice at the Bar. He is a seasoned Legal Consultant and Security Intelligence Analyst whose work reflects deep expertise and a strong professional affiliation with law enforcement agencies across the globe.
+
+His experience spans Commercial Law and core aspects of Management, including Personnel, Financial, Security, Conflict Resolution, and Guidance and Counselling. This broad competence is reinforced by a solid background in legal matters and Human Resources, enabling him to operate effectively across complex organisational, security, and advisory environments.
+
+Alexander is a member of several distinguished international bodies, including the International Bar Association, the International Institute of Professional Security, the International Association of Chiefs of Police, the American Society for Industrial Security (International), the United States Institute of Peace, and the International Association of Law Enforcement Intelligence Analysts.
+
+He is also an active member of the Nigerian Bar Association (Ikeja Branch), a Fellow of the Institute of Corporate Administration, a member of the Security & Safety Management Practitioner group, and a committed member of the Human Rights Defenders and Advocacy Centre.
+
+Alexander serves as a Director and Global Ambassador of CallLawya, where he is deeply committed to driving the platform toward its full potential and expanding its impact across Africa and beyond. His determination is anchored in a vision of accessible justice, digital transformation, and professional excellence.`,
   },
 ];

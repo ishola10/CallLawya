@@ -116,11 +116,70 @@ export const CHAT_TOPICS: ChatTopic[] = [
     links: [{ label: "Learn about Lex AI", href: ROUTES.howItWorks }],
   },
   {
+    id: "lawyer-free",
+    question: "Is it free for lawyers to register?",
+    keywords: ["free to register", "free to join", "free for lawyers", "registration fee", "listing fee", "monthly fee", "subscription", "cost to join", "pay to join", "pay to register"],
+    answer:
+      "Yes. Registration and listing are free, with no monthly listing fee. A 10% platform commission applies to eligible transactions processed through CallLawya.",
+    links: [{ label: "Join as a Lawyer", href: ROUTES.joinAsLawyer }],
+  },
+  {
+    id: "lawyer-commission",
+    question: "How does the 10% commission work?",
+    keywords: ["commission", "ten percent", "percent", "platform fee", "your cut", "deduction", "deductions"],
+    answer:
+      "CallLawya charges a 10% platform commission on eligible payments processed through the platform. For example, on a ₦10,000 consultation the commission is ₦1,000. Your account shows the relevant transaction details and applicable deductions.",
+    links: [{ label: "Pricing for lawyers", href: ROUTES.joinAsLawyer }],
+  },
+  {
+    id: "lawyer-verification",
+    question: "How does lawyer verification work?",
+    keywords: ["lawyer verification", "get verified", "verify my", "verification process", "scn", "supreme court number", "enrolment", "enrollment", "bar number", "selfie", "facial verification", "face verification"],
+    answer:
+      "You provide your Supreme Court of Nigeria enrolment number, identity details and the required professional information, and complete a quick facial verification in the app. Your profile must pass the applicable verification checks before it can accept bookings.",
+    links: [{ label: "See the verification steps", href: ROUTES.joinAsLawyer }],
+  },
+  {
+    id: "lawyer-fees",
+    question: "Can I set my own consultation fees?",
+    keywords: ["set my own", "my own fee", "my own fees", "set my fee", "set my fees", "my consultation fee", "how much should i charge", "charge clients", "free consultations"],
+    answer:
+      "Yes. You can set your consultation fees and publish them on your profile, subject to CallLawya's applicable platform rules. You can also choose to offer free consultations and update your fee anytime.",
+  },
+  {
+    id: "lawyer-availability",
+    question: "Can I choose when I am available?",
+    keywords: ["when i am available", "when i'm available", "my availability", "availability", "working hours", "block dates", "block out", "time off", "my hours"],
+    answer:
+      "Yes. You can configure your working hours and appointment availability, and block dates when you are unavailable.",
+  },
+  {
+    id: "lawyer-payouts",
+    question: "How do I receive payments as a lawyer?",
+    keywords: ["receive payments", "receive payment", "receive my money", "payout", "payouts", "get paid", "paid", "withdraw", "withdrawal", "earnings", "thursday", "bank account"],
+    answer:
+      "Add and verify your payout account and review the applicable payment terms. Eligible earnings are processed according to CallLawya's payment and payout arrangements: payouts are scheduled every Thursday through Paystack to your verified bank account, subject to payment clearance and verification.",
+  },
+  {
+    id: "lawyer-calendar",
+    question: "Can I connect my calendar?",
+    keywords: ["connect my calendar", "calendar", "google calendar", "outlook", "sync"],
+    answer:
+      "Where supported, you can connect a compatible calendar or add confirmed appointments to help manage your schedule.",
+  },
+  {
+    id: "lawyer-guarantee",
+    question: "Does joining guarantee clients?",
+    keywords: ["guarantee clients", "guarantee", "guaranteed", "how many clients", "enough clients", "get clients"],
+    answer:
+      "No. CallLawya provides a platform for discovery and connection, but the number of enquiries and bookings depends on client demand, profile suitability, availability and other factors.",
+  },
+  {
     id: "join-as-lawyer",
     question: "I'm a lawyer. How do I join CallLawya?",
-    keywords: ["i am a lawyer", "i'm a lawyer", "im a lawyer", "as a lawyer", "join", "become", "onboard", "onboarding", "register as", "list my", "partner", "partnership", "earn", "clients", "for lawyers"],
-    answer: `Download the CallLawya app and create a lawyer profile with your professional details, qualifications, licensing information and practice areas. Once verification is complete, your profile goes live and you can manage consultations and earnings in the app. For partnerships, email ${CONTACT_EMAILS.lawyers}.`,
-    links: [{ label: "How it works for lawyers", href: ROUTES.forLawyers }, ...APP_LINKS],
+    keywords: ["i am a lawyer", "i'm a lawyer", "im a lawyer", "as a lawyer", "join", "who can join", "become", "onboard", "onboarding", "register as", "list my", "partner", "partnership", "earn", "clients", "for lawyers"],
+    answer: `Legal professionals who meet CallLawya's eligibility and verification requirements can apply to join. Download the app, verify your Supreme Court Number, complete facial verification, then publish your profile and set your fee. It's free to join; a 10% platform commission applies to eligible transactions. For partnerships, email ${CONTACT_EMAILS.lawyers}.`,
+    links: [{ label: "See how to join", href: ROUTES.joinAsLawyer }, ...APP_LINKS],
   },
   {
     id: "account",

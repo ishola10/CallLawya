@@ -1,3 +1,9 @@
+// Backend integration for articles is switched off: articles are stored in the browser for now
+// (src/lib/articles/store.ts). To restore, uncomment this file and src/app/api/articles, then switch the
+// articles pages and ArticleComposer back to their backend versions (kept in comments in those files).
+export {};
+
+/*
 import "server-only";
 import type {
   Article,
@@ -105,3 +111,4 @@ export async function recordArticleRead(slug: string): Promise<number> {
   const { reads } = await apiPost<{ reads: number }>(`/articles/${encodeURIComponent(slug)}/read`, undefined, {});
   return reads;
 }
+*/

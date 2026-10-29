@@ -14,7 +14,7 @@ import {
 } from "@/assets/icons";
 import { Icon, JsonLd } from "@/components/common";
 import { BookButton } from "@/components/lawyers";
-import { ROUTES } from "@/constants";
+import { LAWYER_ONBOARDING_STEPS, LAWYER_SIGNUP_HREF, ROUTES } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -50,25 +50,6 @@ const LEX_CAPABILITIES = [
   {
     title: "Know when to seek professional support",
     text: "Recognise when your situation may require advice tailored to your circumstances.",
-  },
-];
-
-const LAWYER_STEPS = [
-  {
-    title: "Create Your Profile",
-    text: "Provide your professional details, relevant qualifications, licensing information and areas of practice.",
-  },
-  {
-    title: "Complete Verification",
-    text: "Submit the information required for CallLawya's verification process. Your profile is activated once the platform's applicable checks are complete.",
-  },
-  {
-    title: "Build Your Digital Presence",
-    text: "Maintain an accurate profile, indicate your availability and make your expertise easier for potential clients to discover.",
-  },
-  {
-    title: "Manage Consultations",
-    text: "Respond to suitable requests, arrange consultations and communicate with clients through the supported platform.",
   },
 ];
 
@@ -332,29 +313,29 @@ export default function HowItWorksPage() {
       <section id="for-lawyers" className="page-x bg-paper section-y">
         <div className="grid items-start gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
           <div>
-            <p className="eyebrow text-brand">For lawyers</p>
-            <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">Getting started.</h2>
+            <p className="eyebrow text-brand">Getting started</p>
+            <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">Three Steps to Getting Started on CallLawya.</h2>
             <p className="mt-5 text-lg leading-8 text-slate-600">
-              Present your professional expertise, make it easier for potential clients to discover you and manage
-              consultations through one platform.
+              Joining CallLawya is straightforward. Complete your professional profile, set up your services and prepare
+              to connect with potential clients.
             </p>
             <Link
-              href={`${ROUTES.contact}?subject=Lawyer%20onboarding`}
+              href={LAWYER_SIGNUP_HREF}
               className="press mt-8 inline-block rounded-md bg-brand px-7 py-4 font-bold text-white hover:bg-brand-hover"
             >
               Join as a Lawyer
             </Link>
           </div>
           <div className="border-t-4 border-black">
-            {LAWYER_STEPS.map((step, index) => (
+            {LAWYER_ONBOARDING_STEPS.map((step, index) => (
               <article key={step.title} className="grid grid-cols-[70px_1fr] gap-6 border-b border-slate-200 py-8">
                 <span
-                  className={`font-serif text-4xl ${index === LAWYER_STEPS.length - 1 ? "text-gold" : "text-brand"}`}
+                  className={`font-serif text-4xl ${index === LAWYER_ONBOARDING_STEPS.length - 1 ? "text-gold" : "text-brand"}`}
                 >
                   0{index + 1}
                 </span>
                 <div>
-                  <p className="text-xs font-bold text-brand">STEP {index + 1}</p>
+                  <p className="text-xs font-bold text-brand">STEP 0{index + 1}</p>
                   <h3 className="mt-1 text-2xl font-bold">{step.title}</h3>
                   <p className="mt-2 text-slate-600">{step.text}</p>
                 </div>
@@ -398,7 +379,7 @@ export default function HowItWorksPage() {
             Find a Lawyer <Icon icon={ArrowRightIcon} className="ml-2" />
           </Link>
           <Link
-            href={`${ROUTES.contact}?subject=Lawyer%20onboarding`}
+            href={LAWYER_SIGNUP_HREF}
             className="press rounded-md border border-white px-8 py-4 font-bold hover:bg-white hover:text-brand"
           >
             Join as a Lawyer
