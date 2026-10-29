@@ -12,7 +12,7 @@ import {
 } from "@/assets/icons";
 import { Icon, JsonLd } from "@/components/common";
 import { SupportChat } from "@/components/support";
-import { CONTACT_EMAILS, ROUTES, SUPPORT_PHONE } from "@/constants";
+import { CONTACT_EMAILS, LAWYER_FAQS, ROUTES, SUPPORT_PHONE } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 import { SupportForm } from "./components";
 
@@ -89,7 +89,7 @@ const FAQS = [
 const FAQ_STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: FAQS.map((faq) => ({
+  mainEntity: [...FAQS, ...LAWYER_FAQS].map((faq) => ({
     "@type": "Question",
     name: faq.question,
     acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -212,15 +212,29 @@ export default function SupportPage() {
               for more.
             </p>
           </div>
-          <div className="border-t-2 border-black">
-            {FAQS.map((faq, index) => (
-              <details key={faq.question} className="group border-b border-slate-300 py-6" open={index === 0}>
-                <summary className="flex cursor-pointer list-none justify-between gap-6 text-xl font-bold [&::-webkit-details-marker]:hidden">
-                  {faq.question}
-                  <Icon icon={PlusIcon} className="shrink-0 transition group-open:rotate-45" />
-                </summary>
-                <p className="mt-4 leading-7 text-slate-600 md:pr-16">{faq.answer}</p>
-              </details>
+          <div className="space-y-10">
+            {[
+              { title: "For clients", faqs: FAQS },
+              { title: "For lawyers", faqs: LAWYER_FAQS },
+            ].map((group, groupIndex) => (
+              <div key={group.title}>
+                <h3 className="mb-2 text-xs font-bold tracking-widest text-brand">{group.title.toUpperCase()}</h3>
+                <div className="border-t-2 border-black">
+                  {group.faqs.map((faq, index) => (
+                    <details
+                      key={faq.question}
+                      className="group border-b border-slate-300 py-6"
+                      open={groupIndex === 0 && index === 0}
+                    >
+                      <summary className="flex cursor-pointer list-none justify-between gap-6 text-xl font-bold [&::-webkit-details-marker]:hidden">
+                        {faq.question}
+                        <Icon icon={PlusIcon} className="shrink-0 transition group-open:rotate-45" />
+                      </summary>
+                      <p className="mt-4 leading-7 text-slate-600 md:pr-16">{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>

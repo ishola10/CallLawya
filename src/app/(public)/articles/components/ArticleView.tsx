@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeftIcon, InfoIcon, PlusIcon } from "@/assets/icons";
-import { ArticleBody, ArticleCard, articleDate } from "@/components/articles";
+import { ArrowLeftIcon, EyeIcon, InfoIcon, PlusIcon } from "@/assets/icons";
+import { ArticleBody, ArticleCard, articleDate, formatReads } from "@/components/articles";
 import { Icon } from "@/components/common";
 import { ROUTES } from "@/constants";
 import type { Article, ArticleSummary } from "@/types/article";
-import ArticleReads from "./ArticleReads";
+// Backend read counting (switched off): import ArticleReads from "./ArticleReads";
 
 export default function ArticleView({ article, more }: { article: Article; more: ArticleSummary[] }) {
   return (
@@ -26,7 +26,10 @@ export default function ArticleView({ article, more }: { article: Article; more:
             {article.authorRole && <span>{article.authorRole}</span>}
             <span>{articleDate.format(new Date(article.createdAt))}</span>
             <span>{article.readMinutes} min read</span>
-            <ArticleReads slug={article.slug} initialReads={article.reads} />
+            {/* Backend read counting (switched off): <ArticleReads slug={article.slug} initialReads={article.reads} /> */}
+            <span className="inline-flex items-center gap-1.5 font-semibold text-slate-600">
+              <Icon icon={EyeIcon} className="text-brand" /> {formatReads(article.reads)}
+            </span>
           </div>
           {article.cover && (
             <div className="relative mt-8 h-72 overflow-hidden rounded-lg md:h-[420px]">

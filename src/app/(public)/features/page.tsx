@@ -15,6 +15,7 @@ import {
   ReceiptTextIcon,
   ShieldCheckIcon,
   SparklesIcon,
+  StarIcon,
 } from "@/assets/icons";
 import { legalConsultation } from "@/assets/images";
 import { Icon } from "@/components/common";
@@ -163,6 +164,7 @@ const FEATURES: Feature[] = [
       "Legal costs are an important consideration when choosing professional support.",
       "CallLawya aims to make consultation information clearer by presenting relevant fees and service details before users commit to a booking.",
       "Review the consultation price, format and scope of service so you can make a more informed decision.",
+      "A 10% CallLawya service fee is shown on the same screen, so the total is clear before you confirm. Your payment is held in escrow and released to the lawyer once the consultation is delivered. No cash to a stranger, no chasing a refund.",
     ],
     tone: "mist",
     panelLabel: "BEFORE YOU BOOK",
@@ -180,6 +182,44 @@ const FEATURES: Feature[] = [
     tone: "ink",
     panelLabel: "PRIVACY",
     panelTitle: "Care for every conversation.",
+  },
+];
+
+const LAWYER_TOOLS: { icon: IconComponent; title: string; text: string }[] = [
+  {
+    icon: BadgeCheckIcon,
+    title: "Verified profile",
+    text: "Your identity, enrolment and practice areas are verified once, then your profile carries that badge. Clients see you as checked before they ever contact you.",
+  },
+  {
+    icon: CalendarCheckIcon,
+    title: "Your calendar",
+    text: "Publish the days and hours you actually work. Clients book into them. You stop negotiating times over social media.",
+  },
+  {
+    icon: SparklesIcon,
+    title: "Lex AI, working for you",
+    text: "Clients arrive having already organised their facts and questions, so the first fifteen minutes are advice instead of intake.",
+  },
+  {
+    icon: MessagesSquareIcon,
+    title: "Consultations",
+    text: "Voice or chat, in-app, recorded where you choose, with no travel.",
+  },
+  {
+    icon: FolderKanbanIcon,
+    title: "Matter management",
+    text: "Every client, appointment, document and next step in one place, instead of across your phone, your email and a notebook.",
+  },
+  {
+    icon: ReceiptTextIcon,
+    title: "Getting paid",
+    text: "Your fee is agreed and held in escrow before the consultation, then released to you when it is delivered. CallLawya takes 10% of each payment made through the platform, including further payments on a matter that continues. Listing is free and there is no monthly fee.",
+  },
+  {
+    icon: StarIcon,
+    title: "Trust",
+    text: "Clients can see your rating from work you actually delivered, which is what a stranger needs before they book a lawyer they found on a phone.",
   },
 ];
 
@@ -308,6 +348,51 @@ export default function FeaturesPage() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section id="for-lawyers" className="page-x scroll-mt-24 bg-ink section-y text-white">
+        <div className="grid gap-6 border-t border-white/30 pt-5 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="eyebrow text-brand-light">For lawyers</p>
+            <h2 className="mt-2 font-serif text-4xl font-bold leading-tight md:text-5xl">
+              Now the lawyer half: the same tools, turned around.
+            </h2>
+          </div>
+          <p className="leading-7 text-white/60">
+            Everything that makes CallLawya easier for clients also takes admin off your desk, so more of your time goes
+            into actual legal work.
+          </p>
+        </div>
+        <ol className="mt-12 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          {LAWYER_TOOLS.map((tool, index) => (
+            <li
+              key={tool.title}
+              className={cn(
+                "group bg-ink p-7 transition-colors duration-300 hover:bg-brand",
+                index === LAWYER_TOOLS.length - 1 && "sm:col-span-2 lg:col-span-1",
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <Icon
+                  icon={tool.icon}
+                  className="h-11 w-11 rounded-lg bg-white/10 p-2 text-gold transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white"
+                />
+                <span className="font-serif text-2xl text-white/20">{index + 1}</span>
+              </div>
+              <h3 className="mt-6 text-xl font-bold">{tool.title}</h3>
+              <p className="mt-3 leading-7 text-white/65 group-hover:text-white/85">{tool.text}</p>
+            </li>
+          ))}
+          <li className="flex flex-col justify-between bg-brand p-7 sm:col-span-2 lg:col-span-1">
+            <p className="font-serif text-2xl font-bold leading-snug">Ready to put these tools to work?</p>
+            <Link
+              href={ROUTES.joinAsLawyer}
+              className="press mt-6 inline-flex items-center gap-2 self-start rounded-md bg-black px-6 py-3 font-bold"
+            >
+              Join as a Lawyer <Icon icon={ArrowRightIcon} />
+            </Link>
+          </li>
+        </ol>
       </section>
 
       <section className="page-x pb-12 lg:pb-14">

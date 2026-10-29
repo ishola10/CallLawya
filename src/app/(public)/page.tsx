@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { lawyerWoman1 } from "@/assets/images";
-// Used by the hidden news section: import { courtCorridor, legalConsultation } from "@/assets/images";
-// Used by the hidden news section: import { LandmarkIcon } from "@/assets/icons";
+import { courtCorridor, lawyerWoman1, legalConsultation, officeCity } from "@/assets/images";
 import { CountUp, Icon, StoreButton } from "@/components/common";
 import { LawyerAvatar } from "@/components/lawyers";
-import { ROUTES } from "@/constants";
+import { LAWYER_BENEFITS, LAWYER_ONBOARDING_STEPS, LAWYER_PRICING_NOTE, LAWYER_SIGNUP_HREF, ROUTES } from "@/constants";
 import { getLawyerStats, getTopLawyers } from "@/services/lawyers";
+import { getNews } from "@/services/news";
 import { ArrowRightIcon, BriefcaseIcon, CalendarCheckIcon, ChartLineIcon, FileSearchIcon, LockIcon, ScaleIcon, SearchIcon, SmartphoneIcon, SparklesIcon, UserCheckIcon } from "@/assets/icons";
 // Used by the hidden partners section: import { Building2Icon, GavelIcon, GlobeIcon, HandshakeIcon, ShieldCheckIcon } from "@/assets/icons";
 
@@ -100,12 +99,18 @@ const STEPS = [
   },
 ];
 
+const NEWS_FALLBACK_IMAGES = [legalConsultation, courtCorridor, officeCity];
+const newsDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "Africa/Lagos" });
+
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const [topLawyers, stats] = await Promise.all([
+  const [topLawyers, stats, latestNews] = await Promise.all([
     getTopLawyers(4).catch(() => []),
     getLawyerStats().catch(() => null),
+    getNews()
+      .then((feed) => feed.articles.slice(0, 3))
+      .catch(() => []),
   ]);
 
   return (
@@ -132,12 +137,14 @@ export default async function HomePage() {
               <span className="text-[#2F7FFF]">Anywhere. Anytime.</span>
             </h1>
             <p className="max-w-[650px] border-l-2 border-gold pl-5 text-lg leading-8 text-white/75 md:text-xl">
-              Finding the right lawyer should not be complicated. CallLawya helps you connect with legal professionals,
-              book consultations and get support for the issues that matter to you.
+              Finding the right legal support or connecting with the right clients should not be complicated. CallLawya
+              brings clients and legal professionals together through a platform designed to make legal services more
+              accessible, convenient and easier to navigate.
             </p>
             <p className="mt-5 max-w-[650px] leading-7 text-white/55 md:text-lg">
-              Whether you are dealing with a property dispute, starting a business, reviewing a contract or trying to
-              understand your rights, CallLawya helps you take the next step with greater confidence.
+              Whether you are looking for a lawyer to help with a personal or business matter, or you are a legal
+              professional looking to showcase your expertise and connect with potential clients, CallLawya helps you
+              take the next step with confidence.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
@@ -169,7 +176,7 @@ export default async function HomePage() {
                 placeholder="blur"
                 preload
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-7">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-7 pb-20">
                 <span className="bg-brand px-2 py-1 text-xs font-bold">VERIFIED LAWYER</span>
                 <h3 className="mt-3 font-serif text-3xl">Counsel in your corner.</h3>
                 <p className="mt-2 text-white/70">Speak privately by call or chat.</p>
@@ -212,10 +219,7 @@ export default async function HomePage() {
                   <CountUp value={stats.averageRating} decimals={1} />
                   <span className="text-gold">★</span>
                 </strong>
-                <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">
-                  Client Rating · {stats.ratingsCount.toLocaleString("en-US")} rating
-                  {stats.ratingsCount === 1 ? "" : "s"}
-                </p>
+                <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">Client Rating</p>
               </div>
             )}
           </div>
@@ -282,6 +286,38 @@ export default async function HomePage() {
             </Link>
           ))}
         </div>
+
+        <div className="mt-16 grid gap-6 border-t-4 border-black pt-5 lg:mt-20 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="eyebrow text-brand">For lawyers</p>
+            <h2 className="mt-2 font-serif text-4xl font-bold md:text-5xl">Three Steps to Getting Started on CallLawya.</h2>
+          </div>
+          <p className="leading-7 text-slate-600">
+            Joining CallLawya is straightforward. Complete your professional profile, set up your services and prepare to
+            connect with potential clients.
+          </p>
+        </div>
+        <ol className="mt-10 grid gap-6 md:grid-cols-3">
+          {LAWYER_ONBOARDING_STEPS.map((step, index) => (
+            <li
+              key={step.title}
+              className={`rounded-xl border-t-4 bg-paper p-8 ${index === LAWYER_ONBOARDING_STEPS.length - 1 ? "border-gold" : "border-brand"}`}
+            >
+              <p className="text-xs font-bold tracking-widest text-brand">STEP 0{index + 1}</p>
+              <h3 className="mt-3 font-serif text-2xl font-bold">{step.title}</h3>
+              <p className="mt-4 leading-7 text-slate-600">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Link
+            href={LAWYER_SIGNUP_HREF}
+            className="press inline-flex items-center justify-center rounded-md bg-brand px-8 py-4 font-bold text-white hover:bg-brand-hover"
+          >
+            Join as a Lawyer <Icon icon={ArrowRightIcon} className="ml-2" />
+          </Link>
+          <p className="text-sm text-slate-500">{LAWYER_PRICING_NOTE}</p>
+        </div>
       </section>
 
       <section className="page-x bg-paper section-y">
@@ -320,6 +356,44 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
+
+        <div className="mt-16 grid gap-6 border-t-4 border-black pt-5 lg:mt-20 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="eyebrow text-brand">Grow your practice</p>
+            <h2 className="mt-2 font-serif text-4xl font-bold leading-tight md:text-5xl">
+              More Visibility. Better Connections. Greater Control.
+            </h2>
+          </div>
+          <p className="leading-7 text-slate-600">
+            Your expertise deserves to reach the people who need it. CallLawya gives you the tools to establish your
+            digital presence and connect with potential clients looking for legal support.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3">
+          {LAWYER_BENEFITS.map((benefit, index) => (
+            <article key={benefit.title} className="group bg-white p-7 transition-colors duration-300 hover:bg-brand">
+              <div className="flex items-center justify-between">
+                <Icon
+                  icon={benefit.icon}
+                  className="h-11 w-11 rounded-lg bg-brand-mist p-2 text-brand transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white"
+                />
+                <span className="font-serif text-2xl text-slate-200 transition-colors duration-300 group-hover:text-white/30">
+                  0{index + 1}
+                </span>
+              </div>
+              <h3 className="mt-5 text-xl font-bold transition-colors duration-300 group-hover:text-white">{benefit.title}</h3>
+              <p className="mt-2 leading-7 text-slate-600 transition-colors duration-300 group-hover:text-white/80">
+                {benefit.text}
+              </p>
+            </article>
+          ))}
+        </div>
+        <Link
+          href={LAWYER_SIGNUP_HREF}
+          className="press mt-8 inline-flex items-center rounded-md bg-brand px-8 py-4 font-bold text-white hover:bg-brand-hover"
+        >
+          Start Your CallLawya Journey <Icon icon={ArrowRightIcon} className="ml-2" />
+        </Link>
       </section>
 
       <section className="page-x bg-ink section-y text-white">
@@ -386,53 +460,46 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* News section hidden for now. Uncomment to restore it.
-      <section className="page-x bg-paper section-y">
-        <div className="mb-8 flex items-end justify-between border-t-4 border-black pt-5">
-          <h2 className="font-serif text-4xl font-bold md:text-5xl">Latest Legal News</h2>
-          <Link href={ROUTES.news} className="font-bold hover:text-brand">
-            All stories
-          </Link>
-        </div>
-        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
-          <Link href={ROUTES.news} className="group md:col-span-2 lg:col-span-1">
-            <Image
-              src={legalConsultation}
-              alt="Legal professionals in consultation"
-              className="h-[260px] w-full object-cover md:h-[330px]"
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              placeholder="blur"
-            />
-            <p className="mt-4 text-xs font-bold text-brand">LEGAL ACCESS</p>
-            <h3 className="mt-2 font-serif text-3xl font-bold leading-tight group-hover:text-brand">
-              The digital shift reshaping how Nigerians find legal representation
-            </h3>
-          </Link>
-          <Link href={ROUTES.news} className="group border-t border-black pt-4">
-            <Image
-              src={courtCorridor}
-              alt="Lawyers at courthouse"
-              className="h-44 w-full object-cover"
-              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-              placeholder="blur"
-            />
-            <p className="mt-4 text-xs font-bold text-brand">HUMAN RIGHTS</p>
-            <h3 className="mt-2 font-serif text-2xl font-bold group-hover:text-brand">
-              What to know before your first legal consultation
-            </h3>
-          </Link>
-          <Link href={ROUTES.news} className="group border-t border-black pt-4">
-            <div className="flex h-44 items-end bg-navy p-6 text-white">
-              <Icon icon={LandmarkIcon} strokeWidth={1.25} className="text-5xl text-brand-light" />
-            </div>
-            <p className="mt-4 text-xs font-bold text-brand">LAND & PROPERTY</p>
-            <h3 className="mt-2 font-serif text-2xl font-bold group-hover:text-brand">
-              Five documents that protect your property transaction
-            </h3>
-          </Link>
-        </div>
-      </section>
-      */}
+      {latestNews.length > 0 && (
+        <section className="page-x bg-paper section-y">
+          <div className="mb-8 flex items-end justify-between border-t-4 border-black pt-5">
+            <h2 className="font-serif text-4xl font-bold md:text-5xl">Latest Legal News</h2>
+            <Link href={ROUTES.news} className="font-bold hover:text-brand">
+              All stories
+            </Link>
+          </div>
+          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
+            {latestNews.map((story, index) => (
+              <a
+                key={story.id}
+                href={story.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={index === 0 ? "group md:col-span-2 lg:col-span-1" : "group border-t border-black pt-4"}
+              >
+                <Image
+                  src={NEWS_FALLBACK_IMAGES[index]}
+                  alt=""
+                  className={index === 0 ? "h-[260px] w-full object-cover md:h-[330px]" : "h-44 w-full object-cover"}
+                  sizes={index === 0 ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"}
+                  placeholder="blur"
+                />
+                <p className="mt-4 text-xs font-bold uppercase text-brand">
+                  {story.publisher}
+                  {story.publisher !== story.source.name && ` via ${story.source.name}`} ·{" "}
+                  {newsDate.format(new Date(story.publishedAt))}
+                </p>
+                <h3
+                  className={`mt-2 font-serif font-bold leading-tight group-hover:text-brand ${index === 0 ? "text-3xl" : "text-2xl"}`}
+                >
+                  {story.title}
+                </h3>
+                <span className="sr-only"> (opens the original article on {story.publisher} in a new tab)</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="page-x section-y">
         <div className="grid items-center gap-8 rounded-[20px] bg-brand p-8 text-white md:p-14 lg:grid-cols-[1.3fr_.7fr]">

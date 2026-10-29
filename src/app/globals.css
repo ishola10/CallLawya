@@ -136,4 +136,51 @@
   .field {
     @apply w-full rounded-md border border-slate-300 bg-white px-4 py-4 outline-none transition focus:border-brand focus:ring-[3px] focus:ring-brand/10;
   }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-scan {
+    animation: scan 2.4s ease-in-out infinite;
+  }
+  .animate-pulse-ring {
+    animation: pulse-ring 2.4s ease-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-scan,
+    .animate-pulse-ring {
+      animation: none;
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    top: 12%;
+  }
+  50% {
+    top: 82%;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.55;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.18;
+  }
 }
