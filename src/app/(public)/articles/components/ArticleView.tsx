@@ -5,7 +5,6 @@ import { ArticleBody, ArticleCard, articleDate, formatReads } from "@/components
 import { Icon } from "@/components/common";
 import { ROUTES } from "@/constants";
 import type { Article, ArticleSummary } from "@/types/article";
-// Backend read counting (switched off): import ArticleReads from "./ArticleReads";
 
 export default function ArticleView({ article, more }: { article: Article; more: ArticleSummary[] }) {
   return (
@@ -26,7 +25,6 @@ export default function ArticleView({ article, more }: { article: Article; more:
             {article.authorRole && <span>{article.authorRole}</span>}
             <span>{articleDate.format(new Date(article.createdAt))}</span>
             <span>{article.readMinutes} min read</span>
-            {/* Backend read counting (switched off): <ArticleReads slug={article.slug} initialReads={article.reads} /> */}
             <span className="inline-flex items-center gap-1.5 font-semibold text-slate-600">
               <Icon icon={EyeIcon} className="text-brand" /> {formatReads(article.reads)}
             </span>

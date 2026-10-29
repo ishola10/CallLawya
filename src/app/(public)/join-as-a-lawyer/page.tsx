@@ -11,12 +11,21 @@ import {
   CheckIcon,
   LockIcon,
   ReceiptTextIcon,
-  ScanFaceIcon,
   ShieldCheckIcon,
+  SmartphoneIcon,
   UserRoundCheckIcon,
   WalletIcon,
 } from "@/assets/icons";
-import { appConsultationFee, appProfileSettings, appVerifyLicence } from "@/assets/images";
+import {
+  appChooseRole,
+  appConsultationFee,
+  appCreateAccount,
+  appGetStarted,
+  appLawyerLogin,
+  appProfileSettings,
+  appVerifyLicence,
+  appVerifyScn,
+} from "@/assets/images";
 import { Icon, StoreButton } from "@/components/common";
 import { LAWYER_PRICING_NOTE, ROUTES } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
@@ -26,9 +35,12 @@ import { FaceVerificationScreen, PhoneFrame } from "./components";
 export const metadata: Metadata = pageMetadata({
   title: "Join as a Lawyer — How to Get Started on CallLawya",
   description:
-    "See how to join CallLawya as a lawyer: verify your Supreme Court Number, complete facial verification, publish your profile and set your consultation fee. Free to join.",
+    "See how to join CallLawya as a lawyer: download the app, create your account, verify your Supreme Court Number with a quick selfie, then publish your profile and set your fee. Free to join.",
   path: ROUTES.joinAsLawyer,
 });
+
+/** A real app screenshot, or the coded facial-verification screen when `screenshot` is omitted. */
+type AppScreen = { screenshot?: StaticImageData; alt?: string };
 
 type AppStep = {
   label: string;
@@ -36,44 +48,59 @@ type AppStep = {
   text: string;
   points: string[];
   icon: typeof ShieldCheckIcon;
-  screenshot?: StaticImageData;
-  alt?: string;
+  screens: [AppScreen, AppScreen];
 };
 
 const APP_STEPS: AppStep[] = [
   {
-    label: "Submit your details",
-    title: "Verify your licence with your Supreme Court Number.",
-    text: "Download the CallLawya app, create your lawyer account and enter your Supreme Court of Nigeria enrolment number, together with the professional information required during registration.",
-    points: ["Supreme Court Number (SCN)", "Identity details", "Professional information"],
-    icon: BadgeCheckIcon,
-    screenshot: appVerifyLicence,
-    alt: "CallLawya app screen: Verify Your Licence by entering your Supreme Court Number",
+    label: "Get started",
+    title: "Download the app and choose \u201cAs a Lawyer\u201d.",
+    text: "Install CallLawya from the App Store or Google Play and tap Get started. When the app asks how you would like to use it, choose As a Lawyer to set up a professional account.",
+    points: ["Free on iOS and Android", "Choose \u201cAs a Lawyer\u201d", "One app for clients and lawyers"],
+    icon: SmartphoneIcon,
+    screens: [
+      { screenshot: appGetStarted, alt: "CallLawya app welcome screen: Legal help made simple, with a Get started button" },
+      { screenshot: appChooseRole, alt: "CallLawya app screen: How would you like to use this app? As a Client or As a Lawyer" },
+    ],
   },
   {
-    label: "Facial verification",
-    title: "Confirm it's really you with a quick selfie.",
-    text: "Take a selfie in the app so we can check that the person behind the profile matches the identity details you submitted. Our team then completes the applicable identity and professional checks.",
-    points: ["Good, even lighting", "Face centred in the frame", "Reviewed by our team"],
-    icon: ScanFaceIcon,
-  },
-  {
-    label: "Publish your profile",
-    title: "Complete your profile and go live.",
-    text: "Once you're approved, set up your practice from Profile settings: complete your profile, add your bank account for payouts and manage your availability. Then publish so potential clients can discover your expertise.",
-    points: ["My profile and practice areas", "Bank account for payouts", "Manage availability"],
+    label: "Create your account",
+    title: "Create your lawyer account.",
+    text: "Log in if you already have an account, or create one with your full name exactly as it appears on your Supreme Court / NBA records, your email address, your Nigerian mobile number and a secure password. You can also continue with Apple or Google.",
+    points: ["Name must match NBA records", "Email and +234 mobile number", "Apple or Google sign-in"],
     icon: UserRoundCheckIcon,
-    screenshot: appProfileSettings,
-    alt: "CallLawya app Profile settings screen with My profile, Bank account, Consultation fee and Manage availability",
+    screens: [
+      { screenshot: appLawyerLogin, alt: "CallLawya app screen: Log in as a Lawyer with email, password, Apple or Google" },
+      { screenshot: appCreateAccount, alt: "CallLawya app screen: Create new account with full name, email, mobile number and password" },
+    ],
   },
   {
-    label: "Start consulting",
-    title: "Set your fee and start receiving bookings.",
-    text: "Choose what you charge per consultation, or offer free consultations, and update it anytime. Clients see your fee before they book, then connect with you by call or chat.",
-    points: ["Your fee, your choice", "Shown to clients before booking", "Consult by call or chat"],
+    label: "Verify your licence",
+    title: "Verify your licence and confirm it\u2019s really you.",
+    text: "Enter your Supreme Court Number so we can confirm your licensed status with the Nigerian Bar Association, then take a quick selfie so we can check that the person behind the profile matches your details. Our team completes the applicable checks.",
+    points: ["Supreme Court Number (SCN)", "Quick selfie check", "Reviewed by our team"],
+    icon: BadgeCheckIcon,
+    screens: [
+      { screenshot: appVerifyScn, alt: "CallLawya app screen: Verify Your Licence by entering your Supreme Court Number" },
+      {},
+    ],
+  },
+  {
+    label: "Go live",
+    title: "Complete your profile, set your fee and start consulting.",
+    text: "Once you're approved, set up your practice from Profile settings: complete your profile, add your bank account for payouts and manage your availability. Choose what you charge per consultation, or offer free consultations. Clients see your fee before they book.",
+    points: ["Profile and practice areas", "Bank account for payouts", "Your fee, shown before booking"],
     icon: CalendarCheckIcon,
-    screenshot: appConsultationFee,
-    alt: "CallLawya app screen: Set your consultation fee in Naira, with an option to offer free consultations",
+    screens: [
+      {
+        screenshot: appProfileSettings,
+        alt: "CallLawya app Profile settings screen with My profile, Bank account, Consultation fee and Manage availability",
+      },
+      {
+        screenshot: appConsultationFee,
+        alt: "CallLawya app screen: Set your consultation fee in Naira, with an option to offer free consultations",
+      },
+    ],
   },
 ];
 
@@ -201,8 +228,8 @@ export default function JoinAsLawyerPage() {
               From sign-up to your first consultation.
             </h1>
             <p className="mt-7 max-w-[600px] border-l-2 border-gold pl-5 text-lg leading-8 text-white/75 md:text-xl">
-              Here&apos;s what joining CallLawya looks like in the app, step by step: verify your licence, confirm your
-              identity, publish your profile and start receiving bookings.
+              Here&apos;s what joining CallLawya looks like in the app, step by step: download the app, create your
+              account, verify your licence and identity, then go live and start receiving bookings.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <StoreButton store="googlePlay" variant="light" />
@@ -243,15 +270,25 @@ export default function JoinAsLawyerPage() {
             <li
               key={step.label}
               className={cn(
-                "grid items-center gap-10 lg:gap-20",
-                index % 2 === 0 ? "lg:grid-cols-[.8fr_1.2fr]" : "lg:grid-cols-[1.2fr_.8fr]",
+                "grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-20",
               )}
             >
               <div className={cn("relative flex justify-center", index % 2 === 1 && "lg:order-2")}>
                 <div className="absolute inset-8 rounded-full bg-brand-mist blur-2xl" aria-hidden="true" />
-                <PhoneFrame screenshot={step.screenshot} alt={step.alt} floatDelay={`-${index * 1.5}s`} className="relative">
-                  {!step.screenshot && <FaceVerificationScreen />}
-                </PhoneFrame>
+                <div className="relative flex items-start gap-4 pb-10 sm:gap-6 sm:pb-14">
+                  {step.screens.map((screen, screenIndex) => (
+                    <PhoneFrame
+                      key={screen.alt ?? "face-verification"}
+                      size="sm"
+                      screenshot={screen.screenshot}
+                      alt={screen.alt}
+                      floatDelay={`-${index * 1.5 + screenIndex * 2.5}s`}
+                      className={cn(screenIndex === 0 ? "-rotate-2" : "mt-10 rotate-2 sm:mt-14")}
+                    >
+                      {!screen.screenshot && <FaceVerificationScreen />}
+                    </PhoneFrame>
+                  ))}
+                </div>
               </div>
               <div>
                 <div className="flex items-center gap-4">
@@ -479,8 +516,11 @@ export default function JoinAsLawyerPage() {
             <p className="mt-4 text-sm text-white/75">
               Free to join. No monthly listing fee. A 10% platform commission applies to eligible transactions.
             </p>
-            <Link href={ROUTES.forLawyers} className="mt-3 inline-block text-sm font-bold underline underline-offset-4">
-              Why lawyers choose CallLawya
+            <Link
+              href={`${ROUTES.howItWorks}#lawyer-faqs`}
+              className="mt-3 inline-block text-sm font-bold underline underline-offset-4"
+            >
+              Questions from lawyers
             </Link>
           </div>
         </div>

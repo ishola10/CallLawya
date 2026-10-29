@@ -10,7 +10,6 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: "daily" 
   { path: ROUTES.lawyers, priority: 0.9, changeFrequency: "daily" },
   { path: ROUTES.features, priority: 0.8, changeFrequency: "monthly" },
   { path: ROUTES.howItWorks, priority: 0.8, changeFrequency: "monthly" },
-  { path: ROUTES.forLawyers, priority: 0.8, changeFrequency: "monthly" },
   { path: ROUTES.joinAsLawyer, priority: 0.8, changeFrequency: "monthly" },
   { path: ROUTES.download, priority: 0.7, changeFrequency: "monthly" },
   { path: ROUTES.about, priority: 0.7, changeFrequency: "monthly" },

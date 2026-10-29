@@ -4,11 +4,6 @@ import { useSyncExternalStore } from "react";
 import type { Article } from "@/types/article";
 import { SAMPLE_ARTICLES, SEED_SAMPLE_ARTICLES } from "./samples";
 
-/*
- * Articles are stored in this browser (localStorage) while the backend integration is switched off.
- * The backend version lives, commented out, in src/services/articles.ts and src/app/api/articles.
- */
-
 export type NewArticle = Omit<Article, "id" | "slug" | "reads" | "createdAt">;
 
 const STORAGE_KEY = "calllawya:articles";

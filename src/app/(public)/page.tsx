@@ -7,19 +7,6 @@ import { LAWYER_BENEFITS, LAWYER_ONBOARDING_STEPS, LAWYER_PRICING_NOTE, LAWYER_S
 import { getLawyerStats, getTopLawyers } from "@/services/lawyers";
 import { getNews } from "@/services/news";
 import { ArrowRightIcon, BriefcaseIcon, CalendarCheckIcon, ChartLineIcon, FileSearchIcon, LockIcon, ScaleIcon, SearchIcon, SmartphoneIcon, SparklesIcon, UserCheckIcon } from "@/assets/icons";
-// Used by the hidden partners section: import { Building2Icon, GavelIcon, GlobeIcon, HandshakeIcon, ShieldCheckIcon } from "@/assets/icons";
-
-/* Partners section hidden until real partners are confirmed. Uncomment (with its section below) to restore it.
-const PARTNERS = [
-  { icon: ScaleIcon, name: "LexNigeria" },
-  { icon: Building2Icon, name: "Nigerian Bar Forum" },
-  { icon: GavelIcon, name: "Justice Hub" },
-  { icon: GlobeIcon, name: "Ubuntu Rights" },
-  { icon: HandshakeIcon, name: "Legal Aid Alliance" },
-  { icon: ShieldCheckIcon, name: "TrustPay Nigeria" },
-];
-*/
-
 const FEATURES = [
   {
     icon: SearchIcon,
@@ -75,7 +62,7 @@ const WHY_ITEMS = [
     href: `${ROUTES.features}#verified-lawyers`,
   },
   { icon: SmartphoneIcon, title: "Mobile First", text: "Advice wherever life happens.", href: ROUTES.download },
-  { icon: ChartLineIcon, title: "Expand Your Income", text: "Serve more clients across borders.", href: ROUTES.forLawyers },
+  { icon: ChartLineIcon, title: "Expand Your Income", text: "Serve more clients across borders.", href: ROUTES.joinAsLawyer },
   {
     icon: BriefcaseIcon,
     title: "Specialized Expertise",
@@ -225,30 +212,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* Partners section hidden until real partners are confirmed. Uncomment (with PARTNERS above) to restore it.
-      <section className="page-x border-b border-slate-200 bg-paper py-10">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
-          <div className="shrink-0 lg:w-[240px]">
-            <p className="eyebrow text-brand">Our partners</p>
-            <p className="mt-2 font-serif text-xl font-bold leading-snug">
-              Working with Nigeria&apos;s legal community.
-            </p>
-          </div>
-          <ul data-reveal="whole" className="grid flex-1 grid-cols-2 gap-px border border-slate-200 bg-slate-200 sm:grid-cols-3 xl:grid-cols-6">
-            {PARTNERS.map((partner) => (
-              <li
-                key={partner.name}
-                className="group flex h-24 items-center justify-center gap-3 bg-white px-4 text-slate-400 transition-colors hover:text-navy"
-              >
-                <Icon icon={partner.icon} className="text-2xl transition-colors group-hover:text-brand" />
-                <span className="font-serif text-lg font-bold leading-tight">{partner.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-      */}
 
       <section className="page-x bg-white section-y">
         <div className="mb-10 grid gap-6 border-t-4 border-black pt-5 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-16">

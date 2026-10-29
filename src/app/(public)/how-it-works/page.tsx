@@ -8,19 +8,19 @@ import {
   ChevronDownIcon,
   InfoIcon,
   MapPinIcon,
-  PlusIcon,
   ScaleIcon,
   SparklesIcon,
 } from "@/assets/icons";
 import { Icon, JsonLd } from "@/components/common";
 import { BookButton } from "@/components/lawyers";
-import { LAWYER_ONBOARDING_STEPS, LAWYER_SIGNUP_HREF, ROUTES } from "@/constants";
+import { LAWYER_FAQS, LAWYER_ONBOARDING_STEPS, LAWYER_SIGNUP_HREF, ROUTES } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
+import { FaqSlider } from "./components";
 
 export const metadata: Metadata = pageMetadata({
   title: "How It Works",
   description:
-    "Describe your situation, find the right lawyer and book a consultation in three steps. Explore Lex AI and see how lawyers get started on CallLawya.",
+    "Describe your situation, find the right lawyer and book a consultation in three steps. Explore Lex AI, see how lawyers get started on CallLawya and read answers to common client and lawyer questions.",
   path: ROUTES.howItWorks,
 });
 
@@ -78,7 +78,7 @@ const stepCard = "lift grid items-center gap-6 rounded-xl p-8 md:grid-cols-[90px
 const FAQ_STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: FAQS.map((faq) => ({
+  mainEntity: [...FAQS, ...LAWYER_FAQS].map((faq) => ({
     "@type": "Question",
     name: faq.question,
     acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -345,29 +345,7 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section className="page-x bg-white section-y">
-        <div className="grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
-          <div>
-            <p className="text-xs font-bold tracking-widest text-brand">COMMON QUESTIONS</p>
-            <h2 className="mt-3 font-serif text-4xl font-bold md:text-5xl">Before you begin.</h2>
-            <p className="mt-5 text-slate-600">Still unsure? Our support team is here to help.</p>
-            <Link href={ROUTES.contact} className="mt-6 inline-block border-b-2 border-brand font-bold">
-              Contact support
-            </Link>
-          </div>
-          <div className="border-t-2 border-black">
-            {FAQS.map((faq, index) => (
-              <details key={faq.question} className="group border-b border-slate-300 py-6" open={index === 0}>
-                <summary className="flex cursor-pointer list-none justify-between gap-6 text-xl font-bold [&::-webkit-details-marker]:hidden">
-                  {faq.question}
-                  <Icon icon={PlusIcon} className="transition group-open:rotate-45" />
-                </summary>
-                <p className="mt-4 leading-7 text-slate-600 md:pr-16">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSlider clientFaqs={FAQS} lawyerFaqs={LAWYER_FAQS} />
 
       <section className="page-x flex flex-col gap-8 bg-brand py-10 text-white lg:flex-row lg:items-center lg:justify-between lg:py-12">
         <div>

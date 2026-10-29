@@ -9,7 +9,7 @@ const FOOTER_COLUMNS = [
     title: "Platform",
     links: [
       { label: "Find a Lawyer", href: ROUTES.lawyers },
-      { label: "For Lawyers", href: ROUTES.forLawyers },
+      { label: "Join as a Lawyer", href: ROUTES.joinAsLawyer },
       { label: "How It Works", href: ROUTES.howItWorks },
       { label: "Features", href: ROUTES.features },
     ],

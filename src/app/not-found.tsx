@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const QUICK_LINKS = [
   { icon: ScaleIcon, title: "Find a lawyer", text: "Browse verified lawyers by practice area and location.", href: ROUTES.lawyers },
   { icon: SparklesIcon, title: "How it works", text: "See how consultations by call or chat work.", href: ROUTES.howItWorks },
-  { icon: BriefcaseIcon, title: "For lawyers", text: "Grow your practice with a verified profile.", href: ROUTES.forLawyers },
+  { icon: BriefcaseIcon, title: "Join as a lawyer", text: "Grow your practice with a verified profile.", href: ROUTES.joinAsLawyer },
   { icon: UserRoundCheckIcon, title: "Join as a lawyer", text: "Step-by-step sign-up in the CallLawya app.", href: ROUTES.joinAsLawyer },
   { icon: NewspaperIcon, title: "Legal news", text: "The latest legal stories from Africa and Europe.", href: ROUTES.news },
   { icon: HeadsetIcon, title: "Support", text: "Answers to common questions, or talk to our team.", href: ROUTES.support },
