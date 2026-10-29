@@ -1,7 +1,11 @@
-//export all images from this file
+import appChooseRole from "./app-screens/app-choose-role.png";
 import appConsultationFee from "./app-screens/app-consultation-fee.webp";
+import appCreateAccount from "./app-screens/app-create-account.png";
+import appGetStarted from "./app-screens/app-get-started.jpg";
+import appLawyerLogin from "./app-screens/app-lawyer-login.png";
 import appProfileSettings from "./app-screens/app-profile-settings.webp";
 import appVerifyLicence from "./app-screens/app-verify-licence.webp";
+import appVerifyScn from "./app-screens/app-verify-scn.png";
 import appScreen from "./calllawya-app.jpg";
 import logo from "./calllawya-logo.svg";
 import teamPhoto from "./calllawya-team.jpg";
@@ -18,10 +22,15 @@ import teamIfunanyaDike from "./team-ifunanya-dike.jpg";
 import teamJulietDike from "./team-juliet-dike.jpg";
 
 export {
+  appChooseRole,
   appConsultationFee,
+  appCreateAccount,
+  appGetStarted,
+  appLawyerLogin,
   appProfileSettings,
   appScreen,
   appVerifyLicence,
+  appVerifyScn,
   courtCorridor,
   lawyerMan1,
   lawyerMan2,

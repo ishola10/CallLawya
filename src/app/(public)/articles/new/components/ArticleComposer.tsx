@@ -144,7 +144,6 @@ export default function ArticleComposer() {
     setDraftSaved(false);
   };
 
-  // Saves to browser storage while the backend integration is switched off.
   const publish = async () => {
     setPublishing(true);
     setPublishError(null);
@@ -173,41 +172,6 @@ export default function ArticleComposer() {
       setPublishing(false);
     }
   };
-
-  /* Backend version (switched off). To restore, use this instead of publish above and uncomment
-     src/services/articles.ts and src/app/api/articles.
-
-  const publish = async () => {
-    setPublishing(true);
-    setPublishError(null);
-    const data = new FormData();
-    data.set("title", values.title.trim());
-    data.set("category", values.category);
-    data.set("authorName", values.authorName.trim());
-    if (values.authorRole?.trim()) data.set("authorRole", values.authorRole.trim());
-    data.set("excerpt", values.excerpt.trim());
-    data.set("body", values.body.trim());
-    if (tags.length) data.set("tags", tags.join(","));
-    data.set("confirmed", String(values.confirmed));
-    if (cover) data.set("cover", cover.blob, "cover.jpg");
-
-    try {
-      const response = await fetch("/api/articles", { method: "POST", body: data });
-      const result = (await response.json().catch(() => null)) as (Article & { error?: string }) | null;
-      if (!response.ok || !result?.slug) {
-        setPublishError(result?.error ?? "We couldn't post your article. Please try again.");
-        return;
-      }
-      window.localStorage.removeItem(DRAFT_KEY);
-      setPublished(result);
-      goTo("published");
-    } catch {
-      setPublishError("We couldn't reach CallLawya. Check your connection and try again.");
-    } finally {
-      setPublishing(false);
-    }
-  };
-  */
 
   const startNew = () => {
     clearDraft();

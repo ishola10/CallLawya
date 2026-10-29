@@ -1,4 +1,3 @@
-//This is components that are shared across the app
 import CountUp from "./CountUp";
 import Icon from "./Icon";
 import JsonLd from "./JsonLd";

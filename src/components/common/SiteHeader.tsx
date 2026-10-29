@@ -17,12 +17,12 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-black text-white">
-      <div className="page-x flex h-[72px] items-center gap-4 xl:gap-8 lg:h-[86px]">
+      <div className="page-x flex h-[72px] items-center gap-4 lg:h-[86px] xl:gap-6 2xl:gap-8">
         <Link href={ROUTES.home} className="shrink-0" onClick={closeMenu}>
           <Image src={logo} alt="CallLawya" className="h-auto w-[104px] lg:w-[118px]" preload />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-4 text-sm font-semibold xl:flex 2xl:gap-6">
+        <nav className="hidden flex-1 items-center justify-center gap-3 text-[13px] font-semibold xl:flex 2xl:gap-6 2xl:text-sm">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -39,8 +39,14 @@ export default function SiteHeader() {
 
         <div className="ml-auto hidden items-center gap-3 whitespace-nowrap xl:flex">
           <Link
+            href={ROUTES.joinAsLawyer}
+            className="press rounded-full border border-white/40 px-4 py-2.5 text-[13px] font-bold hover:border-white hover:bg-white hover:text-black 2xl:px-5 2xl:py-3 2xl:text-sm"
+          >
+            Connect as Lawyer
+          </Link>
+          <Link
             href={ROUTES.lawyers}
-            className="press rounded-full bg-brand px-5 py-3 text-sm font-bold hover:bg-brand-hover"
+            className="press rounded-full bg-brand px-4 py-2.5 text-[13px] font-bold hover:bg-brand-hover 2xl:px-5 2xl:py-3 2xl:text-sm"
           >
             Find a Lawyer
           </Link>
@@ -84,13 +90,22 @@ export default function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <Link
-            href={ROUTES.lawyers}
-            onClick={closeMenu}
-            className="mt-4 block rounded-full bg-brand px-4 py-3 text-center text-sm font-bold"
-          >
-            Find a Lawyer
-          </Link>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <Link
+              href={ROUTES.joinAsLawyer}
+              onClick={closeMenu}
+              className="block rounded-full border border-white/40 px-4 py-3 text-center text-sm font-bold"
+            >
+              Connect as Lawyer
+            </Link>
+            <Link
+              href={ROUTES.lawyers}
+              onClick={closeMenu}
+              className="block rounded-full bg-brand px-4 py-3 text-center text-sm font-bold"
+            >
+              Find a Lawyer
+            </Link>
+          </div>
         </div>
       )}
     </header>

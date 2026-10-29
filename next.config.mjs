@@ -14,6 +14,9 @@ const nextConfig = {
   turbopack: {
     root: path.dirname(fileURLToPath(import.meta.url)),
   },
+  async redirects() {
+    return [{ source: "/for-lawyers", destination: "/how-it-works#lawyer-faqs", permanent: true }];
+  },
 };
 
 export default nextConfig;

@@ -6,56 +6,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-// Articles are read from browser storage while the backend integration is switched off.
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   return <LocalArticleView slug={slug} />;
 }
-
-/* Backend version (switched off). To restore: replace ArticlePage above with this and uncomment
-   src/services/articles.ts and src/app/api/articles.
-
-import { notFound } from "next/navigation";
-import { cache } from "react";
-import { ROUTES } from "@/constants";
-import { pageMetadata } from "@/lib/seo";
-import { getArticle, listArticles } from "@/services/articles";
-import { ArticleView } from "../components";
-
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  return [];
-}
-
-const SLUG_PATTERN = /^[a-z0-9-]{1,100}$/;
-
-const loadArticle = cache(async (slug: string) => (SLUG_PATTERN.test(slug) ? getArticle(slug) : null));
-
-type PageProps = { params: Promise<{ slug: string }> };
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const article = await loadArticle(slug).catch(() => null);
-  if (!article) return { title: "Article", robots: { index: false, follow: true } };
-  return pageMetadata({
-    title: article.title,
-    description: article.excerpt,
-    path: `${ROUTES.articles}/${article.slug}`,
-    ...(article.cover ? { images: [article.cover] } : {}),
-    noIndex: true,
-  });
-}
-
-export default async function ArticlePage({ params }: PageProps) {
-  const { slug } = await params;
-  const article = await loadArticle(slug);
-  if (!article) notFound();
-
-  const more = await listArticles({ limit: 4 })
-    .then((page) => page.items.filter((item) => item.slug !== article.slug).slice(0, 3))
-    .catch(() => []);
-
-  return <ArticleView article={article} more={more} />;
-}
-*/

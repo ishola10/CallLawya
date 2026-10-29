@@ -1,4 +1,3 @@
-//export all icons from this file
 import type { LucideIcon } from "lucide-react";
 import type { JSX, SVGProps } from "react";
 
