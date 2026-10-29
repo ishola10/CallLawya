@@ -1,17 +1,6 @@
-import { notFound } from "next/navigation";
-
-// The Articles page is hidden for now and returns "page not found".
-// To restore it, delete ArticlesPage below and uncomment the original page underneath
-// (and the matching files in articles/[slug], articles/new and api/articles).
-export default function ArticlesPage() {
-  notFound();
-}
-
-/*
 import type { Metadata } from "next";
-import { ARTICLES_PAGE_SIZE, ROUTES } from "@/constants";
+import { ROUTES } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
-import { getArticleCategories, listArticles } from "@/services/articles";
 import { ArticlesList } from "./components";
 
 export const metadata: Metadata = pageMetadata({
@@ -20,6 +9,17 @@ export const metadata: Metadata = pageMetadata({
   path: ROUTES.articles,
   noIndex: true,
 });
+
+// Articles are read from browser storage while the backend integration is switched off.
+export default function ArticlesPage() {
+  return <ArticlesList />;
+}
+
+/* Backend version (switched off). To restore: replace ArticlesPage above with this, restore the backend
+   ArticlesList from git, and uncomment src/services/articles.ts and src/app/api/articles.
+
+import { ARTICLES_PAGE_SIZE } from "@/constants";
+import { getArticleCategories, listArticles } from "@/services/articles";
 
 export const revalidate = 60;
 

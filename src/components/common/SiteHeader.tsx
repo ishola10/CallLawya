@@ -22,13 +22,13 @@ export default function SiteHeader() {
           <Image src={logo} alt="CallLawya" className="h-auto w-[104px] lg:w-[118px]" preload />
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-4 xl:gap-6 text-sm font-semibold lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-4 text-sm font-semibold xl:flex 2xl:gap-6">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "transition-colors hover:text-brand-light",
+                "whitespace-nowrap transition-colors hover:text-brand-light",
                 pathname === link.href && "text-brand-light",
               )}
             >
@@ -37,13 +37,7 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <div className="ml-auto hidden items-center gap-3 lg:flex">
-          <Link
-            href={ROUTES.forLawyers}
-            className="press rounded-full border border-white/50 px-5 py-3 text-sm font-bold hover:bg-white hover:text-black"
-          >
-            Connect as Lawyer
-          </Link>
+        <div className="ml-auto hidden items-center gap-3 whitespace-nowrap xl:flex">
           <Link
             href={ROUTES.lawyers}
             className="press rounded-full bg-brand px-5 py-3 text-sm font-bold hover:bg-brand-hover"
@@ -64,7 +58,7 @@ export default function SiteHeader() {
 
         <button
           type="button"
-          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-lg lg:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-lg xl:hidden"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
@@ -74,7 +68,7 @@ export default function SiteHeader() {
       </div>
 
       {menuOpen && (
-        <div className="page-x border-t border-white/15 pb-6 lg:hidden">
+        <div className="page-x border-t border-white/15 pb-6 xl:hidden">
           <nav className="flex flex-col py-2 text-base font-semibold">
             {[...NAV_LINKS, { label: "Download the App", href: ROUTES.download }].map((link) => (
               <Link
@@ -90,22 +84,13 @@ export default function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <Link
-              href={ROUTES.forLawyers}
-              onClick={closeMenu}
-              className="rounded-full border border-white/50 px-4 py-3 text-center text-sm font-bold"
-            >
-              Connect as Lawyer
-            </Link>
-            <Link
-              href={ROUTES.lawyers}
-              onClick={closeMenu}
-              className="rounded-full bg-brand px-4 py-3 text-center text-sm font-bold"
-            >
-              Find a Lawyer
-            </Link>
-          </div>
+          <Link
+            href={ROUTES.lawyers}
+            onClick={closeMenu}
+            className="mt-4 block rounded-full bg-brand px-4 py-3 text-center text-sm font-bold"
+          >
+            Find a Lawyer
+          </Link>
         </div>
       )}
     </header>

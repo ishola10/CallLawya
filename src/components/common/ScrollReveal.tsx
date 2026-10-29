@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
+export const REVEAL_REFRESH_EVENT = "calllawya:reveal-refresh";
+
 const STAGGER_MS = 90;
 const MAX_STAGGER_STEPS = 5;
 
@@ -61,16 +63,28 @@ export default function ScrollReveal() {
       { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
 
-    const frame = requestAnimationFrame(() => {
-      collectTargets(main).forEach(({ element, order }) => {
-        if (element.getBoundingClientRect().top < window.innerHeight) return;
-        element.classList.add("reveal");
-        element.style.transitionDelay = `${order * STAGGER_MS}ms`;
-        observer.observe(element);
+    const seen = new WeakSet<HTMLElement>();
+    let frame = 0;
+    const run = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        collectTargets(main).forEach(({ element, order }) => {
+          // Streamed content (pages with loading.tsx) arrives before React hydrates it; touching it then
+          // causes hydration mismatches. Such content opts out until it dispatches REVEAL_REFRESH_EVENT.
+          if (seen.has(element) || element.closest("[data-reveal-pending]")) return;
+          seen.add(element);
+          if (element.getBoundingClientRect().top < window.innerHeight) return;
+          element.classList.add("reveal");
+          element.style.transitionDelay = `${order * STAGGER_MS}ms`;
+          observer.observe(element);
+        });
       });
-    });
+    };
+    run();
+    window.addEventListener(REVEAL_REFRESH_EVENT, run);
 
     return () => {
+      window.removeEventListener(REVEAL_REFRESH_EVENT, run);
       cancelAnimationFrame(frame);
       observer.disconnect();
       main.querySelectorAll<HTMLElement>(".reveal").forEach(cleanup);

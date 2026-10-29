@@ -20,6 +20,7 @@ import { ArticleBody } from "@/components/articles";
 import { Icon } from "@/components/common";
 import { ROUTES } from "@/constants";
 import { compressImage } from "@/lib/articles/image";
+import { ArticleStorageFullError, blobToDataUrl, saveArticle } from "@/lib/articles/store";
 import { cn } from "@/lib/utils";
 import { ARTICLE_CATEGORIES, COVER_TYPES, MAX_COVER_BYTES, articleSchema, parseTags } from "@/lib/validations";
 import type { ArticleValues } from "@/lib/validations";
@@ -143,6 +144,39 @@ export default function ArticleComposer() {
     setDraftSaved(false);
   };
 
+  // Saves to browser storage while the backend integration is switched off.
+  const publish = async () => {
+    setPublishing(true);
+    setPublishError(null);
+    try {
+      const article = saveArticle({
+        title: values.title.trim(),
+        category: values.category,
+        authorName: values.authorName.trim(),
+        authorRole: values.authorRole?.trim() || null,
+        excerpt: values.excerpt.trim(),
+        body: values.body.trim(),
+        tags,
+        cover: cover ? await blobToDataUrl(cover.blob) : null,
+        readMinutes,
+      });
+      window.localStorage.removeItem(DRAFT_KEY);
+      setPublished(article);
+      goTo("published");
+    } catch (error) {
+      setPublishError(
+        error instanceof ArticleStorageFullError
+          ? "There isn't enough storage space in this browser. Try a smaller cover image."
+          : "We couldn't post your article. Please try again.",
+      );
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  /* Backend version (switched off). To restore, use this instead of publish above and uncomment
+     src/services/articles.ts and src/app/api/articles.
+
   const publish = async () => {
     setPublishing(true);
     setPublishError(null);
@@ -173,6 +207,7 @@ export default function ArticleComposer() {
       setPublishing(false);
     }
   };
+  */
 
   const startNew = () => {
     clearDraft();
@@ -485,7 +520,12 @@ export default function ArticleComposer() {
             <Icon icon={CircleCheckIcon} className="mx-auto h-16 w-16 rounded-full bg-green-50 p-3.5 text-green-600" />
             <h2 className="mt-6 font-serif text-4xl font-bold">Article posted</h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              Thank you for contributing to the CallLawya Newsroom. Your article is now live on the articles page.
+              Thank you for contributing to the CallLawya Newsroom. Your article is now listed on the articles page.
+            </p>
+            <p className="mx-auto mt-6 flex max-w-xl gap-3 rounded-lg border border-gold/50 bg-gold/10 p-4 text-left text-sm leading-6 text-slate-700">
+              <Icon icon={InfoIcon} className="mt-0.5 text-base text-gold" />
+              While the articles service is being set up, posts are saved in this browser, so they won&apos;t appear on
+              other devices yet.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {published && (
