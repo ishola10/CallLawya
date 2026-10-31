@@ -1,4 +1,5 @@
 import { ScrollReveal, SiteFooter, SiteHeader } from "@/components/common";
+import { SupportChat } from "@/components/support";
 
 export default function PublicLayout({
   children,
@@ -10,6 +11,7 @@ export default function PublicLayout({
       <SiteHeader />
       <main>{children}</main>
       <SiteFooter />
+      <SupportChat />
       <ScrollReveal />
     </div>
   );

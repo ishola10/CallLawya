@@ -5,7 +5,6 @@ import { lawyerWoman1, legalConsultation, officeCity } from "@/assets/images";
 import { CONTACT_EMAILS, ROUTES, SOCIAL_LINKS } from "@/constants";
 import { pageMetadata } from "@/lib/seo";
 import { Icon } from "@/components/common";
-import { SupportChat } from "@/components/support";
 import { ContactForm } from "./components";
 import {
   ArrowRightIcon,
@@ -95,7 +94,8 @@ export default function ContactPage() {
                 src={legalConsultation}
                 alt="A CallLawya team member helping a client"
                 className="h-full w-full object-cover"
-                sizes="(min-width: 1024px) 430px, 82vw"
+                sizes="(min-width: 640px) 970px, 830px"
+                quality={85}
                 placeholder="blur"
                 preload
               />
@@ -248,7 +248,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <SupportChat />
     </>
   );
 }

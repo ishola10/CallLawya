@@ -4,6 +4,7 @@ import {
   MAX_COVER_BYTES,
   MAX_TAGS,
   articleSchema,
+  normalizeScn,
   parseTags,
 } from "./articleSchema";
 import type { ArticleValues } from "./articleSchema";
@@ -26,6 +27,7 @@ export {
   articleSchema,
   contactFormSchema,
   newsletterSchema,
+  normalizeScn,
   parseTags,
   supportRequestSchema,
 };

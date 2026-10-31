@@ -6,6 +6,7 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 85],
     remotePatterns: [
       { protocol: "https", hostname: "callawyamedia.blob.core.windows.net", pathname: "/media/**" },
       { protocol: "https", hostname: "calawya.sfo3.digitaloceanspaces.com", pathname: "/**" },

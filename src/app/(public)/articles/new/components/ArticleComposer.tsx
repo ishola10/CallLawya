@@ -22,7 +22,7 @@ import { ROUTES } from "@/constants";
 import { compressImage } from "@/lib/articles/image";
 import { ArticleStorageFullError, blobToDataUrl, saveArticle } from "@/lib/articles/store";
 import { cn } from "@/lib/utils";
-import { ARTICLE_CATEGORIES, COVER_TYPES, MAX_COVER_BYTES, articleSchema, parseTags } from "@/lib/validations";
+import { ARTICLE_CATEGORIES, COVER_TYPES, MAX_COVER_BYTES, articleSchema, normalizeScn, parseTags } from "@/lib/validations";
 import type { ArticleValues } from "@/lib/validations";
 import type { Article } from "@/types/article";
 
@@ -31,12 +31,15 @@ const DRAFT_KEY = "calllawya:article-draft";
 const EMPTY_ARTICLE = {
   title: "",
   authorName: "",
+  authorScn: "",
   authorRole: "",
   excerpt: "",
   body: "",
   tags: "",
   confirmed: false,
 };
+
+const COVER_REQUIRED = "Add a cover image for your article.";
 
 const STEPS = [
   { id: "write", label: "Write" },
@@ -145,6 +148,11 @@ export default function ArticleComposer() {
   };
 
   const publish = async () => {
+    if (!cover) {
+      setCoverError(COVER_REQUIRED);
+      goTo("write");
+      return;
+    }
     setPublishing(true);
     setPublishError(null);
     try {
@@ -152,11 +160,12 @@ export default function ArticleComposer() {
         title: values.title.trim(),
         category: values.category,
         authorName: values.authorName.trim(),
+        authorScn: normalizeScn(values.authorScn),
         authorRole: values.authorRole?.trim() || null,
         excerpt: values.excerpt.trim(),
         body: values.body.trim(),
         tags,
-        cover: cover ? await blobToDataUrl(cover.blob) : null,
+        cover: await blobToDataUrl(cover.blob),
         readMinutes,
       });
       window.localStorage.removeItem(DRAFT_KEY);
@@ -226,7 +235,18 @@ export default function ArticleComposer() {
       {step === "write" && (
         <section className="page-x section-y">
           <form
-            onSubmit={handleSubmit(() => goTo("preview"))}
+            onSubmit={handleSubmit(
+              () => {
+                if (!cover) {
+                  setCoverError(COVER_REQUIRED);
+                  return;
+                }
+                goTo("preview");
+              },
+              () => {
+                if (!cover) setCoverError(COVER_REQUIRED);
+              },
+            )}
             noValidate
             className="grid gap-8 lg:grid-cols-[1fr_340px] lg:gap-10"
           >
@@ -273,6 +293,22 @@ export default function ArticleComposer() {
                   <FieldError message={errors.authorName?.message} />
                 </label>
                 <label className="block">
+                  <span className="mb-2 block text-sm font-bold">Supreme Court Number (SCN)</span>
+                  <input
+                    className="field uppercase placeholder:normal-case"
+                    placeholder="e.g. SCN123456"
+                    autoComplete="off"
+                    spellCheck={false}
+                    aria-invalid={!!errors.authorScn}
+                    aria-describedby="author-scn-hint"
+                    {...register("authorScn")}
+                  />
+                  <FieldError message={errors.authorScn?.message} />
+                  <p id="author-scn-hint" className="mt-2 text-xs text-slate-500">
+                    Used only to verify you&apos;re a licensed lawyer. It isn&apos;t shown on your article.
+                  </p>
+                </label>
+                <label className="block md:col-span-2">
                   <span className="mb-2 block text-sm font-bold">
                     Author title <span className="font-normal text-slate-400">(optional)</span>
                   </span>
@@ -297,7 +333,7 @@ export default function ArticleComposer() {
 
               <div>
                 <span className="mb-2 block text-sm font-bold">
-                  Cover image <span className="font-normal text-slate-400">(optional)</span>
+                  Cover image
                 </span>
                 {cover ? (
                   <div className="relative overflow-hidden rounded-lg border border-slate-200">

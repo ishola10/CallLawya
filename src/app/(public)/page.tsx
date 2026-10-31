@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { courtCorridor, lawyerWoman1, legalConsultation, officeCity } from "@/assets/images";
-import { CountUp, Icon, StoreButton } from "@/components/common";
+import { CountUp, Icon, NewsTicker, StoreButton } from "@/components/common";
 import { LawyerAvatar } from "@/components/lawyers";
 import { LAWYER_BENEFITS, LAWYER_ONBOARDING_STEPS, LAWYER_PRICING_NOTE, LAWYER_SIGNUP_HREF, ROUTES } from "@/constants";
 import { getLawyerStats, getTopLawyers } from "@/services/lawyers";
@@ -92,24 +92,19 @@ const newsDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "shor
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const [topLawyers, stats, latestNews] = await Promise.all([
+  const [topLawyers, stats, newsArticles] = await Promise.all([
     getTopLawyers(4).catch(() => []),
     getLawyerStats().catch(() => null),
     getNews()
-      .then((feed) => feed.articles.slice(0, 3))
+      .then((feed) => feed.articles.slice(0, 12))
       .catch(() => []),
   ]);
+  const latestNews = [...newsArticles.filter((story) => story.image), ...newsArticles.filter((story) => !story.image)].slice(0, 3);
+  const tickerStories = newsArticles.map(({ id, title, url, publisher }) => ({ id, title, url, publisher }));
 
   return (
     <>
-      <Link
-        href={ROUTES.lawyers}
-        className="page-x flex min-h-[34px] items-center gap-4 bg-brand py-2 text-xs font-bold tracking-wide text-white"
-      >
-        <span className="shrink-0 bg-white px-2 py-1 text-brand">LEGAL ACCESS</span>
-        <span>Now serving clients and lawyers across Nigeria — call or chat in minutes.</span>
-        <Icon icon={ArrowRightIcon} className="ml-auto" />
-      </Link>
+      <NewsTicker stories={tickerStories} />
 
       <section className="page-x overflow-hidden bg-black py-10 lg:py-12 text-white lg:min-h-[780px]">
         <div className="mx-auto grid max-w-[1296px] items-center gap-16 lg:grid-cols-[1.06fr_.94fr]">

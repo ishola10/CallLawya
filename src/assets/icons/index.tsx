@@ -31,6 +31,8 @@ export {
   ChartLine as ChartLineIcon,
   Check as CheckIcon,
   ChevronDown as ChevronDownIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
   CircleCheck as CircleCheckIcon,
   Download as DownloadIcon,
   Eye as EyeIcon,
