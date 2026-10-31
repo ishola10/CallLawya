@@ -16,6 +16,11 @@ const MAX_TAG_LENGTH = 30;
 export const MAX_COVER_BYTES = 2 * 1024 * 1024;
 export const COVER_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
+const SCN_PATTERN = /^(SCN)?\s*\d{3,8}$/i;
+
+/** "scn 123456" and "123456" are stored as "SCN123456". */
+export const normalizeScn = (value: string) => `SCN${value.replace(/^\s*scn/i, "").trim()}`;
+
 export function parseTags(tags?: string) {
   const seen = new Set<string>();
   return (tags ?? "")
@@ -40,6 +45,10 @@ export const articleSchema = z.object({
     errorMap: () => ({ message: "Choose a category" }),
   }),
   authorName: z.string().trim().min(2, "Enter the author's name").max(80, "Keep the name under 80 characters"),
+  authorScn: z
+    .string()
+    .trim()
+    .regex(SCN_PATTERN, "Enter your Supreme Court Number, e.g. SCN123456"),
   authorRole: z.string().trim().max(80, "Keep this under 80 characters").optional(),
   excerpt: z
     .string()

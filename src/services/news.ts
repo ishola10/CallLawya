@@ -14,6 +14,13 @@ const MAX_ITEMS_PER_SOURCE = 40;
 const MAX_ARTICLES = 150;
 const MAX_AGE_DAYS = 120;
 const SUMMARY_LENGTH = 240;
+const PREVIEW_IMAGE_LIMIT = 36;
+const PREVIEW_CONCURRENCY = 6;
+const PREVIEW_TIMEOUT_MS = 6_000;
+const PREVIEW_REVALIDATE_SECONDS = 86_400;
+const MAX_PAGE_BYTES = 400_000;
+/** Publishers fall back to their logo when a story has no photo; a logo is worse than our own image. */
+const GENERIC_IMAGE = /logo|placeholder|default|\/static\/images\/structure\//i;
 
 type Item = RawFeedItem & { publisher: string; summary: string };
 
@@ -175,12 +182,57 @@ function dedupe(articles: NewsArticle[]) {
   return result;
 }
 
+const decodeEntities = (value: string) =>
+  value.replace(/&amp;/g, "&").replace(/&#0?38;/g, "&").replace(/&quot;/g, '"').replace(/&#0?39;/g, "'");
+
+/** The share-preview image a publisher sets on a story page (og:image, then twitter:image). */
+async function previewImage(articleUrl: string, hosts: string[]) {
+  try {
+    const response = await fetch(articleUrl, {
+      headers: { "User-Agent": USER_AGENT, Accept: "text/html", "Accept-Language": "en" },
+      signal: AbortSignal.timeout(PREVIEW_TIMEOUT_MS),
+      next: { revalidate: PREVIEW_REVALIDATE_SECONDS, tags: [NEWS_CACHE_TAG] },
+    });
+    if (!response.ok) return null;
+    const html = (await response.text()).slice(0, MAX_PAGE_BYTES);
+    const headEnd = html.search(/<\/head>/i);
+    const head = headEnd > 0 ? html.slice(0, headEnd) : html;
+    for (const property of ["og:image:secure_url", "og:image", "twitter:image"]) {
+      for (const [tag] of head.matchAll(/<meta\b[^>]*>/gi)) {
+        if (!new RegExp(`(?:property|name)\\s*=\\s*["']${property}["']`, "i").test(tag)) continue;
+        const content = /content\s*=\s*["']([^"']+)["']/i.exec(tag)?.[1];
+        const url = content ? safeUrl(decodeEntities(content), hosts) : null;
+        if (url && !GENERIC_IMAGE.test(url)) return url;
+      }
+    }
+  } catch {
+    // Slow or unreachable story page: the local fallback image is used instead.
+  }
+  return null;
+}
+
+async function addPreviewImages(articles: NewsArticle[], sources: NewsSource[]) {
+  const hostsBySource = new Map(sources.map((source) => [source.id, source.previewImageHosts]));
+  const pending = articles
+    .filter((article) => !article.image && hostsBySource.get(article.source.id)?.length)
+    .slice(0, PREVIEW_IMAGE_LIMIT);
+  let next = 0;
+  const worker = async () => {
+    while (next < pending.length) {
+      const article = pending[next++];
+      article.image = await previewImage(article.url, hostsBySource.get(article.source.id) ?? []);
+    }
+  };
+  await Promise.all(Array.from({ length: PREVIEW_CONCURRENCY }, worker));
+}
+
 export async function getNews(): Promise<NewsFeed> {
   const sources = activeNewsSources();
   const results = await Promise.all(sources.map(fetchSource));
   const articles = dedupe(results.flatMap((result) => result.articles))
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, MAX_ARTICLES);
+  await addPreviewImages(articles, sources);
 
   return {
     articles,

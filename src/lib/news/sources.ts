@@ -16,6 +16,11 @@ export type NewsSource = {
   enabled: boolean;
   /** Only show feed images when the source's terms allow it. Otherwise a local fallback image is used. */
   allowImages: boolean;
+  /**
+   * For feeds without images: use the share-preview image (og:image) the publisher sets on each story
+   * page, hot-linked from these hosts only.
+   */
+  previewImageHosts?: string[];
   /** For broad feeds: keep only items with a clear legal angle. */
   requireLegalSignal?: boolean;
   /** Topics implied by the feed itself, applied as weak matches. */
@@ -47,13 +52,14 @@ export const NEWS_SOURCES: NewsSource[] = [
     linkHosts: ["allafrica.com"],
     enabled: true,
     allowImages: false,
+    previewImageHosts: ["cdn.allafrica.com"],
     skipTitle: /all of africa today|news briefs/i,
     transform: "allafrica",
     terms: {
       url: "https://allafrica.com/misc/tools/rss.html",
-      checked: "2026-10-29",
+      checked: "2026-10-31",
       notes:
-        "Headlines may be shown on a website if formatting is kept, AllAfrica is credited and the site links to allafrica.com or the category page. Commercial use is not addressed explicitly, and the stories belong to the originating publishers, so we show headline + short summary only and link out. Confirm with AllAfrica if you need more certainty.",
+        "Headlines may be shown on a website if formatting is kept, AllAfrica is credited and the site links to allafrica.com or the category page. Commercial use is not addressed explicitly, and the stories belong to the originating publishers, so we show headline + short summary only and link out. The feed has no images; we show each story's own share-preview image (og:image), linked back to the story, as social link previews do. Confirm with AllAfrica if you need more certainty.",
     },
   },
   {
@@ -66,6 +72,7 @@ export const NEWS_SOURCES: NewsSource[] = [
     linkHosts: ["allafrica.com"],
     enabled: true,
     allowImages: false,
+    previewImageHosts: ["cdn.allafrica.com"],
     defaultTopics: ["human-rights"],
     skipTitle: /all of africa today|news briefs/i,
     transform: "allafrica",
@@ -85,6 +92,7 @@ export const NEWS_SOURCES: NewsSource[] = [
     linkHosts: ["allafrica.com"],
     enabled: true,
     allowImages: false,
+    previewImageHosts: ["cdn.allafrica.com"],
     requireLegalSignal: true,
     skipTitle: /all of africa today|news briefs/i,
     transform: "allafrica",

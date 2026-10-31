@@ -3,7 +3,15 @@
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { courtCorridor, legalConsultation, officeCity } from "@/assets/images";
+import {
+  courtCorridor,
+  lawyerMan1,
+  lawyerMan2,
+  lawyerWoman1,
+  lawyerWoman2,
+  legalConsultation,
+  officeCity,
+} from "@/assets/images";
 import { ArrowRightIcon, ExternalLinkIcon, InfoIcon, RefreshCwIcon, SearchIcon, TriangleAlertIcon } from "@/assets/icons";
 import { Icon } from "@/components/common";
 import { REVEAL_REFRESH_EVENT } from "@/components/common/ScrollReveal";
@@ -31,15 +39,33 @@ const timeFormat = new Intl.DateTimeFormat("en-GB", {
   timeZone: "Africa/Lagos",
 });
 
-const FALLBACK_BY_TOPIC: Record<NewsTopicId, StaticImageData> = {
-  "land-property": officeCity,
-  family: legalConsultation,
-  criminal: courtCorridor,
-  business: officeCity,
-  "human-rights": legalConsultation,
-  "tech-ip": officeCity,
+type Fallback = { src: StaticImageData; position?: string };
+
+const OFFICE: Fallback = { src: officeCity };
+const COURT: Fallback = { src: courtCorridor };
+const CONSULTATION: Fallback = { src: legalConsultation };
+const MAN_1: Fallback = { src: lawyerMan1, position: "object-[center_20%]" };
+const MAN_2: Fallback = { src: lawyerMan2, position: "object-[center_20%]" };
+const WOMAN_1: Fallback = { src: lawyerWoman1, position: "object-[center_20%]" };
+const WOMAN_2: Fallback = { src: lawyerWoman2, position: "object-[center_20%]" };
+
+const FALLBACKS_BY_TOPIC: Record<NewsTopicId, Fallback[]> = {
+  "land-property": [OFFICE, CONSULTATION, MAN_2, COURT],
+  family: [CONSULTATION, WOMAN_1, WOMAN_2, MAN_1],
+  criminal: [COURT, MAN_1, CONSULTATION, WOMAN_2],
+  business: [OFFICE, MAN_2, CONSULTATION, WOMAN_1],
+  "human-rights": [COURT, WOMAN_2, CONSULTATION, MAN_1],
+  "tech-ip": [OFFICE, WOMAN_1, MAN_2, CONSULTATION],
 };
-const FALLBACK_ROTATION = [courtCorridor, legalConsultation, officeCity];
+const ALL_FALLBACKS = [COURT, CONSULTATION, OFFICE, WOMAN_1, MAN_1, WOMAN_2, MAN_2];
+
+/** Stable per story, offset by position so neighbouring stories without photos don't repeat an image. */
+function fallbackFor(article: NewsArticle, index: number) {
+  const pool = FALLBACKS_BY_TOPIC[article.topics[0]?.id as NewsTopicId] ?? ALL_FALLBACKS;
+  let hash = 0;
+  for (const char of article.url) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return pool[(hash + index) % pool.length];
+}
 
 const isTopic = (value: string | null): value is NewsTopicId => NEWS_TOPICS.some((topic) => topic.id === value);
 const isRegion = (value: string | null): value is Exclude<NewsRegion, "international"> =>
@@ -99,15 +125,14 @@ function StoryImage({
       />
     );
   }
-  const primary = article.topics[0]?.id;
-  const fallback = primary ? FALLBACK_BY_TOPIC[primary] : FALLBACK_ROTATION[index % FALLBACK_ROTATION.length];
+  const fallback = fallbackFor(article, index);
   return (
     <Image
-      src={fallback}
+      src={fallback.src}
       alt=""
       sizes={sizes}
       placeholder="blur"
-      className={cn("w-full object-cover transition duration-500 group-hover:scale-[1.03]", className)}
+      className={cn("w-full object-cover transition duration-500 group-hover:scale-[1.03]", fallback.position, className)}
     />
   );
 }
@@ -149,7 +174,8 @@ export default function NewsRoom({ feed, topLawyers }: NewsRoomProps) {
         (topic === "all" || article.topics.some((match) => match.id === topic)) &&
         (region === "all" || article.region === region),
     );
-    return sort === "oldest" ? [...matches].reverse() : matches;
+    const ordered = sort === "oldest" ? [...matches].reverse() : matches;
+    return [...ordered.filter((article) => article.image), ...ordered.filter((article) => !article.image)];
   }, [feed.articles, topic, region, sort]);
 
   const update = (patch: Partial<{ topic: TopicFilter; region: RegionFilter; sort: SortOrder }>) => {

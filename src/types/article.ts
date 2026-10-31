@@ -17,6 +17,8 @@ export type ArticleSummary = {
 
 export type Article = ArticleSummary & {
   body: string;
+  /** Supreme Court Number, kept for verifying the author is a lawyer; never displayed. */
+  authorScn?: string | null;
 };
 
 export type ArticleSearchParams = {
