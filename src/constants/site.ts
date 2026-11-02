@@ -7,7 +7,7 @@ export const NAV_LINKS = [
   { label: "Lawyers Directory", href: "/lawyers" },
   { label: "Join as a Lawyer", href: "/join-as-a-lawyer" },
   { label: "News", href: "/news" },
-  { label: "Articles", href: "/articles" },
+  // { label: "Articles", href: "/articles" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
