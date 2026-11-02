@@ -1,15 +1,6 @@
-import type { Metadata } from "next";
-import { ROUTES } from "@/constants";
-import { pageMetadata } from "@/lib/seo";
-import { ArticlesList } from "./components";
+import { notFound } from "next/navigation";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Articles",
-  description: "Practical legal guides and insights from the CallLawya Newsroom.",
-  path: ROUTES.articles,
-  noIndex: true,
-});
-
+// Articles page is hidden for now.
 export default function ArticlesPage() {
-  return <ArticlesList />;
+  notFound();
 }
